@@ -1,0 +1,498 @@
+Test (3B): agreement after follower reconnects ...
+2024/05/11 19:17:27 server[0]begin a new ticker, local state is:2, local Term is:0, and time is bigger than interval?:true
+2024/05/11 19:17:27 server[0]should begin a election
+2024/05/11 19:17:27 server[0]has vote for himself, Term is:1
+2024/05/11 19:17:27 server[1]begin a new ticker, local state is:2, local Term is:0, and time is bigger than interval?:true
+2024/05/11 19:17:27 server[1]should begin a election
+2024/05/11 19:17:27 server[1]has vote for himself, Term is:1
+2024/05/11 19:17:27 server[2]begin a new ticker, local state is:2, local Term is:0, and time is bigger than interval?:true
+2024/05/11 19:17:27 server[2]should begin a election
+2024/05/11 19:17:27 server[2]has vote for himself, Term is:1
+2024/05/11 19:17:27 server[2] recive 0 server vote request, args Term is:1
+2024/05/11 19:17:27 server[2] recive 0 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[2] begin to handler vote request, local Term is:1, request server is:0, request Term is:1,
+2024/05/11 19:17:27 server[1] recive 0 server vote request, args Term is:1
+2024/05/11 19:17:27 server[2]not granted to server 0, because server has vote to 2
+2024/05/11 19:17:27 server[1] recive 0 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[1] begin to handler vote request, local Term is:1, request server is:0, request Term is:1,
+2024/05/11 19:17:27 server[2] has finish request vote, request server is:0, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[1]not granted to server 0, because server has vote to 1
+2024/05/11 19:17:27 server[1] has finish request vote, request server is:0, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[1] recive 2 server vote request, args Term is:1
+2024/05/11 19:17:27 server[1] recive 2 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[1] begin to handler vote request, local Term is:1, request server is:2, request Term is:1,
+2024/05/11 19:17:27 server[1]not granted to server 2, because server has vote to 1
+2024/05/11 19:17:27 server[1] has finish request vote, request server is:2, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[0] got server 2 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[0] got server 2 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[0] wait walk up, voteCount is:1, finishRequest:2,len/2 is:1, vote plus finish is:2
+2024/05/11 19:17:27 server[0] recive 1 server vote request, args Term is:1
+2024/05/11 19:17:27 server[0] recive 1 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[2] got server 1 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[0] begin to handler vote request, local Term is:1, request server is:1, request Term is:1,
+2024/05/11 19:17:27 server[2] got server 1 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[0]not granted to server 1, because server has vote to 0
+2024/05/11 19:17:27 server[0] has finish request vote, request server is:1, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[0] got server 1 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[0] got server 1 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[2] recive 1 server vote request, args Term is:1
+2024/05/11 19:17:27 TestFailAgree3B:begin to test cmd:101 is commited?excep commit is 3
+2024/05/11 19:17:27 server[2] wait walk up, voteCount is:1, finishRequest:2,len/2 is:1, vote plus finish is:2
+2024/05/11 19:17:27 server[2] recive 1 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[0] recive 2 server vote request, args Term is:1
+2024/05/11 19:17:27 server[1] got server 0 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[1] got server 0 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[0] wait walk up, voteCount is:1, finishRequest:3,len/2 is:1, vote plus finish is:1
+2024/05/11 19:17:27 server[1] wait walk up, voteCount is:1, finishRequest:2,len/2 is:1, vote plus finish is:2
+2024/05/11 19:17:27 server[0], vote for leader, got 1 tickets, got 0 failRpc, total 3 request, args Term is:1
+2024/05/11 19:17:27 server[0] recive 2 server vote request, args Term is:1, get lock success
+2024/05/11 19:17:27 server[0] begin to handler vote request, local Term is:1, request server is:2, request Term is:1,
+2024/05/11 19:17:27 server[0]not granted to server 2, because server has vote to 0
+2024/05/11 19:17:27 server[0] has finish request vote, request server is:2, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[2] begin to handler vote request, local Term is:1, request server is:1, request Term is:1,
+2024/05/11 19:17:27 server[2]not granted to server 1, because server has vote to 2
+2024/05/11 19:17:27 server[2] has finish request vote, request server is:1, args Term is:1, result granted is:false
+2024/05/11 19:17:27 server[2] got server 0 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[2] got server 0 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[2] wait walk up, voteCount is:1, finishRequest:3,len/2 is:1, vote plus finish is:1
+2024/05/11 19:17:27 server[2], vote for leader, got 1 tickets, got 0 failRpc, total 3 request, args Term is:1
+2024/05/11 19:17:27 server[1] got server 2 vote respone, args Term is:1,reply grante:false, is ok? true, not get lock
+2024/05/11 19:17:27 server[1] got server 2 vote respone, args Term is:1,reply grante:false, is ok? true, get lock success
+2024/05/11 19:17:27 server[1] wait walk up, voteCount is:1, finishRequest:3,len/2 is:1, vote plus finish is:1
+2024/05/11 19:17:27 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 3 request, args Term is:1
+2024/05/11 19:17:27 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:27 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:27 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:27 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:28 server[0]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:28 server[2]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[1]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:28 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:28 server[0]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[2]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[1]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+
+=== server1 开始进行选举，成为了term为2的leader
+2024/05/11 19:17:28 server[0]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[2]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:false
+2024/05/11 19:17:28 server[1]begin a new ticker, local state is:3, local Term is:1, and time is bigger than interval?:true
+2024/05/11 19:17:28 server[1]should begin a election
+2024/05/11 19:17:28 server[1]has vote for himself, Term is:2
+2024/05/11 19:17:28 server[2] recive 1 server vote request, args Term is:2
+2024/05/11 19:17:28 server[2] recive 1 server vote request, args Term is:2, get lock success
+2024/05/11 19:17:28 server[2] begin to handler vote request, local Term is:1, request server is:1, request Term is:2,
+2024/05/11 19:17:28 server[2] has finish request vote, request server is:1, args Term is:2, result granted is:true
+2024/05/11 19:17:28 server[0] recive 1 server vote request, args Term is:2
+2024/05/11 19:17:28 server[0] recive 1 server vote request, args Term is:2, get lock success
+2024/05/11 19:17:28 server[0] begin to handler vote request, local Term is:1, request server is:1, request Term is:2,
+2024/05/11 19:17:28 server[0] has finish request vote, request server is:1, args Term is:2, result granted is:true
+2024/05/11 19:17:28 server[1] got server 2 vote respone, args Term is:2,reply grante:true, is ok? true, not get lock
+2024/05/11 19:17:28 server[1] got server 2 vote respone, args Term is:2,reply grante:true, is ok? true, get lock success
+2024/05/11 19:17:28 server[1] wait walk up, voteCount is:2, finishRequest:2,len/2 is:1, vote plus finish is:3
+2024/05/11 19:17:28 server[1], vote for leader, got 2 tickets, got 0 failRpc, total 2 request, args Term is:2
+2024/05/11 19:17:28 server[1], become a leader, got 2 tickets
+
+=== server1 成为了term为2的leader
+2024/05/11 19:17:28 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101}]
+2024/05/11 19:17:28 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:28 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:28 server[1] prepare send log to 0, the nextIndex is:1, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 1 101}], args commitIndex is:0
+2024/05/11 19:17:28 server[1] prepare send log to 2, the nextIndex is:1, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 1 101}], args commitIndex is:0
+
+2024/05/11 19:17:28 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 0 -1 [{2 1 101}] 0 2} {0 0 0 0 [] 0 0} {2 1 0 -1 [{2 1 101}] 0 2}],
+2024/05/11 19:17:28 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:0
+2024/05/11 19:17:28 server[2]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:0
+
+2024/05/11 19:17:28 server[1]begin to cacu match count, begin index is:1, len of log is:2, this is:0 server reply,and now match index is:[1 1 0],commit index is:
+=== server1将term为2，index为1点日志应用到状态机了
+2024/05/11 19:17:28 server[1] apply a log entry to applyCh, log term is:2, log index is:1
+2024/05/11 19:17:28 server[1]after append entries to 0 server request, now it commit index is:1
+2024/05/11 19:17:28 server[1]after append entries to 2 server request, now it commit index is:1
+
+2024/05/11 19:17:28 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:28 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:29 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+
+
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 1 2 [] 1 1} {0 0 0 0 [] 0 0} {2 1 1 2 [] 1 1}],
+
+=== 此时2和0都应该把位置为1的日志给提交了
+2024/05/11 19:17:29 server[2]apply log to applych,local term is:2, log term is:2, log index is:1
+2024/05/11 19:17:29 server[2]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+2024/05/11 19:17:29 server[0]apply log to applych,local term is:2, log term is:2, log index is:1
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+
+=== 此时0和2都把位置为1的日志提交了
+
+2024/05/11 19:17:29 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:29 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 1 2 [] 1 1} {0 0 0 0 [] 0 0} {2 1 1 2 [] 1 1}],
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+2024/05/11 19:17:29 server[2]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:29 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:29 server[2] got server 1 vote respone, args Term is:4,reply grante:false, is ok? false, not get lock
+2024/05/11 19:17:29 server[2] got server 1 vote respone, args Term is:4,reply grante:false, is ok? false, get lock success
+2024/05/11 19:17:29 server[2] wait walk up, voteCount is:1, finishRequest:2,len/2 is:1, vote plus finish is:2
+2024/05/11 19:17:29 server[2]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 1 2 [] 1 1} {0 0 0 0 [] 0 0} {2 1 1 2 [] 1 1}],
+2024/05/11 19:17:29 server[2]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+2024/05/11 19:17:29 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[1]begin a new ticker, local state is:1, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:2, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 1 2 [] 1 1} {0 0 0 0 [] 0 0} {2 1 1 2 [] 1 1}],
+2024/05/11 19:17:29 server[2]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:1
+
+=== 将server2断开连接
+2024/05/11 19:17:29 TestFailAgree3B:begin to disconnect server:2
+2024/05/11 19:17:29 TestFailAgree3B:the leader and remaining follower should beable to agree despite the disconnected follower.
+
+2024/05/11 19:17:29 TestFailAgree3B:begin to test cmd 102 is 2 server commited?
+=== 接下来是将102，103，104，105这四条日志在server1和server0之间达成共识。然后server1是leader。term为2.
+
+2024/05/11 19:17:29 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {2 2 102}]
+2024/05/11 19:17:29 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:29 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:2, len of log is:3, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102}], args commitIndex is:1
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:3, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102}], args commitIndex is:1
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 1 2 [{2 2 102}] 1 2} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102}] 1 2}],
+
+=== server1将日志发送给 0 和2 ，其中发给2的是 {2 1 1 2 [{2 2 102}] 1 2}
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102}] log, commit index is:1
+2024/05/11 19:17:29 server[1]begin to cacu match count, begin index is:2, len of log is:3, this is:0 server reply,and now match index is:[2 2 1],commit index is:1
+2024/05/11 19:17:29 server[1] apply a log entry to applyCh, log term is:2, log index is:2
+2024/05/11 19:17:29 server[1]after append entries to 0 server request, now it commit index is:2
+=== 此时收到0点会复制后，由于index为2的日志，已经被大多数节点给复制了，所以此处server1将index为2的日志提交到了状态机
+
+2024/05/11 19:17:29 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:29 server[2]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:29 server[1]begin a new ticker, local state is:1, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:29 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+
+
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:3, len of log is:3, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:2
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:3, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102}], args commitIndex is:2
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 2 2 [] 2 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102}] 2 2}],
+2024/05/11 19:17:29 server[0]apply log to applych,local term is:2, log term is:2, log index is:2
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102}] log, commit index is:2
+
+=== 此处开始已经判断了102的日志被大多数的节点接收了
+2024/05/11 19:17:29 TestFailAgree3B:begin to test cmd 103 is 2 server commited?
+2024/05/11 19:17:29 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}]
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:29 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:29 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+
+2024/05/11 19:17:29 server[1] prepare send log to 0, the nextIndex is:3, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 3 103}], args commitIndex is:2
+2024/05/11 19:17:29 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:2
+2024/05/11 19:17:29 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 2 2 [{2 3 103}] 2 2} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 2 2}],
+
+
+2024/05/11 19:17:29 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:
+
+=== server1开始计算commitIndex，
+2024/05/11 19:17:29 server[1]begin to cacu match count, begin index is:3, len of log is:4, this is:0 server reply,and now match index is:[3 3 1],commit index is:2
+2024/05/11 19:17:29 server[1] apply a log entry to applyCh, log term is:2, log index is:3
+2024/05/11 19:17:29 server[1]after append entries to 0 server request, now it commit index is:3
+
+=== server1计算出commitIndex为3 了，
+
+
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+
+===server0接收到commitindex为3，大于自己的commitIndex，所以将index为3的提交到状态机了。
+2024/05/11 19:17:30 server[0]apply log to applych,local term is:2, log term is:2, log index is:3
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+2024/05/11 19:17:30 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:30 server[1]begin a new ticker, local state is:1, local Term is:2, and time is bigger than interval?:true
+2024/05/11 19:17:30 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+
+
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+
+=== server0接收到心跳消息了
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[2]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+
+
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+2024/05/11 19:17:30 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:30 server[1]begin a new ticker, local state is:1, local Term is:2, and time is bigger than interval?:true
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+
+
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+
+=== 由于server2是一个正常的节点，所以开始了超时选举
+2024/05/11 19:17:30 server[2]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:true
+2024/05/11 19:17:30 server[2]should begin a election
+2024/05/11 19:17:30 server[2]has vote for himself, Term is:3
+
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:30 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+
+
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+
+
+2024/05/11 19:17:30 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:30 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[1]begin a new ticker, local state is:1, local Term is:2, and time is bigger than interval?:true
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:30 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+2024/05/11 19:17:30 server[2]begin a new ticker, local state is:3, local Term is:3, and time is bigger than interval?:false
+2024/05/11 19:17:30 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:30 server[1] prepare send log to 0, the nextIndex is:4, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:3
+2024/05/11 19:17:30 server[1] prepare send log to 2, the nextIndex is:2, len of log is:4, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103}], args commitIndex is:3
+2024/05/11 19:17:30 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [] 3 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103}] 3 2}],
+2024/05/11 19:17:30 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103}] log, commit index is:3
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[0]begin a new ticker, local state is:2, local Term is:2, and time is bigger than interval?:false
+2024/05/11 19:17:31 server[2]begin a new ticker, local state is:3, local Term is:3, and time is bigger than interval?:false
+
+=== 开始发送104的日志
+2024/05/11 19:17:31 TestFailAgree3B:begin to test cmd 104 is 2 server commited?
+2024/05/11 19:17:31 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104}]
+
+2024/05/11 19:17:31 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:31 server[1] prepare send log to 0, the nextIndex is:4, len of log is:5, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 4 104}], args commitIndex is:3
+2024/05/11 19:17:31 server[1] prepare send log to 2, the nextIndex is:2, len of log is:5, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103} {2 4 104}], args commitIndex is:
+2024/05/11 19:17:31 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 3 2 [{2 4 104}] 3 2} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103} {2 4 104}] 3 2}],
+
+2024/05/11 19:17:31 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104}] log, commit index is:3
+2024/05/11 19:17:31 server[1]begin to cacu match count, begin index is:4, len of log is:5, this is:0 server reply,and now match index is:[4 4 1],commit index is:3
+2024/05/11 19:17:31 server[1] apply a log entry to applyCh, log term is:2, log index is:4
+2024/05/11 19:17:31 server[1]after append entries to 0 server request, now it commit index is:4
+
+=== 由于server1接收到了server0的回复，所以此时commitIndex要更新为4了，并且server1将index为4的日志应用到状态机了。
+
+2024/05/11 19:17:31 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[1] prepare send log to 0, the nextIndex is:5, len of log is:5, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:4
+2024/05/11 19:17:31 server[1] prepare send log to 2, the nextIndex is:2, len of log is:5, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103} {2 4 104}], args commitIndex is:4
+
+2024/05/11 19:17:31 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 4 2 [] 4 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103} {2 4 104}] 4 2}],
+
+=== server0 将index为4的日志应用到状态机了
+2024/05/11 19:17:31 server[0]apply log to applych,local term is:2, log term is:2, log index is:4
+2024/05/11 19:17:31 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104}] log, commit index is:4
+
+=== 开始测试105日志
+2024/05/11 19:17:31 TestFailAgree3B:begin to test cmd 105 is 2 server commited?
+2024/05/11 19:17:31 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104} {2 5 105}]
+2024/05/11 19:17:31 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[1] prepare send log to 0, the nextIndex is:5, len of log is:6, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 5 105}], args commitIndex is:4
+2024/05/11 19:17:31 server[1] prepare send log to 2, the nextIndex is:2, len of log is:6, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103} {2 4 104} {2 5 105}], args commitIndex is:4
+2024/05/11 19:17:31 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 4 2 [{2 5 105}] 4 2} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103} {2 4 104} {2 5 105}] 4 2}],
+2024/05/11 19:17:31 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104} {2 5 105}] log, commit index is:4
+2024/05/11 19:17:31 server[1]begin to cacu match count, begin index is:5, len of log is:6, this is:0 server reply,and now match index is:[5 5 1],commit index is:4
+2024/05/11 19:17:31 server[1] apply a log entry to applyCh, log term is:2, log index is:5
+2024/05/11 19:17:31 server[1]after append entries to 0 server request, now it commit index is:5
+
+=== server1更新commitIndex为5了
+
+=== 此时server2开始了选举，并且term成为了4，此时真实leader是term为2的server1
+2024/05/11 19:17:31 server[2]begin a new ticker, local state is:3, local Term is:3, and time is bigger than interval?:true
+2024/05/11 19:17:31 server[2]should begin a election
+2024/05/11 19:17:31 server[2]has vote for himself, Term is:4
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+
+2024/05/11 19:17:31 server[1] prepare send log to 0, the nextIndex is:6, len of log is:6, status is:1, and term is:2, send args term is:2, msg type is:1, papare to send log is:[], args commitIndex is:5
+2024/05/11 19:17:31 server[1] prepare send log to 2, the nextIndex is:2, len of log is:6, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103} {2 4 104} {2 5 105}], args commitIndex is:5
+2024/05/11 19:17:31 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 5 2 [] 5 1} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103} {2 4 104} {2 5 105}] 5 2}],
+2024/05/11 19:17:31 server[0]apply log to applych,local term is:2, log term is:2, log index is:5
+2024/05/11 19:17:31 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104} {2 5 105}] log, commit index is:5
+
+
+2024/05/11 19:17:31 TestFailAgree3B:make server:2 reconnect to cluster
+2024/05/11 19:17:31 TestFailAgree3B:begin to test cmd 106 is 3 server commited?
+
+===将server2重新加入集群，此时server2是候选者，并且term为4，但是没有最新日志
+2024/05/11 19:17:31 server[1]get a log, current term is:2, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104} {2 5 105} {2 6 106}]
+2024/05/11 19:17:31 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+
+2024/05/11 19:17:31 server[2] got server 0 vote respone, args Term is:4,reply grante:false, is ok? false, not get lock
+2024/05/11 19:17:31 server[2] got server 0 vote respone, args Term is:4,reply grante:false, is ok? false, get lock success
+2024/05/11 19:17:31 server[2] wait walk up, voteCount is:1, finishRequest:3,len/2 is:1, vote plus finish is:1
+2024/05/11 19:17:31 server[2], vote for leader, got 1 tickets, got 2 failRpc, total 3 request, args Term is:4
+
+
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[1] send log to 2, bug get fail, args Term is:3, args Index is:3
+
+
+2024/05/11 19:17:31 server[1] prepare send log to 0, the nextIndex is:6, len of log is:7, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 6 106}], args commitIndex is:5
+2024/05/11 19:17:31 server[1] prepare send log to 2, the nextIndex is:2, len of log is:7, status is:1, and term is:2, send args term is:2, msg type is:2, papare to send log is:[{2 2 102} {2 3 103} {2 4 104} {2 5 105} {2 6 106}], args commitIndex is:5
+2024/05/11 19:17:31 server[1], term:2, before send log to others, ths allSendLogArgs is:[{2 1 5 2 [{2 6 106}] 5 2} {0 0 0 0 [] 0 0} {2 1 1 2 [{2 2 102} {2 3 103} {2 4 104} {2 5 105} {2 6 106}] 5 2}],
+
+
+2024/05/11 19:17:31 server[2] got a log heart beat, but args Term less than local Term, request Term is:2, current term is:4, request server id is:1
+
+=== 此时就看先接收到谁的回复了。
+2024/05/11 19:17:31 server[0]got heart beat, reset timeout, local Term is:2, local status is:2, args server id is:1, args Term is:2,now i have:[{-1 0 <nil>} {2 1 101} {2 2 102} {2 3 103} {2 4 104} {2 5 105} {2 6 106}] log, commit index is:5
+2024/05/11 19:17:31 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:31 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:31 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:32 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:32 server[0] send log to 1, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:32 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:32 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+
+=== server2开始了term为5的选举，这次选举应该能得到正确的回复，而且到目前为止，为什么server1没有收到server0的回复。
+2024/05/11 19:17:32 server[2]begin a new ticker, local state is:3, local Term is:4, and time is bigger than interval?:true
+2024/05/11 19:17:32 server[2]should begin a election
+2024/05/11 19:17:32 server[2]has vote for himself, Term is:5
+
+2024/05/11 19:17:32 server[1] recive 2 server vote request, args Term is:5
+2024/05/11 19:17:32 server[1] recive 2 server vote request, args Term is:5, get lock success
+
+2024/05/11 19:17:32 server[0] recive 2 server vote request, args Term is:5
+2024/05/11 19:17:32 server[0] recive 2 server vote request, args Term is:5, get lock success
+2024/05/11 19:17:32 server[0] begin to handler vote request, local Term is:2, request server is:2, request Term is:5,
+2024/05/11 19:17:32 server[0] has finish request vote, request server is:2, args Term is:5, result granted is:true
+
+2024/05/11 19:17:32 server[1] begin to handler vote request, local Term is:4, request server is:2, request Term is:5,
+2024/05/11 19:17:32 server[1] has finish request vote, request server is:2, args Term is:5, result granted is:true
+
+
+2024/05/11 19:17:32 server[2] got server 0 vote respone, args Term is:5,reply grante:true, is ok? true, not get lock
+2024/05/11 19:17:32 server[2] got server 0 vote respone, args Term is:5,reply grante:true, is ok? true, get lock success
+2024/05/11 19:17:32 server[2] got server 1 vote respone, args Term is:5,reply grante:true, is ok? true, not get lock
+2024/05/11 19:17:32 server[2] wait walk up, voteCount is:2, finishRequest:2,len/2 is:1, vote plus finish is:3
+2024/05/11 19:17:32 server[2], vote for leader, got 2 tickets, got 0 failRpc, total 2 request, args Term is:5
+2024/05/11 19:17:32 server[2], become a leader, got 2 tickets
+
+
+=== 此时一个没有最新日志的server2成为了leader
+2024/05/11 19:17:32 server[2] prepare send log to 0, the nextIndex is:1, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:2, papare to send log is:[{2 1 101}], args commitIndex is:1
+2024/05/11 19:17:32 server[2] prepare send log to 1, the nextIndex is:1, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:2, papare to send log is:[{2 1 101}], args commitIndex is:1
+2024/05/11 19:17:32 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 0 -1 [{2 1 101}] 1 2} {5 2 0 -1 [{2 1 101}] 1 2} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:32 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[2]after append entries to 0 server request, now it commit index is:1
+2024/05/11 19:17:32 server[2]after append entries to 1 server request, now it commit index is:1
+2024/05/11 19:17:32 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:32 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+
+2024/05/11 19:17:32 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:32 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:32 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:32 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[2]begin a new ticker, local state is:1, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:32 server[0]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:32 server[1]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:32 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:32 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:32 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:32 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:32 server[0] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:33 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:33 server[1]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:33 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[0]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:33 server[2]begin a new ticker, local state is:1, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:33 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[1]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:33 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:33 server[1] send log to 2, bug get fail, args Term is:2, args Index is:1
+2024/05/11 19:17:33 server[2]begin a new ticker, local state is:1, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[1]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[0]begin a new ticker, local state is:2, local Term is:5, and time is bigger than interval?:false
+2024/05/11 19:17:33 server[2] prepare send log to 0, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2] prepare send log to 1, the nextIndex is:2, len of log is:2, status is:1, and term is:5, send args term is:5, msg type is:1, papare to send log is:[], args commitIndex is:1
+2024/05/11 19:17:33 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [] 1 1} {5 2 1 2 [] 1 1} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:33 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101}] log, commit index is:5
+2024/05/11 19:17:33 server[2]get a log, current term is:5, current state is:1, all log is:[{-1 0 <nil>} {2 1 101} {5 2 106}]
+2024/05/11 19:17:33 server[1] send log to 0, bug get fail, args Term is:-1, args Index is:0
+2024/05/11 19:17:33 server[2] prepare send log to 0, the nextIndex is:2, len of log is:3, status is:1, and term is:5, send args term is:5, msg type is:2, papare to send log is:[{5 2 106}], args commitIndex is:1
+2024/05/11 19:17:33 server[2] prepare send log to 1, the nextIndex is:2, len of log is:3, status is:1, and term is:5, send args term is:5, msg type is:2, papare to send log is:[{5 2 106}], args commitIndex is:1
+2024/05/11 19:17:33 server[2], term:5, before send log to others, ths allSendLogArgs is:[{5 2 1 2 [{5 2 106}] 1 2} {5 2 1 2 [{5 2 106}] 1 2} {0 0 0 0 [] 0 0}],
+2024/05/11 19:17:33 server[1]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101} {5 2 106}] log, commit index is:5
+2024/05/11 19:17:33 server[0]got heart beat, reset timeout, local Term is:5, local status is:2, args server id is:2, args Term is:5,now i have:[{-1 0 <nil>} {2 1 101} {5 2 106}] log, commit index is:5
+2024/05/11 19:17:33 server[2]begin to cacu match count, begin index is:2, len of log is:3, this is:1 server reply,and now match index is:[1 2 2],commit index is:1
+2024/05/11 19:17:33 server[2] apply a log entry to applyCh, log term is:5, log index is:2
+2024/05/11 19:17:33 server[2]after append entries to 1 server request, now it commit index is:2
+2024/05/11 19:17:33 server[2]after append entries to 0 server request, now it commit index is:2
+2024/05/11 19:17:33 2: log map[1:101]; server map[1:101 2:102 3:103 4:104 5:105]
+2024/05/11 19:17:33 2: log map[1:101]; server map[1:101 2:102 3:103 4:104 5:105]
+2024/05/11 19:17:33 apply error: commit Index=2 server=2 106 != server=1 102
+exit status 1
+FAIL	6.5840/raft	24.557s
+end of test 1...

@@ -1,0 +1,1040 @@
+Running test 3....
+2024/05/19 09:50:28 server[2]handler 3 vote request, args term is:121 bigger than local term:121, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[2] has finish request vote, request server is:3, args Term is:121, result granted is:true
+2024/05/19 09:50:28 server[1] recive 3 server vote request, args Term is:121, get lock success
+2024/05/19 09:50:28 server[1] begin to handler vote request, local Term is:120, request server is:3, request Term is:121, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[1]handler 3 vote request, args term is:121 bigger than local term:121, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[1] has finish request vote, request server is:3, args Term is:121, result granted is:true
+2024/05/19 09:50:28 server[2]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[4] recive 3 server vote request, args Term is:121, get lock success
+2024/05/19 09:50:28 server[4] begin to handler vote request, local Term is:120, request server is:3, request Term is:121, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[4]handler 3 vote request, args term is:121 bigger than local term:121, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[4] has finish request vote, request server is:3, args Term is:121, result granted is:true
+2024/05/19 09:50:28 server[0] recive 3 server vote request, args Term is:121, get lock success
+2024/05/19 09:50:28 server[0] begin to handler vote request, local Term is:120, request server is:3, request Term is:121, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[0]handler 3 vote request, args term is:121 bigger than local term:121, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[0] has finish request vote, request server is:3, args Term is:121, result granted is:true
+2024/05/19 09:50:28 server[0]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[0] got server 3 vote respone, args Term is:105,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[1]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[4]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[2] got server 4 vote respone, args Term is:120,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[1] got server 3 vote respone, args Term is:102,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[2]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:true
+2024/05/19 09:50:28 server[2]should begin a election
+2024/05/19 09:50:28 server[2]has vote for himself, Term is:122
+2024/05/19 09:50:28 server[0] got server 1 vote respone, args Term is:120,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[0]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[3] recive 2 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[3] begin to handler vote request, local Term is:121, request server is:2, request Term is:122, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[3]handler 2 vote request, args term is:122 bigger than local term:122, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[3]not granted to server 2, because local Index is new than args
+2024/05/19 09:50:28 server[3] has finish request vote, request server is:2, args Term is:122, result granted is:false
+2024/05/19 09:50:28 server[2] got server 3 vote respone, args Term is:122,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:28 server[2] got server 4 vote respone, args Term is:122,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:28 server[0] recive 2 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[0] begin to handler vote request, local Term is:121, request server is:2, request Term is:122, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[0]handler 2 vote request, args term is:122 bigger than local term:122, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[0] has finish request vote, request server is:2, args Term is:122, result granted is:true
+2024/05/19 09:50:28 server[4] got server 2 vote respone, args Term is:100,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[4] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:28 server[4], vote for leader, got 2 tickets, got 3 failRpc, total 5 request, args Term is:100
+2024/05/19 09:50:28 server[1] recive 2 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[1] begin to handler vote request, local Term is:121, request server is:2, request Term is:122, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[1]handler 2 vote request, args term is:122 bigger than local term:122, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[1] has finish request vote, request server is:2, args Term is:122, result granted is:true
+2024/05/19 09:50:28 server[2] got server 4 vote respone, args Term is:118,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[3]begin a new ticker, local state is:2, local Term is:122, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[1]begin a new ticker, local state is:2, local Term is:122, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[4]begin a new ticker, local state is:2, local Term is:121, and time is bigger than interval?:true
+2024/05/19 09:50:28 server[4]should begin a election
+2024/05/19 09:50:28 server[4]has vote for himself, Term is:122
+2024/05/19 09:50:28 server[2] recive 4 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[2] begin to handler vote request, local Term is:122, request server is:4, request Term is:122, request log last term is:15, request log last index is:35
+2024/05/19 09:50:28 server[2]not granted to server 4, because server has vote to 2
+2024/05/19 09:50:28 server[2] has finish request vote, request server is:4, args Term is:122, result granted is:false
+2024/05/19 09:50:28 server[4] got server 1 vote respone, args Term is:122,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[4] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:28 server[0]begin a new ticker, local state is:2, local Term is:122, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[3] recive 4 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[3] begin to handler vote request, local Term is:122, request server is:4, request Term is:122, request log last term is:15, request log last index is:35
+2024/05/19 09:50:28 server[3]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:28 server[3] has finish request vote, request server is:4, args Term is:122, result granted is:false
+2024/05/19 09:50:28 server[0] recive 4 server vote request, args Term is:122, get lock success
+2024/05/19 09:50:28 server[0] begin to handler vote request, local Term is:122, request server is:4, request Term is:122, request log last term is:15, request log last index is:35
+2024/05/19 09:50:28 server[0]not granted to server 4, because server has vote to 2
+2024/05/19 09:50:28 server[0] has finish request vote, request server is:4, args Term is:122, result granted is:false
+2024/05/19 09:50:28 server[3] got server 1 vote respone, args Term is:121,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[3] wait walk up, voteCount is:2, finishRequest:2, len/2 is:2, vote plus finish is:5
+2024/05/19 09:50:28 server[2]begin a new ticker, local state is:3, local Term is:122, and time is bigger than interval?:true
+2024/05/19 09:50:28 server[2]should begin a election
+2024/05/19 09:50:28 server[2]has vote for himself, Term is:123
+2024/05/19 09:50:28 server[1] recive 2 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[1] begin to handler vote request, local Term is:122, request server is:2, request Term is:123, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[1]handler 2 vote request, args term is:123 bigger than local term:123, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[1] has finish request vote, request server is:2, args Term is:123, result granted is:true
+2024/05/19 09:50:28 server[2] got server 1 vote respone, args Term is:123,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:2, finishRequest:2, len/2 is:2, vote plus finish is:5
+2024/05/19 09:50:28 server[3] got server 2 vote respone, args Term is:121,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[3] wait walk up, voteCount is:3, finishRequest:3, len/2 is:2, vote plus finish is:5
+2024/05/19 09:50:28 server[3], vote for leader, got 3 tickets, got 0 failRpc, total 3 request, args Term is:121
+2024/05/19 09:50:28 server[2] got server 0 vote respone, args Term is:123,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:2, finishRequest:3, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:28 server[4] recive 2 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[4] begin to handler vote request, local Term is:122, request server is:2, request Term is:123, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[4]handler 2 vote request, args term is:123 bigger than local term:123, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[4] has finish request vote, request server is:2, args Term is:123, result granted is:true
+2024/05/19 09:50:28 server[2] got server 3 vote respone, args Term is:123,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:28 server[1]begin a new ticker, local state is:2, local Term is:123, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[3] got server 4 vote respone, args Term is:121,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[3]begin a new ticker, local state is:2, local Term is:122, and time is bigger than interval?:true
+2024/05/19 09:50:28 server[3]should begin a election
+2024/05/19 09:50:28 server[3]has vote for himself, Term is:123
+2024/05/19 09:50:28 server[1] recive 3 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[1] begin to handler vote request, local Term is:123, request server is:3, request Term is:123, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[1]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:28 server[1] has finish request vote, request server is:3, args Term is:123, result granted is:false
+2024/05/19 09:50:28 server[2] recive 3 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[2] begin to handler vote request, local Term is:123, request server is:3, request Term is:123, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[2]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:28 server[2] has finish request vote, request server is:3, args Term is:123, result granted is:false
+2024/05/19 09:50:28 server[0] recive 3 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[0] begin to handler vote request, local Term is:122, request server is:3, request Term is:123, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[0]handler 3 vote request, args term is:123 bigger than local term:123, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[0] has finish request vote, request server is:3, args Term is:123, result granted is:true
+2024/05/19 09:50:28 server[4] recive 3 server vote request, args Term is:123, get lock success
+2024/05/19 09:50:28 server[4] begin to handler vote request, local Term is:123, request server is:3, request Term is:123, request log last term is:74, request log last index is:384
+2024/05/19 09:50:28 server[4]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:28 server[4] has finish request vote, request server is:3, args Term is:123, result granted is:false
+2024/05/19 09:50:28 server[4]begin a new ticker, local state is:2, local Term is:123, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[4] got server 3 vote respone, args Term is:122,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:28 server[4] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:28 server[2] got server 1 vote respone, args Term is:119,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:3, finishRequest:4, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:28 server[2], vote for leader, got 3 tickets, got 0 failRpc, total 4 request, args Term is:119
+2024/05/19 09:50:28 server[4] got server 0 vote respone, args Term is:122,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:28 server[4] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:28 server[4], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:122
+2024/05/19 09:50:28 server[4] got server 2 vote respone, args Term is:122,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:28 server[0]begin a new ticker, local state is:2, local Term is:123, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[1]begin a new ticker, local state is:2, local Term is:123, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[3]begin a new ticker, local state is:3, local Term is:123, and time is bigger than interval?:false
+2024/05/19 09:50:28 server[2]begin a new ticker, local state is:3, local Term is:123, and time is bigger than interval?:true
+2024/05/19 09:50:28 server[2]should begin a election
+2024/05/19 09:50:28 server[2]has vote for himself, Term is:124
+2024/05/19 09:50:28 server[4] recive 2 server vote request, args Term is:124, get lock success
+2024/05/19 09:50:28 server[4] begin to handler vote request, local Term is:123, request server is:2, request Term is:124, request log last term is:15, request log last index is:936
+2024/05/19 09:50:28 server[4]handler 2 vote request, args term is:124 bigger than local term:124, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:28 server[4] has finish request vote, request server is:2, args Term is:124, result granted is:true
+2024/05/19 09:50:28 server[2] got server 4 vote respone, args Term is:124,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:28 server[2] wait walk up, voteCount is:2, finishRequest:2, len/2 is:2, vote plus finish is:5
+2024/05/19 09:50:29 server[3] recive 2 server vote request, args Term is:124, get lock success
+2024/05/19 09:50:29 server[3] begin to handler vote request, local Term is:123, request server is:2, request Term is:124, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[3]handler 2 vote request, args term is:124 bigger than local term:124, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[3]not granted to server 2, because local Index is new than args
+2024/05/19 09:50:29 server[1] recive 2 server vote request, args Term is:124, get lock success
+2024/05/19 09:50:29 server[1] begin to handler vote request, local Term is:123, request server is:2, request Term is:124, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[1]handler 2 vote request, args term is:124 bigger than local term:124, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[1] has finish request vote, request server is:2, args Term is:124, result granted is:true
+2024/05/19 09:50:29 server[2] got server 1 vote respone, args Term is:124,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:2, finishRequest:3, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[3] has finish request vote, request server is:2, args Term is:124, result granted is:false
+2024/05/19 09:50:29 server[0] recive 2 server vote request, args Term is:124, get lock success
+2024/05/19 09:50:29 server[0] begin to handler vote request, local Term is:123, request server is:2, request Term is:124, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[0]handler 2 vote request, args term is:124 bigger than local term:124, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[0] has finish request vote, request server is:2, args Term is:124, result granted is:true
+2024/05/19 09:50:29 server[2] got server 1 vote respone, args Term is:122,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[4]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[2] got server 0 vote respone, args Term is:119,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[3] got server 4 vote respone, args Term is:123,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[3] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[2]begin a new ticker, local state is:3, local Term is:124, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[3] got server 0 vote respone, args Term is:121,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[3]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[0]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[1]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[2] got server 3 vote respone, args Term is:124,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[2] got server 0 vote respone, args Term is:122,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:3, finishRequest:5, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[2], vote for leader, got 3 tickets, got 1 failRpc, total 5 request, args Term is:122
+2024/05/19 09:50:29 server[3] got server 1 vote respone, args Term is:123,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[3] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[4]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:true
+2024/05/19 09:50:29 server[4]should begin a election
+2024/05/19 09:50:29 server[4]has vote for himself, Term is:125
+2024/05/19 09:50:29 server[4] got server 1 vote respone, args Term is:125,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:29 server[4] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[3] recive 4 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[3] begin to handler vote request, local Term is:124, request server is:4, request Term is:125, request log last term is:15, request log last index is:35
+2024/05/19 09:50:29 server[3]handler 4 vote request, args term is:125 bigger than local term:125, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[3]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:29 server[3] has finish request vote, request server is:4, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[0] recive 4 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[0] begin to handler vote request, local Term is:124, request server is:4, request Term is:125, request log last term is:15, request log last index is:35
+2024/05/19 09:50:29 server[0]handler 4 vote request, args term is:125 bigger than local term:125, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[0] has finish request vote, request server is:4, args Term is:125, result granted is:true
+2024/05/19 09:50:29 server[2] recive 4 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[2] begin to handler vote request, local Term is:124, request server is:4, request Term is:125, request log last term is:15, request log last index is:35
+2024/05/19 09:50:29 server[2]handler 4 vote request, args term is:125 bigger than local term:125, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[2]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:29 server[2] has finish request vote, request server is:4, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[4] got server 2 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[4] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[2]begin a new ticker, local state is:2, local Term is:125, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[0]begin a new ticker, local state is:2, local Term is:125, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[3] got server 2 vote respone, args Term is:123,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[3] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:29 server[3], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:123
+2024/05/19 09:50:29 server[4]begin a new ticker, local state is:3, local Term is:125, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[3]begin a new ticker, local state is:2, local Term is:125, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[1]begin a new ticker, local state is:2, local Term is:124, and time is bigger than interval?:true
+2024/05/19 09:50:29 server[1]should begin a election
+2024/05/19 09:50:29 server[1]has vote for himself, Term is:125
+2024/05/19 09:50:29 server[4] recive 1 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[4] begin to handler vote request, local Term is:125, request server is:1, request Term is:125, request log last term is:2, request log last index is:98
+2024/05/19 09:50:29 server[4]not granted to server 1, because server has vote to 4
+2024/05/19 09:50:29 server[4] has finish request vote, request server is:1, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[2] recive 1 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[2] begin to handler vote request, local Term is:125, request server is:1, request Term is:125, request log last term is:2, request log last index is:98
+2024/05/19 09:50:29 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:29 server[2] has finish request vote, request server is:1, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[2] got server 0 vote respone, args Term is:124,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[3] recive 1 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[3] begin to handler vote request, local Term is:125, request server is:1, request Term is:125, request log last term is:2, request log last index is:98
+2024/05/19 09:50:29 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:29 server[3] has finish request vote, request server is:1, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[1] got server 3 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:3, finishRequest:5, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[2], vote for leader, got 3 tickets, got 1 failRpc, total 5 request, args Term is:124
+2024/05/19 09:50:29 server[4] got server 0 vote respone, args Term is:125,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[4] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[0] recive 1 server vote request, args Term is:125, get lock success
+2024/05/19 09:50:29 server[0] begin to handler vote request, local Term is:125, request server is:1, request Term is:125, request log last term is:2, request log last index is:98
+2024/05/19 09:50:29 server[0]not granted to server 1, because server has vote to 4
+2024/05/19 09:50:29 server[0] has finish request vote, request server is:1, args Term is:125, result granted is:false
+2024/05/19 09:50:29 server[1] got server 0 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[0]begin a new ticker, local state is:2, local Term is:125, and time is bigger than interval?:true
+2024/05/19 09:50:29 server[0]should begin a election
+2024/05/19 09:50:29 server[0]has vote for himself, Term is:126
+2024/05/19 09:50:29 server[2]begin a new ticker, local state is:2, local Term is:125, and time is bigger than interval?:true
+2024/05/19 09:50:29 server[2]should begin a election
+2024/05/19 09:50:29 server[2]has vote for himself, Term is:126
+2024/05/19 09:50:29 server[1] recive 0 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[1] begin to handler vote request, local Term is:125, request server is:0, request Term is:126, request log last term is:12, request log last index is:616
+2024/05/19 09:50:29 server[1]handler 0 vote request, args term is:126 bigger than local term:126, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[1] has finish request vote, request server is:0, args Term is:126, result granted is:true
+2024/05/19 09:50:29 server[4] recive 0 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[4] begin to handler vote request, local Term is:125, request server is:0, request Term is:126, request log last term is:12, request log last index is:616
+2024/05/19 09:50:29 server[4]handler 0 vote request, args term is:126 bigger than local term:126, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:29 server[4] has finish request vote, request server is:0, args Term is:126, result granted is:false
+2024/05/19 09:50:29 server[0] got server 4 vote respone, args Term is:126,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[2] recive 0 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[2] begin to handler vote request, local Term is:126, request server is:0, request Term is:126, request log last term is:12, request log last index is:616
+2024/05/19 09:50:29 server[2]not granted to server 0, because server has vote to 2
+2024/05/19 09:50:29 server[2] has finish request vote, request server is:0, args Term is:126, result granted is:false
+2024/05/19 09:50:29 server[2] got server 3 vote respone, args Term is:126,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:29 server[0] recive 2 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[0] begin to handler vote request, local Term is:126, request server is:2, request Term is:126, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[0]not granted to server 2, because server has vote to 0
+2024/05/19 09:50:29 server[0] has finish request vote, request server is:2, args Term is:126, result granted is:false
+2024/05/19 09:50:29 server[3] recive 0 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[3] begin to handler vote request, local Term is:125, request server is:0, request Term is:126, request log last term is:12, request log last index is:616
+2024/05/19 09:50:29 server[3]handler 0 vote request, args term is:126 bigger than local term:126, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:29 server[3] has finish request vote, request server is:0, args Term is:126, result granted is:false
+2024/05/19 09:50:29 server[0] got server 3 vote respone, args Term is:126,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:29 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:29 server[1] recive 2 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[1] begin to handler vote request, local Term is:126, request server is:2, request Term is:126, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[1]not granted to server 2, because server has vote to 0
+2024/05/19 09:50:29 server[1] has finish request vote, request server is:2, args Term is:126, result granted is:false
+2024/05/19 09:50:29 server[4] recive 2 server vote request, args Term is:126, get lock success
+2024/05/19 09:50:29 server[4] begin to handler vote request, local Term is:126, request server is:2, request Term is:126, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[4] has finish request vote, request server is:2, args Term is:126, result granted is:true
+2024/05/19 09:50:29 server[3]begin a new ticker, local state is:2, local Term is:126, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[4]begin a new ticker, local state is:2, local Term is:126, and time is bigger than interval?:false
+2024/05/19 09:50:29 server[1]begin a new ticker, local state is:2, local Term is:126, and time is bigger than interval?:false
+
+=== server 2开始了选举，term为127
+2024/05/19 09:50:29 server[2]begin a new ticker, local state is:3, local Term is:126, and time is bigger than interval?:true
+2024/05/19 09:50:29 server[2]should begin a election
+2024/05/19 09:50:29 server[2]has vote for himself, Term is:127
+
+=== server1投票给server2的term为127的选举。
+2024/05/19 09:50:29 server[1] recive 2 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:29 server[1] begin to handler vote request, local Term is:126, request server is:2, request Term is:127, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[1]handler 2 vote request, args term is:127 bigger than local term:127, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[1] has finish request vote, request server is:2, args Term is:127, result granted is:true
+=== 但是server2并没有收到server1的赞成票
+2024/05/19 09:50:29 server[2] got server 1 vote respone, args Term is:127,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+
+2024/05/19 09:50:29 server[4] recive 2 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:29 server[4] begin to handler vote request, local Term is:126, request server is:2, request Term is:127, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[4]handler 2 vote request, args term is:127 bigger than local term:127, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[4] has finish request vote, request server is:2, args Term is:127, result granted is:true
+
+2024/05/19 09:50:29 server[0] recive 2 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:29 server[0] begin to handler vote request, local Term is:126, request server is:2, request Term is:127, request log last term is:15, request log last index is:936
+2024/05/19 09:50:29 server[0]handler 2 vote request, args term is:127 bigger than local term:127, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:29 server[0] has finish request vote, request server is:2, args Term is:127, result granted is:true
+
+=== server2收到了server0的赞成票
+2024/05/19 09:50:29 server[2] got server 0 vote respone, args Term is:127,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:29 server[2] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+
+2024/05/19 09:50:30 server[0]begin a new ticker, local state is:2, local Term is:127, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[3]begin a new ticker, local state is:2, local Term is:126, and time is bigger than interval?:true
+2024/05/19 09:50:30 server[3]should begin a election
+2024/05/19 09:50:30 server[3]has vote for himself, Term is:127
+2024/05/19 09:50:30 server[2] got server 0 vote respone, args Term is:126,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[2] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[3] got server 0 vote respone, args Term is:127,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:30 server[4] recive 3 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:30 server[4] begin to handler vote request, local Term is:127, request server is:3, request Term is:127, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[4]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:30 server[4] has finish request vote, request server is:3, args Term is:127, result granted is:false
+2024/05/19 09:50:30 server[2] recive 3 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:30 server[2] begin to handler vote request, local Term is:127, request server is:3, request Term is:127, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[2]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:30 server[2] has finish request vote, request server is:3, args Term is:127, result granted is:false
+2024/05/19 09:50:30 server[1] recive 3 server vote request, args Term is:127, get lock success
+2024/05/19 09:50:30 server[1] begin to handler vote request, local Term is:127, request server is:3, request Term is:127, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[1]not granted to server 3, because server has vote to 2
+2024/05/19 09:50:30 server[1] has finish request vote, request server is:3, args Term is:127, result granted is:false
+2024/05/19 09:50:30 server[1]begin a new ticker, local state is:2, local Term is:127, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[2] got server 4 vote respone, args Term is:123,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:30 server[2] wait walk up, voteCount is:3, finishRequest:5, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[2], vote for leader, got 3 tickets, got 2 failRpc, total 5 request, args Term is:123
+2024/05/19 09:50:30 server[4]begin a new ticker, local state is:2, local Term is:127, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[3] got server 0 vote respone, args Term is:123,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:30 server[2] got server 4 vote respone, args Term is:127,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:30 server[2] wait walk up, voteCount is:3, finishRequest:5, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[2], vote for leader, got 3 tickets, got 2 failRpc, total 5 request, args Term is:127
+2024/05/19 09:50:30 server[2], become a leader, got 3 tickets
+
+
+=== server2最后一次成为了leader，term为127
+2024/05/19 09:50:30 server[2]get a log, current term is:127, current state is:1, all log is:[{-1 0 <nil>} {2 1 0} {3 2 3} {3 3 3} {3 4 3} {3 5 3} {3 6 3} {11 7 3} {11 8 3} {11 9 3} {11 10 3} {11 11 3} {11 12 3} {11 13 3} {11 14 3} {11 15 3} {11 16 3} {11 17 3} {11 18 3} {11 19 3} {11 20 3} {11 21 3} {11 22 3} {11 23 3} {11 24 3} {11 25 3} {11 26 3} {11 27 3} {11 28 3} {11 29 3} {11 30 3} {11 31 3} {11 32 3} {11 33 3} {11 34 3} {15 35 3} {15 36 3} {15 37 3} {15 38 3} {15 39 3} {15 40 3} {15 41 3} {15 42 3} {15 43 3} {15 44 3} {15 45 3} {15 46 3} {15 47 3} {15 48 3} {15 49 3} {15 50 3} {15 51 3} {15 52 3} {15 53 3} {15 54 3} {15 55 3} {15 56 3} {15 57 3} {15 58 3} {15 59 3} {15 60 3} {15 61 3} {15 62 3} {15 63 3} {15 64 3} {15 65 3} {15 66 3} {15 67 3} {15 68 3} {15 69 3} {15 70 3} {15 71 3} {15 72 3} {15 73 3} {15 74 3} {15 75 3} {15 76 3} {15 77 3} {15 78 3} {15 79 3} {15 80 3} {15 81 3} {15 82 3} {15 83 3} {15 84 3} {15 85 3} {15 86 3} {15 87 3} {15 88 3} {15 89 3} {15 90 3} {15 91 3} {15 92 3} {15 93 3} {15 94 3} {15 95 3} {15 96 3} {15 97 3} {15 98 3} {15 99 3} {15 100 3} {15 101 3} {15 102 3} {15 103 3} {15 104 3} {15 105 3} {15 106 3} {15 107 3} {15 108 3} {15 109 3} {15 110 3} {15 111 3} {15 112 3} {15 113 3} {15 114 3} {15 115 3} {15 116 3} {15 117 3} {15 118 3} {15 119 3} {15 120 3} {15 121 3} {15 122 3} {15 123 3} {15 124 3} {15 125 3} {15 126 3} {15 127 3} {15 128 3} {15 129 3} {15 130 3} {15 131 3} {15 132 3} {15 133 3} {15 134 3} {15 135 3} {15 136 3} {15 137 3} {15 138 3} {15 139 3} {15 140 3} {15 141 3} {15 142 3} {15 143 3} {15 144 3} {15 145 3} {15 146 3} {15 147 3} {15 148 3} {15 149 3} {15 150 3} {15 151 3} {15 152 3} {15 153 3} {15 154 3} {15 155 3} {15 156 3} {15 157 3} {15 158 3} {15 159 3} {15 160 3} {15 161 3} {15 162 3} {15 163 3} {15 164 3} {15 165 3} {15 166 3} {15 167 3} {15 168 3} {15 169 3} {15 170 3} {15 171 3} {15 172 3} {15 173 3} {15 174 3} {15 175 3} {15 176 3} {15 177 3} {15 178 3} {15 179 3} {15 180 3} {15 181 3} {15 182 3} {15 183 3} {15 184 3} {15 185 3} {15 186 3} {15 187 3} {15 188 3} {15 189 3} {15 190 3} {15 191 3} {15 192 3} {15 193 3} {15 194 3} {15 195 3} {15 196 3} {15 197 3} {15 198 3} {15 199 3} {15 200 3} {15 201 3} {15 202 3} {15 203 3} {15 204 3} {15 205 3} {15 206 3} {15 207 3} {15 208 3} {15 209 3} {15 210 3} {15 211 3} {15 212 3} {15 213 3} {15 214 3} {15 215 3} {15 216 3} {15 217 3} {15 218 3} {15 219 3} {15 220 3} {15 221 3} {15 222 3} {15 223 3} {15 224 3} {15 225 3} {15 226 3} {15 227 3} {15 228 3} {15 229 3} {15 230 3} {15 231 3} {15 232 3} {15 233 3} {15 234 3} {15 235 3} {15 236 3} {15 237 3} {15 238 3} {15 239 3} {15 240 3} {15 241 3} {15 242 3} {15 243 3} {15 244 3} {15 245 3} {15 246 3} {15 247 3} {15 248 3} {15 249 3} {15 250 3} {15 251 3} {15 252 3} {15 253 3} {15 254 3} {15 255 3} {15 256 3} {15 257 3} {15 258 3} {15 259 3} {15 260 3} {15 261 3} {15 262 3} {15 263 3} {15 264 3} {15 265 3} {15 266 3} {15 267 3} {15 268 3} {15 269 3} {15 270 3} {15 271 3} {15 272 3} {15 273 3} {15 274 3} {15 275 3} {15 276 3} {15 277 3} {15 278 3} {15 279 3} {15 280 3} {15 281 3} {15 282 3} {15 283 3} {15 284 3} {15 285 3} {15 286 3} {15 287 3} {15 288 3} {15 289 3} {15 290 3} {15 291 3} {15 292 3} {15 293 3} {15 294 3} {15 295 3} {15 296 3} {15 297 3} {15 298 3} {15 299 3} {15 300 3} {15 301 3} {15 302 3} {15 303 3} {15 304 3} {15 305 3} {15 306 3} {15 307 3} {15 308 3} {15 309 3} {15 310 3} {15 311 3} {15 312 3} {15 313 3} {15 314 3} {15 315 3} {15 316 3} {15 317 3} {15 318 3} {15 319 3} {15 320 3} {15 321 3} {15 322 3} {15 323 3} {15 324 3} {15 325 3} {15 326 3} {15 327 3} {15 328 3} {15 329 3} {15 330 3} {15 331 3} {15 332 3} {15 333 3} {15 334 3} {15 335 3} {15 336 3} {15 337 3} {15 338 3} {15 339 3} {15 340 3} {15 341 3} {15 342 3} {15 343 3} {15 344 3} {15 345 3} {15 346 3} {15 347 3} {15 348 3} {15 349 3} {15 350 3} {15 351 3} {15 352 3} {15 353 3} {15 354 3} {15 355 3} {15 356 3} {15 357 3} {15 358 3} {15 359 3} {15 360 3} {15 361 3} {15 362 3} {15 363 3} {15 364 3} {15 365 3} {15 366 3} {15 367 3} {15 368 3} {15 369 3} {15 370 3} {15 371 3} {15 372 3} {15 373 3} {15 374 3} {15 375 3} {15 376 3} {15 377 3} {15 378 3} {15 379 3} {15 380 3} {15 381 3} {15 382 3} {15 383 3} {15 384 3} {15 385 3} {15 386 3} {15 387 3} {15 388 3} {15 389 3} {15 390 3} {15 391 3} {15 392 3} {15 393 3} {15 394 3} {15 395 3} {15 396 3} {15 397 3} {15 398 3} {15 399 3} {15 400 3} {15 401 3} {15 402 3} {15 403 3} {15 404 3} {15 405 3} {15 406 3} {15 407 3} {15 408 3} {15 409 3} {15 410 3} {15 411 3} {15 412 3} {15 413 3} {15 414 3} {15 415 3} {15 416 3} {15 417 3} {15 418 3} {15 419 3} {15 420 3} {15 421 3} {15 422 3} {15 423 3} {15 424 3} {15 425 3} {15 426 3} {15 427 3} {15 428 3} {15 429 3} {15 430 3} {15 431 3} {15 432 3} {15 433 3} {15 434 3} {15 435 3} {15 436 3} {15 437 3} {15 438 3} {15 439 3} {15 440 3} {15 441 3} {15 442 3} {15 443 3} {15 444 3} {15 445 3} {15 446 3} {15 447 3} {15 448 3} {15 449 3} {15 450 3} {15 451 3} {15 452 3} {15 453 3} {15 454 3} {15 455 3} {15 456 3} {15 457 3} {15 458 3} {15 459 3} {15 460 3} {15 461 3} {15 462 3} {15 463 3} {15 464 3} {15 465 3} {15 466 3} {15 467 3} {15 468 3} {15 469 3} {15 470 3} {15 471 3} {15 472 3} {15 473 3} {15 474 3} {15 475 3} {15 476 3} {15 477 3} {15 478 3} {15 479 3} {15 480 3} {15 481 3} {15 482 3} {15 483 3} {15 484 3} {15 485 3} {15 486 3} {15 487 3} {15 488 3} {15 489 3} {15 490 3} {15 491 3} {15 492 3} {15 493 3} {15 494 3} {15 495 3} {15 496 3} {15 497 3} {15 498 3} {15 499 3} {15 500 3} {15 501 3} {15 502 3} {15 503 3} {15 504 3} {15 505 3} {15 506 3} {15 507 3} {15 508 3} {15 509 3} {15 510 3} {15 511 3} {15 512 3} {15 513 3} {15 514 3} {15 515 3} {15 516 3} {15 517 3} {15 518 3} {15 519 3} {15 520 3} {15 521 3} {15 522 3} {15 523 3} {15 524 3} {15 525 3} {15 526 3} {15 527 3} {15 528 3} {15 529 3} {15 530 3} {15 531 3} {15 532 3} {15 533 3} {15 534 3} {15 535 3} {15 536 3} {15 537 3} {15 538 3} {15 539 3} {15 540 3} {15 541 3} {15 542 3} {15 543 3} {15 544 3} {15 545 3} {15 546 3} {15 547 3} {15 548 3} {15 549 3} {15 550 3} {15 551 3} {15 552 3} {15 553 3} {15 554 3} {15 555 3} {15 556 3} {15 557 3} {15 558 3} {15 559 3} {15 560 3} {15 561 3} {15 562 3} {15 563 3} {15 564 3} {15 565 3} {15 566 3} {15 567 3} {15 568 3} {15 569 3} {15 570 3} {15 571 3} {15 572 3} {15 573 3} {15 574 3} {15 575 3} {15 576 3} {15 577 3} {15 578 3} {15 579 3} {15 580 3} {15 581 3} {15 582 3} {15 583 3} {15 584 3} {15 585 3} {15 586 3} {15 587 3} {15 588 3} {15 589 3} {15 590 3} {15 591 3} {15 592 3} {15 593 3} {15 594 3} {15 595 3} {15 596 3} {15 597 3} {15 598 3} {15 599 3} {15 600 3} {15 601 3} {15 602 3} {15 603 3} {15 604 3} {15 605 3} {15 606 3} {15 607 3} {15 608 3} {15 609 3} {15 610 3} {15 611 3} {15 612 3} {15 613 3} {15 614 3} {15 615 3} {15 616 3} {15 617 3} {15 618 3} {15 619 3} {15 620 3} {15 621 3} {15 622 3} {15 623 3} {15 624 3} {15 625 3} {15 626 3} {15 627 3} {15 628 3} {15 629 3} {15 630 3} {15 631 3} {15 632 3} {15 633 3} {15 634 3} {15 635 3} {15 636 3} {15 637 3} {15 638 3} {15 639 3} {15 640 3} {15 641 3} {15 642 3} {15 643 3} {15 644 3} {15 645 3} {15 646 3} {15 647 3} {15 648 3} {15 649 3} {15 650 3} {15 651 3} {15 652 3} {15 653 3} {15 654 3} {15 655 3} {15 656 3} {15 657 3} {15 658 3} {15 659 3} {15 660 3} {15 661 3} {15 662 3} {15 663 3} {15 664 3} {15 665 3} {15 666 3} {15 667 3} {15 668 3} {15 669 3} {15 670 3} {15 671 3} {15 672 3} {15 673 3} {15 674 3} {15 675 3} {15 676 3} {15 677 3} {15 678 3} {15 679 3} {15 680 3} {15 681 3} {15 682 3} {15 683 3} {15 684 3} {15 685 3} {15 686 3} {15 687 3} {15 688 3} {15 689 3} {15 690 3} {15 691 3} {15 692 3} {15 693 3} {15 694 3} {15 695 3} {15 696 3} {15 697 3} {15 698 3} {15 699 3} {15 700 3} {15 701 3} {15 702 3} {15 703 3} {15 704 3} {15 705 3} {15 706 3} {15 707 3} {15 708 3} {15 709 3} {15 710 3} {15 711 3} {15 712 3} {15 713 3} {15 714 3} {15 715 3} {15 716 3} {15 717 3} {15 718 3} {15 719 3} {15 720 3} {15 721 3} {15 722 3} {15 723 3} {15 724 3} {15 725 3} {15 726 3} {15 727 3} {15 728 3} {15 729 3} {15 730 3} {15 731 3} {15 732 3} {15 733 3} {15 734 3} {15 735 3} {15 736 3} {15 737 3} {15 738 3} {15 739 3} {15 740 3} {15 741 3} {15 742 3} {15 743 3} {15 744 3} {15 745 3} {15 746 3} {15 747 3} {15 748 3} {15 749 3} {15 750 3} {15 751 3} {15 752 3} {15 753 3} {15 754 3} {15 755 3} {15 756 3} {15 757 3} {15 758 3} {15 759 3} {15 760 3} {15 761 3} {15 762 3} {15 763 3} {15 764 3} {15 765 3} {15 766 3} {15 767 3} {15 768 3} {15 769 3} {15 770 3} {15 771 3} {15 772 3} {15 773 3} {15 774 3} {15 775 3} {15 776 3} {15 777 3} {15 778 3} {15 779 3} {15 780 3} {15 781 3} {15 782 3} {15 783 3} {15 784 3} {15 785 3} {15 786 3} {15 787 3} {15 788 3} {15 789 3} {15 790 3} {15 791 3} {15 792 3} {15 793 3} {15 794 3} {15 795 3} {15 796 3} {15 797 3} {15 798 3} {15 799 3} {15 800 3} {15 801 3} {15 802 3} {15 803 3} {15 804 3} {15 805 3} {15 806 3} {15 807 3} {15 808 3} {15 809 3} {15 810 3} {15 811 3} {15 812 3} {15 813 3} {15 814 3} {15 815 3} {15 816 3} {15 817 3} {15 818 3} {15 819 3} {15 820 3} {15 821 3} {15 822 3} {15 823 3} {15 824 3} {15 825 3} {15 826 3} {15 827 3} {15 828 3} {15 829 3} {15 830 3} {15 831 3} {15 832 3} {15 833 3} {15 834 3} {15 835 3} {15 836 3} {15 837 3} {15 838 3} {15 839 3} {15 840 3} {15 841 3} {15 842 3} {15 843 3} {15 844 3} {15 845 3} {15 846 3} {15 847 3} {15 848 3} {15 849 3} {15 850 3} {15 851 3} {15 852 3} {15 853 3} {15 854 3} {15 855 3} {15 856 3} {15 857 3} {15 858 3} {15 859 3} {15 860 3} {15 861 3} {15 862 3} {15 863 3} {15 864 3} {15 865 3} {15 866 3} {15 867 3} {15 868 3} {15 869 3} {15 870 3} {15 871 3} {15 872 3} {15 873 3} {15 874 3} {15 875 3} {15 876 3} {15 877 3} {15 878 3} {15 879 3} {15 880 3} {15 881 3} {15 882 3} {15 883 3} {15 884 3} {15 885 3} {15 886 3} {15 887 3} {15 888 3} {15 889 3} {15 890 3} {15 891 3} {15 892 3} {15 893 3} {15 894 3} {15 895 3} {15 896 3} {15 897 3} {15 898 3} {15 899 3} {15 900 3} {15 901 3} {15 902 3} {15 903 3} {15 904 3} {15 905 3} {15 906 3} {15 907 3} {15 908 3} {15 909 3} {15 910 3} {15 911 3} {15 912 3} {15 913 3} {15 914 3} {15 915 3} {15 916 3} {15 917 3} {15 918 3} {15 919 3} {15 920 3} {15 921 3} {15 922 3} {15 923 3} {15 924 3} {15 925 3} {15 926 3} {15 927 3} {15 928 3} {15 929 3} {15 930 3} {15 931 3} {15 932 3} {15 933 3} {15 934 3} {15 935 3} {15 936 9000} {127 937 9000}]
+
+2024/05/19 09:50:30 server[2] prepare send log to 0,leader have [{-1 0 <nil>} {2 1 0} {3 2 3} {3 3 3} {3 4 3} {3 5 3} {3 6 3} {11 7 3} {11 8 3} {11 9 3} {11 10 3} {11 11 3} {11 12 3} {11 13 3} {11 14 3} {11 15 3} {11 16 3} {11 17 3} {11 18 3} {11 19 3} {11 20 3} {11 21 3} {11 22 3} {11 23 3} {11 24 3} {11 25 3} {11 26 3} {11 27 3} {11 28 3} {11 29 3} {11 30 3} {11 31 3} {11 32 3} {11 33 3} {11 34 3} {15 35 3} {15 36 3} {15 37 3} {15 38 3} {15 39 3} {15 40 3} {15 41 3} {15 42 3} {15 43 3} {15 44 3} {15 45 3} {15 46 3} {15 47 3} {15 48 3} {15 49 3} {15 50 3} {15 51 3} {15 52 3} {15 53 3} {15 54 3} {15 55 3} {15 56 3} {15 57 3} {15 58 3} {15 59 3} {15 60 3} {15 61 3} {15 62 3} {15 63 3} {15 64 3} {15 65 3} {15 66 3} {15 67 3} {15 68 3} {15 69 3} {15 70 3} {15 71 3} {15 72 3} {15 73 3} {15 74 3} {15 75 3} {15 76 3} {15 77 3} {15 78 3} {15 79 3} {15 80 3} {15 81 3} {15 82 3} {15 83 3} {15 84 3} {15 85 3} {15 86 3} {15 87 3} {15 88 3} {15 89 3} {15 90 3} {15 91 3} {15 92 3} {15 93 3} {15 94 3} {15 95 3} {15 96 3} {15 97 3} {15 98 3} {15 99 3} {15 100 3} {15 101 3} {15 102 3} {15 103 3} {15 104 3} {15 105 3} {15 106 3} {15 107 3} {15 108 3} {15 109 3} {15 110 3} {15 111 3} {15 112 3} {15 113 3} {15 114 3} {15 115 3} {15 116 3} {15 117 3} {15 118 3} {15 119 3} {15 120 3} {15 121 3} {15 122 3} {15 123 3} {15 124 3} {15 125 3} {15 126 3} {15 127 3} {15 128 3} {15 129 3} {15 130 3} {15 131 3} {15 132 3} {15 133 3} {15 134 3} {15 135 3} {15 136 3} {15 137 3} {15 138 3} {15 139 3} {15 140 3} {15 141 3} {15 142 3} {15 143 3} {15 144 3} {15 145 3} {15 146 3} {15 147 3} {15 148 3} {15 149 3} {15 150 3} {15 151 3} {15 152 3} {15 153 3} {15 154 3} {15 155 3} {15 156 3} {15 157 3} {15 158 3} {15 159 3} {15 160 3} {15 161 3} {15 162 3} {15 163 3} {15 164 3} {15 165 3} {15 166 3} {15 167 3} {15 168 3} {15 169 3} {15 170 3} {15 171 3} {15 172 3} {15 173 3} {15 174 3} {15 175 3} {15 176 3} {15 177 3} {15 178 3} {15 179 3} {15 180 3} {15 181 3} {15 182 3} {15 183 3} {15 184 3} {15 185 3} {15 186 3} {15 187 3} {15 188 3} {15 189 3} {15 190 3} {15 191 3} {15 192 3} {15 193 3} {15 194 3} {15 195 3} {15 196 3} {15 197 3} {15 198 3} {15 199 3} {15 200 3} {15 201 3} {15 202 3} {15 203 3} {15 204 3} {15 205 3} {15 206 3} {15 207 3} {15 208 3} {15 209 3} {15 210 3} {15 211 3} {15 212 3} {15 213 3} {15 214 3} {15 215 3} {15 216 3} {15 217 3} {15 218 3} {15 219 3} {15 220 3} {15 221 3} {15 222 3} {15 223 3} {15 224 3} {15 225 3} {15 226 3} {15 227 3} {15 228 3} {15 229 3} {15 230 3} {15 231 3} {15 232 3} {15 233 3} {15 234 3} {15 235 3} {15 236 3} {15 237 3} {15 238 3} {15 239 3} {15 240 3} {15 241 3} {15 242 3} {15 243 3} {15 244 3} {15 245 3} {15 246 3} {15 247 3} {15 248 3} {15 249 3} {15 250 3} {15 251 3} {15 252 3} {15 253 3} {15 254 3} {15 255 3} {15 256 3} {15 257 3} {15 258 3} {15 259 3} {15 260 3} {15 261 3} {15 262 3} {15 263 3} {15 264 3} {15 265 3} {15 266 3} {15 267 3} {15 268 3} {15 269 3} {15 270 3} {15 271 3} {15 272 3} {15 273 3} {15 274 3} {15 275 3} {15 276 3} {15 277 3} {15 278 3} {15 279 3} {15 280 3} {15 281 3} {15 282 3} {15 283 3} {15 284 3} {15 285 3} {15 286 3} {15 287 3} {15 288 3} {15 289 3} {15 290 3} {15 291 3} {15 292 3} {15 293 3} {15 294 3} {15 295 3} {15 296 3} {15 297 3} {15 298 3} {15 299 3} {15 300 3} {15 301 3} {15 302 3} {15 303 3} {15 304 3} {15 305 3} {15 306 3} {15 307 3} {15 308 3} {15 309 3} {15 310 3} {15 311 3} {15 312 3} {15 313 3} {15 314 3} {15 315 3} {15 316 3} {15 317 3} {15 318 3} {15 319 3} {15 320 3} {15 321 3} {15 322 3} {15 323 3} {15 324 3} {15 325 3} {15 326 3} {15 327 3} {15 328 3} {15 329 3} {15 330 3} {15 331 3} {15 332 3} {15 333 3} {15 334 3} {15 335 3} {15 336 3} {15 337 3} {15 338 3} {15 339 3} {15 340 3} {15 341 3} {15 342 3} {15 343 3} {15 344 3} {15 345 3} {15 346 3} {15 347 3} {15 348 3} {15 349 3} {15 350 3} {15 351 3} {15 352 3} {15 353 3} {15 354 3} {15 355 3} {15 356 3} {15 357 3} {15 358 3} {15 359 3} {15 360 3} {15 361 3} {15 362 3} {15 363 3} {15 364 3} {15 365 3} {15 366 3} {15 367 3} {15 368 3} {15 369 3} {15 370 3} {15 371 3} {15 372 3} {15 373 3} {15 374 3} {15 375 3} {15 376 3} {15 377 3} {15 378 3} {15 379 3} {15 380 3} {15 381 3} {15 382 3} {15 383 3} {15 384 3} {15 385 3} {15 386 3} {15 387 3} {15 388 3} {15 389 3} {15 390 3} {15 391 3} {15 392 3} {15 393 3} {15 394 3} {15 395 3} {15 396 3} {15 397 3} {15 398 3} {15 399 3} {15 400 3} {15 401 3} {15 402 3} {15 403 3} {15 404 3} {15 405 3} {15 406 3} {15 407 3} {15 408 3} {15 409 3} {15 410 3} {15 411 3} {15 412 3} {15 413 3} {15 414 3} {15 415 3} {15 416 3} {15 417 3} {15 418 3} {15 419 3} {15 420 3} {15 421 3} {15 422 3} {15 423 3} {15 424 3} {15 425 3} {15 426 3} {15 427 3} {15 428 3} {15 429 3} {15 430 3} {15 431 3} {15 432 3} {15 433 3} {15 434 3} {15 435 3} {15 436 3} {15 437 3} {15 438 3} {15 439 3} {15 440 3} {15 441 3} {15 442 3} {15 443 3} {15 444 3} {15 445 3} {15 446 3} {15 447 3} {15 448 3} {15 449 3} {15 450 3} {15 451 3} {15 452 3} {15 453 3} {15 454 3} {15 455 3} {15 456 3} {15 457 3} {15 458 3} {15 459 3} {15 460 3} {15 461 3} {15 462 3} {15 463 3} {15 464 3} {15 465 3} {15 466 3} {15 467 3} {15 468 3} {15 469 3} {15 470 3} {15 471 3} {15 472 3} {15 473 3} {15 474 3} {15 475 3} {15 476 3} {15 477 3} {15 478 3} {15 479 3} {15 480 3} {15 481 3} {15 482 3} {15 483 3} {15 484 3} {15 485 3} {15 486 3} {15 487 3} {15 488 3} {15 489 3} {15 490 3} {15 491 3} {15 492 3} {15 493 3} {15 494 3} {15 495 3} {15 496 3} {15 497 3} {15 498 3} {15 499 3} {15 500 3} {15 501 3} {15 502 3} {15 503 3} {15 504 3} {15 505 3} {15 506 3} {15 507 3} {15 508 3} {15 509 3} {15 510 3} {15 511 3} {15 512 3} {15 513 3} {15 514 3} {15 515 3} {15 516 3} {15 517 3} {15 518 3} {15 519 3} {15 520 3} {15 521 3} {15 522 3} {15 523 3} {15 524 3} {15 525 3} {15 526 3} {15 527 3} {15 528 3} {15 529 3} {15 530 3} {15 531 3} {15 532 3} {15 533 3} {15 534 3} {15 535 3} {15 536 3} {15 537 3} {15 538 3} {15 539 3} {15 540 3} {15 541 3} {15 542 3} {15 543 3} {15 544 3} {15 545 3} {15 546 3} {15 547 3} {15 548 3} {15 549 3} {15 550 3} {15 551 3} {15 552 3} {15 553 3} {15 554 3} {15 555 3} {15 556 3} {15 557 3} {15 558 3} {15 559 3} {15 560 3} {15 561 3} {15 562 3} {15 563 3} {15 564 3} {15 565 3} {15 566 3} {15 567 3} {15 568 3} {15 569 3} {15 570 3} {15 571 3} {15 572 3} {15 573 3} {15 574 3} {15 575 3} {15 576 3} {15 577 3} {15 578 3} {15 579 3} {15 580 3} {15 581 3} {15 582 3} {15 583 3} {15 584 3} {15 585 3} {15 586 3} {15 587 3} {15 588 3} {15 589 3} {15 590 3} {15 591 3} {15 592 3} {15 593 3} {15 594 3} {15 595 3} {15 596 3} {15 597 3} {15 598 3} {15 599 3} {15 600 3} {15 601 3} {15 602 3} {15 603 3} {15 604 3} {15 605 3} {15 606 3} {15 607 3} {15 608 3} {15 609 3} {15 610 3} {15 611 3} {15 612 3} {15 613 3} {15 614 3} {15 615 3} {15 616 3} {15 617 3} {15 618 3} {15 619 3} {15 620 3} {15 621 3} {15 622 3} {15 623 3} {15 624 3} {15 625 3} {15 626 3} {15 627 3} {15 628 3} {15 629 3} {15 630 3} {15 631 3} {15 632 3} {15 633 3} {15 634 3} {15 635 3} {15 636 3} {15 637 3} {15 638 3} {15 639 3} {15 640 3} {15 641 3} {15 642 3} {15 643 3} {15 644 3} {15 645 3} {15 646 3} {15 647 3} {15 648 3} {15 649 3} {15 650 3} {15 651 3} {15 652 3} {15 653 3} {15 654 3} {15 655 3} {15 656 3} {15 657 3} {15 658 3} {15 659 3} {15 660 3} {15 661 3} {15 662 3} {15 663 3} {15 664 3} {15 665 3} {15 666 3} {15 667 3} {15 668 3} {15 669 3} {15 670 3} {15 671 3} {15 672 3} {15 673 3} {15 674 3} {15 675 3} {15 676 3} {15 677 3} {15 678 3} {15 679 3} {15 680 3} {15 681 3} {15 682 3} {15 683 3} {15 684 3} {15 685 3} {15 686 3} {15 687 3} {15 688 3} {15 689 3} {15 690 3} {15 691 3} {15 692 3} {15 693 3} {15 694 3} {15 695 3} {15 696 3} {15 697 3} {15 698 3} {15 699 3} {15 700 3} {15 701 3} {15 702 3} {15 703 3} {15 704 3} {15 705 3} {15 706 3} {15 707 3} {15 708 3} {15 709 3} {15 710 3} {15 711 3} {15 712 3} {15 713 3} {15 714 3} {15 715 3} {15 716 3} {15 717 3} {15 718 3} {15 719 3} {15 720 3} {15 721 3} {15 722 3} {15 723 3} {15 724 3} {15 725 3} {15 726 3} {15 727 3} {15 728 3} {15 729 3} {15 730 3} {15 731 3} {15 732 3} {15 733 3} {15 734 3} {15 735 3} {15 736 3} {15 737 3} {15 738 3} {15 739 3} {15 740 3} {15 741 3} {15 742 3} {15 743 3} {15 744 3} {15 745 3} {15 746 3} {15 747 3} {15 748 3} {15 749 3} {15 750 3} {15 751 3} {15 752 3} {15 753 3} {15 754 3} {15 755 3} {15 756 3} {15 757 3} {15 758 3} {15 759 3} {15 760 3} {15 761 3} {15 762 3} {15 763 3} {15 764 3} {15 765 3} {15 766 3} {15 767 3} {15 768 3} {15 769 3} {15 770 3} {15 771 3} {15 772 3} {15 773 3} {15 774 3} {15 775 3} {15 776 3} {15 777 3} {15 778 3} {15 779 3} {15 780 3} {15 781 3} {15 782 3} {15 783 3} {15 784 3} {15 785 3} {15 786 3} {15 787 3} {15 788 3} {15 789 3} {15 790 3} {15 791 3} {15 792 3} {15 793 3} {15 794 3} {15 795 3} {15 796 3} {15 797 3} {15 798 3} {15 799 3} {15 800 3} {15 801 3} {15 802 3} {15 803 3} {15 804 3} {15 805 3} {15 806 3} {15 807 3} {15 808 3} {15 809 3} {15 810 3} {15 811 3} {15 812 3} {15 813 3} {15 814 3} {15 815 3} {15 816 3} {15 817 3} {15 818 3} {15 819 3} {15 820 3} {15 821 3} {15 822 3} {15 823 3} {15 824 3} {15 825 3} {15 826 3} {15 827 3} {15 828 3} {15 829 3} {15 830 3} {15 831 3} {15 832 3} {15 833 3} {15 834 3} {15 835 3} {15 836 3} {15 837 3} {15 838 3} {15 839 3} {15 840 3} {15 841 3} {15 842 3} {15 843 3} {15 844 3} {15 845 3} {15 846 3} {15 847 3} {15 848 3} {15 849 3} {15 850 3} {15 851 3} {15 852 3} {15 853 3} {15 854 3} {15 855 3} {15 856 3} {15 857 3} {15 858 3} {15 859 3} {15 860 3} {15 861 3} {15 862 3} {15 863 3} {15 864 3} {15 865 3} {15 866 3} {15 867 3} {15 868 3} {15 869 3} {15 870 3} {15 871 3} {15 872 3} {15 873 3} {15 874 3} {15 875 3} {15 876 3} {15 877 3} {15 878 3} {15 879 3} {15 880 3} {15 881 3} {15 882 3} {15 883 3} {15 884 3} {15 885 3} {15 886 3} {15 887 3} {15 888 3} {15 889 3} {15 890 3} {15 891 3} {15 892 3} {15 893 3} {15 894 3} {15 895 3} {15 896 3} {15 897 3} {15 898 3} {15 899 3} {15 900 3} {15 901 3} {15 902 3} {15 903 3} {15 904 3} {15 905 3} {15 906 3} {15 907 3} {15 908 3} {15 909 3} {15 910 3} {15 911 3} {15 912 3} {15 913 3} {15 914 3} {15 915 3} {15 916 3} {15 917 3} {15 918 3} {15 919 3} {15 920 3} {15 921 3} {15 922 3} {15 923 3} {15 924 3} {15 925 3} {15 926 3} {15 927 3} {15 928 3} {15 929 3} {15 930 3} {15 931 3} {15 932 3} {15 933 3} {15 934 3} {15 935 3} {15 936 9000} {127 937 9000}] log, the nextIndex is:936, len of log is:938, status is:1, and term is:127, send args term is:127, msg type is:2, papare to send log is:[{15 936 9000} {127 937 9000}], args commitIndex is:0
+2024/05/19 09:50:30 server[2] prepare send log to 1,leader have [{-1 0 <nil>} {2 1 0} {3 2 3} {3 3 3} {3 4 3} {3 5 3} {3 6 3} {11 7 3} {11 8 3} {11 9 3} {11 10 3} {11 11 3} {11 12 3} {11 13 3} {11 14 3} {11 15 3} {11 16 3} {11 17 3} {11 18 3} {11 19 3} {11 20 3} {11 21 3} {11 22 3} {11 23 3} {11 24 3} {11 25 3} {11 26 3} {11 27 3} {11 28 3} {11 29 3} {11 30 3} {11 31 3} {11 32 3} {11 33 3} {11 34 3} {15 35 3} {15 36 3} {15 37 3} {15 38 3} {15 39 3} {15 40 3} {15 41 3} {15 42 3} {15 43 3} {15 44 3} {15 45 3} {15 46 3} {15 47 3} {15 48 3} {15 49 3} {15 50 3} {15 51 3} {15 52 3} {15 53 3} {15 54 3} {15 55 3} {15 56 3} {15 57 3} {15 58 3} {15 59 3} {15 60 3} {15 61 3} {15 62 3} {15 63 3} {15 64 3} {15 65 3} {15 66 3} {15 67 3} {15 68 3} {15 69 3} {15 70 3} {15 71 3} {15 72 3} {15 73 3} {15 74 3} {15 75 3} {15 76 3} {15 77 3} {15 78 3} {15 79 3} {15 80 3} {15 81 3} {15 82 3} {15 83 3} {15 84 3} {15 85 3} {15 86 3} {15 87 3} {15 88 3} {15 89 3} {15 90 3} {15 91 3} {15 92 3} {15 93 3} {15 94 3} {15 95 3} {15 96 3} {15 97 3} {15 98 3} {15 99 3} {15 100 3} {15 101 3} {15 102 3} {15 103 3} {15 104 3} {15 105 3} {15 106 3} {15 107 3} {15 108 3} {15 109 3} {15 110 3} {15 111 3} {15 112 3} {15 113 3} {15 114 3} {15 115 3} {15 116 3} {15 117 3} {15 118 3} {15 119 3} {15 120 3} {15 121 3} {15 122 3} {15 123 3} {15 124 3} {15 125 3} {15 126 3} {15 127 3} {15 128 3} {15 129 3} {15 130 3} {15 131 3} {15 132 3} {15 133 3} {15 134 3} {15 135 3} {15 136 3} {15 137 3} {15 138 3} {15 139 3} {15 140 3} {15 141 3} {15 142 3} {15 143 3} {15 144 3} {15 145 3} {15 146 3} {15 147 3} {15 148 3} {15 149 3} {15 150 3} {15 151 3} {15 152 3} {15 153 3} {15 154 3} {15 155 3} {15 156 3} {15 157 3} {15 158 3} {15 159 3} {15 160 3} {15 161 3} {15 162 3} {15 163 3} {15 164 3} {15 165 3} {15 166 3} {15 167 3} {15 168 3} {15 169 3} {15 170 3} {15 171 3} {15 172 3} {15 173 3} {15 174 3} {15 175 3} {15 176 3} {15 177 3} {15 178 3} {15 179 3} {15 180 3} {15 181 3} {15 182 3} {15 183 3} {15 184 3} {15 185 3} {15 186 3} {15 187 3} {15 188 3} {15 189 3} {15 190 3} {15 191 3} {15 192 3} {15 193 3} {15 194 3} {15 195 3} {15 196 3} {15 197 3} {15 198 3} {15 199 3} {15 200 3} {15 201 3} {15 202 3} {15 203 3} {15 204 3} {15 205 3} {15 206 3} {15 207 3} {15 208 3} {15 209 3} {15 210 3} {15 211 3} {15 212 3} {15 213 3} {15 214 3} {15 215 3} {15 216 3} {15 217 3} {15 218 3} {15 219 3} {15 220 3} {15 221 3} {15 222 3} {15 223 3} {15 224 3} {15 225 3} {15 226 3} {15 227 3} {15 228 3} {15 229 3} {15 230 3} {15 231 3} {15 232 3} {15 233 3} {15 234 3} {15 235 3} {15 236 3} {15 237 3} {15 238 3} {15 239 3} {15 240 3} {15 241 3} {15 242 3} {15 243 3} {15 244 3} {15 245 3} {15 246 3} {15 247 3} {15 248 3} {15 249 3} {15 250 3} {15 251 3} {15 252 3} {15 253 3} {15 254 3} {15 255 3} {15 256 3} {15 257 3} {15 258 3} {15 259 3} {15 260 3} {15 261 3} {15 262 3} {15 263 3} {15 264 3} {15 265 3} {15 266 3} {15 267 3} {15 268 3} {15 269 3} {15 270 3} {15 271 3} {15 272 3} {15 273 3} {15 274 3} {15 275 3} {15 276 3} {15 277 3} {15 278 3} {15 279 3} {15 280 3} {15 281 3} {15 282 3} {15 283 3} {15 284 3} {15 285 3} {15 286 3} {15 287 3} {15 288 3} {15 289 3} {15 290 3} {15 291 3} {15 292 3} {15 293 3} {15 294 3} {15 295 3} {15 296 3} {15 297 3} {15 298 3} {15 299 3} {15 300 3} {15 301 3} {15 302 3} {15 303 3} {15 304 3} {15 305 3} {15 306 3} {15 307 3} {15 308 3} {15 309 3} {15 310 3} {15 311 3} {15 312 3} {15 313 3} {15 314 3} {15 315 3} {15 316 3} {15 317 3} {15 318 3} {15 319 3} {15 320 3} {15 321 3} {15 322 3} {15 323 3} {15 324 3} {15 325 3} {15 326 3} {15 327 3} {15 328 3} {15 329 3} {15 330 3} {15 331 3} {15 332 3} {15 333 3} {15 334 3} {15 335 3} {15 336 3} {15 337 3} {15 338 3} {15 339 3} {15 340 3} {15 341 3} {15 342 3} {15 343 3} {15 344 3} {15 345 3} {15 346 3} {15 347 3} {15 348 3} {15 349 3} {15 350 3} {15 351 3} {15 352 3} {15 353 3} {15 354 3} {15 355 3} {15 356 3} {15 357 3} {15 358 3} {15 359 3} {15 360 3} {15 361 3} {15 362 3} {15 363 3} {15 364 3} {15 365 3} {15 366 3} {15 367 3} {15 368 3} {15 369 3} {15 370 3} {15 371 3} {15 372 3} {15 373 3} {15 374 3} {15 375 3} {15 376 3} {15 377 3} {15 378 3} {15 379 3} {15 380 3} {15 381 3} {15 382 3} {15 383 3} {15 384 3} {15 385 3} {15 386 3} {15 387 3} {15 388 3} {15 389 3} {15 390 3} {15 391 3} {15 392 3} {15 393 3} {15 394 3} {15 395 3} {15 396 3} {15 397 3} {15 398 3} {15 399 3} {15 400 3} {15 401 3} {15 402 3} {15 403 3} {15 404 3} {15 405 3} {15 406 3} {15 407 3} {15 408 3} {15 409 3} {15 410 3} {15 411 3} {15 412 3} {15 413 3} {15 414 3} {15 415 3} {15 416 3} {15 417 3} {15 418 3} {15 419 3} {15 420 3} {15 421 3} {15 422 3} {15 423 3} {15 424 3} {15 425 3} {15 426 3} {15 427 3} {15 428 3} {15 429 3} {15 430 3} {15 431 3} {15 432 3} {15 433 3} {15 434 3} {15 435 3} {15 436 3} {15 437 3} {15 438 3} {15 439 3} {15 440 3} {15 441 3} {15 442 3} {15 443 3} {15 444 3} {15 445 3} {15 446 3} {15 447 3} {15 448 3} {15 449 3} {15 450 3} {15 451 3} {15 452 3} {15 453 3} {15 454 3} {15 455 3} {15 456 3} {15 457 3} {15 458 3} {15 459 3} {15 460 3} {15 461 3} {15 462 3} {15 463 3} {15 464 3} {15 465 3} {15 466 3} {15 467 3} {15 468 3} {15 469 3} {15 470 3} {15 471 3} {15 472 3} {15 473 3} {15 474 3} {15 475 3} {15 476 3} {15 477 3} {15 478 3} {15 479 3} {15 480 3} {15 481 3} {15 482 3} {15 483 3} {15 484 3} {15 485 3} {15 486 3} {15 487 3} {15 488 3} {15 489 3} {15 490 3} {15 491 3} {15 492 3} {15 493 3} {15 494 3} {15 495 3} {15 496 3} {15 497 3} {15 498 3} {15 499 3} {15 500 3} {15 501 3} {15 502 3} {15 503 3} {15 504 3} {15 505 3} {15 506 3} {15 507 3} {15 508 3} {15 509 3} {15 510 3} {15 511 3} {15 512 3} {15 513 3} {15 514 3} {15 515 3} {15 516 3} {15 517 3} {15 518 3} {15 519 3} {15 520 3} {15 521 3} {15 522 3} {15 523 3} {15 524 3} {15 525 3} {15 526 3} {15 527 3} {15 528 3} {15 529 3} {15 530 3} {15 531 3} {15 532 3} {15 533 3} {15 534 3} {15 535 3} {15 536 3} {15 537 3} {15 538 3} {15 539 3} {15 540 3} {15 541 3} {15 542 3} {15 543 3} {15 544 3} {15 545 3} {15 546 3} {15 547 3} {15 548 3} {15 549 3} {15 550 3} {15 551 3} {15 552 3} {15 553 3} {15 554 3} {15 555 3} {15 556 3} {15 557 3} {15 558 3} {15 559 3} {15 560 3} {15 561 3} {15 562 3} {15 563 3} {15 564 3} {15 565 3} {15 566 3} {15 567 3} {15 568 3} {15 569 3} {15 570 3} {15 571 3} {15 572 3} {15 573 3} {15 574 3} {15 575 3} {15 576 3} {15 577 3} {15 578 3} {15 579 3} {15 580 3} {15 581 3} {15 582 3} {15 583 3} {15 584 3} {15 585 3} {15 586 3} {15 587 3} {15 588 3} {15 589 3} {15 590 3} {15 591 3} {15 592 3} {15 593 3} {15 594 3} {15 595 3} {15 596 3} {15 597 3} {15 598 3} {15 599 3} {15 600 3} {15 601 3} {15 602 3} {15 603 3} {15 604 3} {15 605 3} {15 606 3} {15 607 3} {15 608 3} {15 609 3} {15 610 3} {15 611 3} {15 612 3} {15 613 3} {15 614 3} {15 615 3} {15 616 3} {15 617 3} {15 618 3} {15 619 3} {15 620 3} {15 621 3} {15 622 3} {15 623 3} {15 624 3} {15 625 3} {15 626 3} {15 627 3} {15 628 3} {15 629 3} {15 630 3} {15 631 3} {15 632 3} {15 633 3} {15 634 3} {15 635 3} {15 636 3} {15 637 3} {15 638 3} {15 639 3} {15 640 3} {15 641 3} {15 642 3} {15 643 3} {15 644 3} {15 645 3} {15 646 3} {15 647 3} {15 648 3} {15 649 3} {15 650 3} {15 651 3} {15 652 3} {15 653 3} {15 654 3} {15 655 3} {15 656 3} {15 657 3} {15 658 3} {15 659 3} {15 660 3} {15 661 3} {15 662 3} {15 663 3} {15 664 3} {15 665 3} {15 666 3} {15 667 3} {15 668 3} {15 669 3} {15 670 3} {15 671 3} {15 672 3} {15 673 3} {15 674 3} {15 675 3} {15 676 3} {15 677 3} {15 678 3} {15 679 3} {15 680 3} {15 681 3} {15 682 3} {15 683 3} {15 684 3} {15 685 3} {15 686 3} {15 687 3} {15 688 3} {15 689 3} {15 690 3} {15 691 3} {15 692 3} {15 693 3} {15 694 3} {15 695 3} {15 696 3} {15 697 3} {15 698 3} {15 699 3} {15 700 3} {15 701 3} {15 702 3} {15 703 3} {15 704 3} {15 705 3} {15 706 3} {15 707 3} {15 708 3} {15 709 3} {15 710 3} {15 711 3} {15 712 3} {15 713 3} {15 714 3} {15 715 3} {15 716 3} {15 717 3} {15 718 3} {15 719 3} {15 720 3} {15 721 3} {15 722 3} {15 723 3} {15 724 3} {15 725 3} {15 726 3} {15 727 3} {15 728 3} {15 729 3} {15 730 3} {15 731 3} {15 732 3} {15 733 3} {15 734 3} {15 735 3} {15 736 3} {15 737 3} {15 738 3} {15 739 3} {15 740 3} {15 741 3} {15 742 3} {15 743 3} {15 744 3} {15 745 3} {15 746 3} {15 747 3} {15 748 3} {15 749 3} {15 750 3} {15 751 3} {15 752 3} {15 753 3} {15 754 3} {15 755 3} {15 756 3} {15 757 3} {15 758 3} {15 759 3} {15 760 3} {15 761 3} {15 762 3} {15 763 3} {15 764 3} {15 765 3} {15 766 3} {15 767 3} {15 768 3} {15 769 3} {15 770 3} {15 771 3} {15 772 3} {15 773 3} {15 774 3} {15 775 3} {15 776 3} {15 777 3} {15 778 3} {15 779 3} {15 780 3} {15 781 3} {15 782 3} {15 783 3} {15 784 3} {15 785 3} {15 786 3} {15 787 3} {15 788 3} {15 789 3} {15 790 3} {15 791 3} {15 792 3} {15 793 3} {15 794 3} {15 795 3} {15 796 3} {15 797 3} {15 798 3} {15 799 3} {15 800 3} {15 801 3} {15 802 3} {15 803 3} {15 804 3} {15 805 3} {15 806 3} {15 807 3} {15 808 3} {15 809 3} {15 810 3} {15 811 3} {15 812 3} {15 813 3} {15 814 3} {15 815 3} {15 816 3} {15 817 3} {15 818 3} {15 819 3} {15 820 3} {15 821 3} {15 822 3} {15 823 3} {15 824 3} {15 825 3} {15 826 3} {15 827 3} {15 828 3} {15 829 3} {15 830 3} {15 831 3} {15 832 3} {15 833 3} {15 834 3} {15 835 3} {15 836 3} {15 837 3} {15 838 3} {15 839 3} {15 840 3} {15 841 3} {15 842 3} {15 843 3} {15 844 3} {15 845 3} {15 846 3} {15 847 3} {15 848 3} {15 849 3} {15 850 3} {15 851 3} {15 852 3} {15 853 3} {15 854 3} {15 855 3} {15 856 3} {15 857 3} {15 858 3} {15 859 3} {15 860 3} {15 861 3} {15 862 3} {15 863 3} {15 864 3} {15 865 3} {15 866 3} {15 867 3} {15 868 3} {15 869 3} {15 870 3} {15 871 3} {15 872 3} {15 873 3} {15 874 3} {15 875 3} {15 876 3} {15 877 3} {15 878 3} {15 879 3} {15 880 3} {15 881 3} {15 882 3} {15 883 3} {15 884 3} {15 885 3} {15 886 3} {15 887 3} {15 888 3} {15 889 3} {15 890 3} {15 891 3} {15 892 3} {15 893 3} {15 894 3} {15 895 3} {15 896 3} {15 897 3} {15 898 3} {15 899 3} {15 900 3} {15 901 3} {15 902 3} {15 903 3} {15 904 3} {15 905 3} {15 906 3} {15 907 3} {15 908 3} {15 909 3} {15 910 3} {15 911 3} {15 912 3} {15 913 3} {15 914 3} {15 915 3} {15 916 3} {15 917 3} {15 918 3} {15 919 3} {15 920 3} {15 921 3} {15 922 3} {15 923 3} {15 924 3} {15 925 3} {15 926 3} {15 927 3} {15 928 3} {15 929 3} {15 930 3} {15 931 3} {15 932 3} {15 933 3} {15 934 3} {15 935 3} {15 936 9000} {127 937 9000}] log, the nextIndex is:936, len of log is:938, status is:1, and term is:127, send args term is:127, msg type is:2, papare to send log is:[{15 936 9000} {127 937 9000}], args commitIndex is:0
+2024/05/19 09:50:30 server[2] prepare send log to 3,leader have [{-1 0 <nil>} {2 1 0} {3 2 3} {3 3 3} {3 4 3} {3 5 3} {3 6 3} {11 7 3} {11 8 3} {11 9 3} {11 10 3} {11 11 3} {11 12 3} {11 13 3} {11 14 3} {11 15 3} {11 16 3} {11 17 3} {11 18 3} {11 19 3} {11 20 3} {11 21 3} {11 22 3} {11 23 3} {11 24 3} {11 25 3} {11 26 3} {11 27 3} {11 28 3} {11 29 3} {11 30 3} {11 31 3} {11 32 3} {11 33 3} {11 34 3} {15 35 3} {15 36 3} {15 37 3} {15 38 3} {15 39 3} {15 40 3} {15 41 3} {15 42 3} {15 43 3} {15 44 3} {15 45 3} {15 46 3} {15 47 3} {15 48 3} {15 49 3} {15 50 3} {15 51 3} {15 52 3} {15 53 3} {15 54 3} {15 55 3} {15 56 3} {15 57 3} {15 58 3} {15 59 3} {15 60 3} {15 61 3} {15 62 3} {15 63 3} {15 64 3} {15 65 3} {15 66 3} {15 67 3} {15 68 3} {15 69 3} {15 70 3} {15 71 3} {15 72 3} {15 73 3} {15 74 3} {15 75 3} {15 76 3} {15 77 3} {15 78 3} {15 79 3} {15 80 3} {15 81 3} {15 82 3} {15 83 3} {15 84 3} {15 85 3} {15 86 3} {15 87 3} {15 88 3} {15 89 3} {15 90 3} {15 91 3} {15 92 3} {15 93 3} {15 94 3} {15 95 3} {15 96 3} {15 97 3} {15 98 3} {15 99 3} {15 100 3} {15 101 3} {15 102 3} {15 103 3} {15 104 3} {15 105 3} {15 106 3} {15 107 3} {15 108 3} {15 109 3} {15 110 3} {15 111 3} {15 112 3} {15 113 3} {15 114 3} {15 115 3} {15 116 3} {15 117 3} {15 118 3} {15 119 3} {15 120 3} {15 121 3} {15 122 3} {15 123 3} {15 124 3} {15 125 3} {15 126 3} {15 127 3} {15 128 3} {15 129 3} {15 130 3} {15 131 3} {15 132 3} {15 133 3} {15 134 3} {15 135 3} {15 136 3} {15 137 3} {15 138 3} {15 139 3} {15 140 3} {15 141 3} {15 142 3} {15 143 3} {15 144 3} {15 145 3} {15 146 3} {15 147 3} {15 148 3} {15 149 3} {15 150 3} {15 151 3} {15 152 3} {15 153 3} {15 154 3} {15 155 3} {15 156 3} {15 157 3} {15 158 3} {15 159 3} {15 160 3} {15 161 3} {15 162 3} {15 163 3} {15 164 3} {15 165 3} {15 166 3} {15 167 3} {15 168 3} {15 169 3} {15 170 3} {15 171 3} {15 172 3} {15 173 3} {15 174 3} {15 175 3} {15 176 3} {15 177 3} {15 178 3} {15 179 3} {15 180 3} {15 181 3} {15 182 3} {15 183 3} {15 184 3} {15 185 3} {15 186 3} {15 187 3} {15 188 3} {15 189 3} {15 190 3} {15 191 3} {15 192 3} {15 193 3} {15 194 3} {15 195 3} {15 196 3} {15 197 3} {15 198 3} {15 199 3} {15 200 3} {15 201 3} {15 202 3} {15 203 3} {15 204 3} {15 205 3} {15 206 3} {15 207 3} {15 208 3} {15 209 3} {15 210 3} {15 211 3} {15 212 3} {15 213 3} {15 214 3} {15 215 3} {15 216 3} {15 217 3} {15 218 3} {15 219 3} {15 220 3} {15 221 3} {15 222 3} {15 223 3} {15 224 3} {15 225 3} {15 226 3} {15 227 3} {15 228 3} {15 229 3} {15 230 3} {15 231 3} {15 232 3} {15 233 3} {15 234 3} {15 235 3} {15 236 3} {15 237 3} {15 238 3} {15 239 3} {15 240 3} {15 241 3} {15 242 3} {15 243 3} {15 244 3} {15 245 3} {15 246 3} {15 247 3} {15 248 3} {15 249 3} {15 250 3} {15 251 3} {15 252 3} {15 253 3} {15 254 3} {15 255 3} {15 256 3} {15 257 3} {15 258 3} {15 259 3} {15 260 3} {15 261 3} {15 262 3} {15 263 3} {15 264 3} {15 265 3} {15 266 3} {15 267 3} {15 268 3} {15 269 3} {15 270 3} {15 271 3} {15 272 3} {15 273 3} {15 274 3} {15 275 3} {15 276 3} {15 277 3} {15 278 3} {15 279 3} {15 280 3} {15 281 3} {15 282 3} {15 283 3} {15 284 3} {15 285 3} {15 286 3} {15 287 3} {15 288 3} {15 289 3} {15 290 3} {15 291 3} {15 292 3} {15 293 3} {15 294 3} {15 295 3} {15 296 3} {15 297 3} {15 298 3} {15 299 3} {15 300 3} {15 301 3} {15 302 3} {15 303 3} {15 304 3} {15 305 3} {15 306 3} {15 307 3} {15 308 3} {15 309 3} {15 310 3} {15 311 3} {15 312 3} {15 313 3} {15 314 3} {15 315 3} {15 316 3} {15 317 3} {15 318 3} {15 319 3} {15 320 3} {15 321 3} {15 322 3} {15 323 3} {15 324 3} {15 325 3} {15 326 3} {15 327 3} {15 328 3} {15 329 3} {15 330 3} {15 331 3} {15 332 3} {15 333 3} {15 334 3} {15 335 3} {15 336 3} {15 337 3} {15 338 3} {15 339 3} {15 340 3} {15 341 3} {15 342 3} {15 343 3} {15 344 3} {15 345 3} {15 346 3} {15 347 3} {15 348 3} {15 349 3} {15 350 3} {15 351 3} {15 352 3} {15 353 3} {15 354 3} {15 355 3} {15 356 3} {15 357 3} {15 358 3} {15 359 3} {15 360 3} {15 361 3} {15 362 3} {15 363 3} {15 364 3} {15 365 3} {15 366 3} {15 367 3} {15 368 3} {15 369 3} {15 370 3} {15 371 3} {15 372 3} {15 373 3} {15 374 3} {15 375 3} {15 376 3} {15 377 3} {15 378 3} {15 379 3} {15 380 3} {15 381 3} {15 382 3} {15 383 3} {15 384 3} {15 385 3} {15 386 3} {15 387 3} {15 388 3} {15 389 3} {15 390 3} {15 391 3} {15 392 3} {15 393 3} {15 394 3} {15 395 3} {15 396 3} {15 397 3} {15 398 3} {15 399 3} {15 400 3} {15 401 3} {15 402 3} {15 403 3} {15 404 3} {15 405 3} {15 406 3} {15 407 3} {15 408 3} {15 409 3} {15 410 3} {15 411 3} {15 412 3} {15 413 3} {15 414 3} {15 415 3} {15 416 3} {15 417 3} {15 418 3} {15 419 3} {15 420 3} {15 421 3} {15 422 3} {15 423 3} {15 424 3} {15 425 3} {15 426 3} {15 427 3} {15 428 3} {15 429 3} {15 430 3} {15 431 3} {15 432 3} {15 433 3} {15 434 3} {15 435 3} {15 436 3} {15 437 3} {15 438 3} {15 439 3} {15 440 3} {15 441 3} {15 442 3} {15 443 3} {15 444 3} {15 445 3} {15 446 3} {15 447 3} {15 448 3} {15 449 3} {15 450 3} {15 451 3} {15 452 3} {15 453 3} {15 454 3} {15 455 3} {15 456 3} {15 457 3} {15 458 3} {15 459 3} {15 460 3} {15 461 3} {15 462 3} {15 463 3} {15 464 3} {15 465 3} {15 466 3} {15 467 3} {15 468 3} {15 469 3} {15 470 3} {15 471 3} {15 472 3} {15 473 3} {15 474 3} {15 475 3} {15 476 3} {15 477 3} {15 478 3} {15 479 3} {15 480 3} {15 481 3} {15 482 3} {15 483 3} {15 484 3} {15 485 3} {15 486 3} {15 487 3} {15 488 3} {15 489 3} {15 490 3} {15 491 3} {15 492 3} {15 493 3} {15 494 3} {15 495 3} {15 496 3} {15 497 3} {15 498 3} {15 499 3} {15 500 3} {15 501 3} {15 502 3} {15 503 3} {15 504 3} {15 505 3} {15 506 3} {15 507 3} {15 508 3} {15 509 3} {15 510 3} {15 511 3} {15 512 3} {15 513 3} {15 514 3} {15 515 3} {15 516 3} {15 517 3} {15 518 3} {15 519 3} {15 520 3} {15 521 3} {15 522 3} {15 523 3} {15 524 3} {15 525 3} {15 526 3} {15 527 3} {15 528 3} {15 529 3} {15 530 3} {15 531 3} {15 532 3} {15 533 3} {15 534 3} {15 535 3} {15 536 3} {15 537 3} {15 538 3} {15 539 3} {15 540 3} {15 541 3} {15 542 3} {15 543 3} {15 544 3} {15 545 3} {15 546 3} {15 547 3} {15 548 3} {15 549 3} {15 550 3} {15 551 3} {15 552 3} {15 553 3} {15 554 3} {15 555 3} {15 556 3} {15 557 3} {15 558 3} {15 559 3} {15 560 3} {15 561 3} {15 562 3} {15 563 3} {15 564 3} {15 565 3} {15 566 3} {15 567 3} {15 568 3} {15 569 3} {15 570 3} {15 571 3} {15 572 3} {15 573 3} {15 574 3} {15 575 3} {15 576 3} {15 577 3} {15 578 3} {15 579 3} {15 580 3} {15 581 3} {15 582 3} {15 583 3} {15 584 3} {15 585 3} {15 586 3} {15 587 3} {15 588 3} {15 589 3} {15 590 3} {15 591 3} {15 592 3} {15 593 3} {15 594 3} {15 595 3} {15 596 3} {15 597 3} {15 598 3} {15 599 3} {15 600 3} {15 601 3} {15 602 3} {15 603 3} {15 604 3} {15 605 3} {15 606 3} {15 607 3} {15 608 3} {15 609 3} {15 610 3} {15 611 3} {15 612 3} {15 613 3} {15 614 3} {15 615 3} {15 616 3} {15 617 3} {15 618 3} {15 619 3} {15 620 3} {15 621 3} {15 622 3} {15 623 3} {15 624 3} {15 625 3} {15 626 3} {15 627 3} {15 628 3} {15 629 3} {15 630 3} {15 631 3} {15 632 3} {15 633 3} {15 634 3} {15 635 3} {15 636 3} {15 637 3} {15 638 3} {15 639 3} {15 640 3} {15 641 3} {15 642 3} {15 643 3} {15 644 3} {15 645 3} {15 646 3} {15 647 3} {15 648 3} {15 649 3} {15 650 3} {15 651 3} {15 652 3} {15 653 3} {15 654 3} {15 655 3} {15 656 3} {15 657 3} {15 658 3} {15 659 3} {15 660 3} {15 661 3} {15 662 3} {15 663 3} {15 664 3} {15 665 3} {15 666 3} {15 667 3} {15 668 3} {15 669 3} {15 670 3} {15 671 3} {15 672 3} {15 673 3} {15 674 3} {15 675 3} {15 676 3} {15 677 3} {15 678 3} {15 679 3} {15 680 3} {15 681 3} {15 682 3} {15 683 3} {15 684 3} {15 685 3} {15 686 3} {15 687 3} {15 688 3} {15 689 3} {15 690 3} {15 691 3} {15 692 3} {15 693 3} {15 694 3} {15 695 3} {15 696 3} {15 697 3} {15 698 3} {15 699 3} {15 700 3} {15 701 3} {15 702 3} {15 703 3} {15 704 3} {15 705 3} {15 706 3} {15 707 3} {15 708 3} {15 709 3} {15 710 3} {15 711 3} {15 712 3} {15 713 3} {15 714 3} {15 715 3} {15 716 3} {15 717 3} {15 718 3} {15 719 3} {15 720 3} {15 721 3} {15 722 3} {15 723 3} {15 724 3} {15 725 3} {15 726 3} {15 727 3} {15 728 3} {15 729 3} {15 730 3} {15 731 3} {15 732 3} {15 733 3} {15 734 3} {15 735 3} {15 736 3} {15 737 3} {15 738 3} {15 739 3} {15 740 3} {15 741 3} {15 742 3} {15 743 3} {15 744 3} {15 745 3} {15 746 3} {15 747 3} {15 748 3} {15 749 3} {15 750 3} {15 751 3} {15 752 3} {15 753 3} {15 754 3} {15 755 3} {15 756 3} {15 757 3} {15 758 3} {15 759 3} {15 760 3} {15 761 3} {15 762 3} {15 763 3} {15 764 3} {15 765 3} {15 766 3} {15 767 3} {15 768 3} {15 769 3} {15 770 3} {15 771 3} {15 772 3} {15 773 3} {15 774 3} {15 775 3} {15 776 3} {15 777 3} {15 778 3} {15 779 3} {15 780 3} {15 781 3} {15 782 3} {15 783 3} {15 784 3} {15 785 3} {15 786 3} {15 787 3} {15 788 3} {15 789 3} {15 790 3} {15 791 3} {15 792 3} {15 793 3} {15 794 3} {15 795 3} {15 796 3} {15 797 3} {15 798 3} {15 799 3} {15 800 3} {15 801 3} {15 802 3} {15 803 3} {15 804 3} {15 805 3} {15 806 3} {15 807 3} {15 808 3} {15 809 3} {15 810 3} {15 811 3} {15 812 3} {15 813 3} {15 814 3} {15 815 3} {15 816 3} {15 817 3} {15 818 3} {15 819 3} {15 820 3} {15 821 3} {15 822 3} {15 823 3} {15 824 3} {15 825 3} {15 826 3} {15 827 3} {15 828 3} {15 829 3} {15 830 3} {15 831 3} {15 832 3} {15 833 3} {15 834 3} {15 835 3} {15 836 3} {15 837 3} {15 838 3} {15 839 3} {15 840 3} {15 841 3} {15 842 3} {15 843 3} {15 844 3} {15 845 3} {15 846 3} {15 847 3} {15 848 3} {15 849 3} {15 850 3} {15 851 3} {15 852 3} {15 853 3} {15 854 3} {15 855 3} {15 856 3} {15 857 3} {15 858 3} {15 859 3} {15 860 3} {15 861 3} {15 862 3} {15 863 3} {15 864 3} {15 865 3} {15 866 3} {15 867 3} {15 868 3} {15 869 3} {15 870 3} {15 871 3} {15 872 3} {15 873 3} {15 874 3} {15 875 3} {15 876 3} {15 877 3} {15 878 3} {15 879 3} {15 880 3} {15 881 3} {15 882 3} {15 883 3} {15 884 3} {15 885 3} {15 886 3} {15 887 3} {15 888 3} {15 889 3} {15 890 3} {15 891 3} {15 892 3} {15 893 3} {15 894 3} {15 895 3} {15 896 3} {15 897 3} {15 898 3} {15 899 3} {15 900 3} {15 901 3} {15 902 3} {15 903 3} {15 904 3} {15 905 3} {15 906 3} {15 907 3} {15 908 3} {15 909 3} {15 910 3} {15 911 3} {15 912 3} {15 913 3} {15 914 3} {15 915 3} {15 916 3} {15 917 3} {15 918 3} {15 919 3} {15 920 3} {15 921 3} {15 922 3} {15 923 3} {15 924 3} {15 925 3} {15 926 3} {15 927 3} {15 928 3} {15 929 3} {15 930 3} {15 931 3} {15 932 3} {15 933 3} {15 934 3} {15 935 3} {15 936 9000} {127 937 9000}] log, the nextIndex is:936, len of log is:938, status is:1, and term is:127, send args term is:127, msg type is:2, papare to send log is:[{15 936 9000} {127 937 9000}], args commitIndex is:0
+2024/05/19 09:50:30 server[2] prepare send log to 4,leader have [{-1 0 <nil>} {2 1 0} {3 2 3} {3 3 3} {3 4 3} {3 5 3} {3 6 3} {11 7 3} {11 8 3} {11 9 3} {11 10 3} {11 11 3} {11 12 3} {11 13 3} {11 14 3} {11 15 3} {11 16 3} {11 17 3} {11 18 3} {11 19 3} {11 20 3} {11 21 3} {11 22 3} {11 23 3} {11 24 3} {11 25 3} {11 26 3} {11 27 3} {11 28 3} {11 29 3} {11 30 3} {11 31 3} {11 32 3} {11 33 3} {11 34 3} {15 35 3} {15 36 3} {15 37 3} {15 38 3} {15 39 3} {15 40 3} {15 41 3} {15 42 3} {15 43 3} {15 44 3} {15 45 3} {15 46 3} {15 47 3} {15 48 3} {15 49 3} {15 50 3} {15 51 3} {15 52 3} {15 53 3} {15 54 3} {15 55 3} {15 56 3} {15 57 3} {15 58 3} {15 59 3} {15 60 3} {15 61 3} {15 62 3} {15 63 3} {15 64 3} {15 65 3} {15 66 3} {15 67 3} {15 68 3} {15 69 3} {15 70 3} {15 71 3} {15 72 3} {15 73 3} {15 74 3} {15 75 3} {15 76 3} {15 77 3} {15 78 3} {15 79 3} {15 80 3} {15 81 3} {15 82 3} {15 83 3} {15 84 3} {15 85 3} {15 86 3} {15 87 3} {15 88 3} {15 89 3} {15 90 3} {15 91 3} {15 92 3} {15 93 3} {15 94 3} {15 95 3} {15 96 3} {15 97 3} {15 98 3} {15 99 3} {15 100 3} {15 101 3} {15 102 3} {15 103 3} {15 104 3} {15 105 3} {15 106 3} {15 107 3} {15 108 3} {15 109 3} {15 110 3} {15 111 3} {15 112 3} {15 113 3} {15 114 3} {15 115 3} {15 116 3} {15 117 3} {15 118 3} {15 119 3} {15 120 3} {15 121 3} {15 122 3} {15 123 3} {15 124 3} {15 125 3} {15 126 3} {15 127 3} {15 128 3} {15 129 3} {15 130 3} {15 131 3} {15 132 3} {15 133 3} {15 134 3} {15 135 3} {15 136 3} {15 137 3} {15 138 3} {15 139 3} {15 140 3} {15 141 3} {15 142 3} {15 143 3} {15 144 3} {15 145 3} {15 146 3} {15 147 3} {15 148 3} {15 149 3} {15 150 3} {15 151 3} {15 152 3} {15 153 3} {15 154 3} {15 155 3} {15 156 3} {15 157 3} {15 158 3} {15 159 3} {15 160 3} {15 161 3} {15 162 3} {15 163 3} {15 164 3} {15 165 3} {15 166 3} {15 167 3} {15 168 3} {15 169 3} {15 170 3} {15 171 3} {15 172 3} {15 173 3} {15 174 3} {15 175 3} {15 176 3} {15 177 3} {15 178 3} {15 179 3} {15 180 3} {15 181 3} {15 182 3} {15 183 3} {15 184 3} {15 185 3} {15 186 3} {15 187 3} {15 188 3} {15 189 3} {15 190 3} {15 191 3} {15 192 3} {15 193 3} {15 194 3} {15 195 3} {15 196 3} {15 197 3} {15 198 3} {15 199 3} {15 200 3} {15 201 3} {15 202 3} {15 203 3} {15 204 3} {15 205 3} {15 206 3} {15 207 3} {15 208 3} {15 209 3} {15 210 3} {15 211 3} {15 212 3} {15 213 3} {15 214 3} {15 215 3} {15 216 3} {15 217 3} {15 218 3} {15 219 3} {15 220 3} {15 221 3} {15 222 3} {15 223 3} {15 224 3} {15 225 3} {15 226 3} {15 227 3} {15 228 3} {15 229 3} {15 230 3} {15 231 3} {15 232 3} {15 233 3} {15 234 3} {15 235 3} {15 236 3} {15 237 3} {15 238 3} {15 239 3} {15 240 3} {15 241 3} {15 242 3} {15 243 3} {15 244 3} {15 245 3} {15 246 3} {15 247 3} {15 248 3} {15 249 3} {15 250 3} {15 251 3} {15 252 3} {15 253 3} {15 254 3} {15 255 3} {15 256 3} {15 257 3} {15 258 3} {15 259 3} {15 260 3} {15 261 3} {15 262 3} {15 263 3} {15 264 3} {15 265 3} {15 266 3} {15 267 3} {15 268 3} {15 269 3} {15 270 3} {15 271 3} {15 272 3} {15 273 3} {15 274 3} {15 275 3} {15 276 3} {15 277 3} {15 278 3} {15 279 3} {15 280 3} {15 281 3} {15 282 3} {15 283 3} {15 284 3} {15 285 3} {15 286 3} {15 287 3} {15 288 3} {15 289 3} {15 290 3} {15 291 3} {15 292 3} {15 293 3} {15 294 3} {15 295 3} {15 296 3} {15 297 3} {15 298 3} {15 299 3} {15 300 3} {15 301 3} {15 302 3} {15 303 3} {15 304 3} {15 305 3} {15 306 3} {15 307 3} {15 308 3} {15 309 3} {15 310 3} {15 311 3} {15 312 3} {15 313 3} {15 314 3} {15 315 3} {15 316 3} {15 317 3} {15 318 3} {15 319 3} {15 320 3} {15 321 3} {15 322 3} {15 323 3} {15 324 3} {15 325 3} {15 326 3} {15 327 3} {15 328 3} {15 329 3} {15 330 3} {15 331 3} {15 332 3} {15 333 3} {15 334 3} {15 335 3} {15 336 3} {15 337 3} {15 338 3} {15 339 3} {15 340 3} {15 341 3} {15 342 3} {15 343 3} {15 344 3} {15 345 3} {15 346 3} {15 347 3} {15 348 3} {15 349 3} {15 350 3} {15 351 3} {15 352 3} {15 353 3} {15 354 3} {15 355 3} {15 356 3} {15 357 3} {15 358 3} {15 359 3} {15 360 3} {15 361 3} {15 362 3} {15 363 3} {15 364 3} {15 365 3} {15 366 3} {15 367 3} {15 368 3} {15 369 3} {15 370 3} {15 371 3} {15 372 3} {15 373 3} {15 374 3} {15 375 3} {15 376 3} {15 377 3} {15 378 3} {15 379 3} {15 380 3} {15 381 3} {15 382 3} {15 383 3} {15 384 3} {15 385 3} {15 386 3} {15 387 3} {15 388 3} {15 389 3} {15 390 3} {15 391 3} {15 392 3} {15 393 3} {15 394 3} {15 395 3} {15 396 3} {15 397 3} {15 398 3} {15 399 3} {15 400 3} {15 401 3} {15 402 3} {15 403 3} {15 404 3} {15 405 3} {15 406 3} {15 407 3} {15 408 3} {15 409 3} {15 410 3} {15 411 3} {15 412 3} {15 413 3} {15 414 3} {15 415 3} {15 416 3} {15 417 3} {15 418 3} {15 419 3} {15 420 3} {15 421 3} {15 422 3} {15 423 3} {15 424 3} {15 425 3} {15 426 3} {15 427 3} {15 428 3} {15 429 3} {15 430 3} {15 431 3} {15 432 3} {15 433 3} {15 434 3} {15 435 3} {15 436 3} {15 437 3} {15 438 3} {15 439 3} {15 440 3} {15 441 3} {15 442 3} {15 443 3} {15 444 3} {15 445 3} {15 446 3} {15 447 3} {15 448 3} {15 449 3} {15 450 3} {15 451 3} {15 452 3} {15 453 3} {15 454 3} {15 455 3} {15 456 3} {15 457 3} {15 458 3} {15 459 3} {15 460 3} {15 461 3} {15 462 3} {15 463 3} {15 464 3} {15 465 3} {15 466 3} {15 467 3} {15 468 3} {15 469 3} {15 470 3} {15 471 3} {15 472 3} {15 473 3} {15 474 3} {15 475 3} {15 476 3} {15 477 3} {15 478 3} {15 479 3} {15 480 3} {15 481 3} {15 482 3} {15 483 3} {15 484 3} {15 485 3} {15 486 3} {15 487 3} {15 488 3} {15 489 3} {15 490 3} {15 491 3} {15 492 3} {15 493 3} {15 494 3} {15 495 3} {15 496 3} {15 497 3} {15 498 3} {15 499 3} {15 500 3} {15 501 3} {15 502 3} {15 503 3} {15 504 3} {15 505 3} {15 506 3} {15 507 3} {15 508 3} {15 509 3} {15 510 3} {15 511 3} {15 512 3} {15 513 3} {15 514 3} {15 515 3} {15 516 3} {15 517 3} {15 518 3} {15 519 3} {15 520 3} {15 521 3} {15 522 3} {15 523 3} {15 524 3} {15 525 3} {15 526 3} {15 527 3} {15 528 3} {15 529 3} {15 530 3} {15 531 3} {15 532 3} {15 533 3} {15 534 3} {15 535 3} {15 536 3} {15 537 3} {15 538 3} {15 539 3} {15 540 3} {15 541 3} {15 542 3} {15 543 3} {15 544 3} {15 545 3} {15 546 3} {15 547 3} {15 548 3} {15 549 3} {15 550 3} {15 551 3} {15 552 3} {15 553 3} {15 554 3} {15 555 3} {15 556 3} {15 557 3} {15 558 3} {15 559 3} {15 560 3} {15 561 3} {15 562 3} {15 563 3} {15 564 3} {15 565 3} {15 566 3} {15 567 3} {15 568 3} {15 569 3} {15 570 3} {15 571 3} {15 572 3} {15 573 3} {15 574 3} {15 575 3} {15 576 3} {15 577 3} {15 578 3} {15 579 3} {15 580 3} {15 581 3} {15 582 3} {15 583 3} {15 584 3} {15 585 3} {15 586 3} {15 587 3} {15 588 3} {15 589 3} {15 590 3} {15 591 3} {15 592 3} {15 593 3} {15 594 3} {15 595 3} {15 596 3} {15 597 3} {15 598 3} {15 599 3} {15 600 3} {15 601 3} {15 602 3} {15 603 3} {15 604 3} {15 605 3} {15 606 3} {15 607 3} {15 608 3} {15 609 3} {15 610 3} {15 611 3} {15 612 3} {15 613 3} {15 614 3} {15 615 3} {15 616 3} {15 617 3} {15 618 3} {15 619 3} {15 620 3} {15 621 3} {15 622 3} {15 623 3} {15 624 3} {15 625 3} {15 626 3} {15 627 3} {15 628 3} {15 629 3} {15 630 3} {15 631 3} {15 632 3} {15 633 3} {15 634 3} {15 635 3} {15 636 3} {15 637 3} {15 638 3} {15 639 3} {15 640 3} {15 641 3} {15 642 3} {15 643 3} {15 644 3} {15 645 3} {15 646 3} {15 647 3} {15 648 3} {15 649 3} {15 650 3} {15 651 3} {15 652 3} {15 653 3} {15 654 3} {15 655 3} {15 656 3} {15 657 3} {15 658 3} {15 659 3} {15 660 3} {15 661 3} {15 662 3} {15 663 3} {15 664 3} {15 665 3} {15 666 3} {15 667 3} {15 668 3} {15 669 3} {15 670 3} {15 671 3} {15 672 3} {15 673 3} {15 674 3} {15 675 3} {15 676 3} {15 677 3} {15 678 3} {15 679 3} {15 680 3} {15 681 3} {15 682 3} {15 683 3} {15 684 3} {15 685 3} {15 686 3} {15 687 3} {15 688 3} {15 689 3} {15 690 3} {15 691 3} {15 692 3} {15 693 3} {15 694 3} {15 695 3} {15 696 3} {15 697 3} {15 698 3} {15 699 3} {15 700 3} {15 701 3} {15 702 3} {15 703 3} {15 704 3} {15 705 3} {15 706 3} {15 707 3} {15 708 3} {15 709 3} {15 710 3} {15 711 3} {15 712 3} {15 713 3} {15 714 3} {15 715 3} {15 716 3} {15 717 3} {15 718 3} {15 719 3} {15 720 3} {15 721 3} {15 722 3} {15 723 3} {15 724 3} {15 725 3} {15 726 3} {15 727 3} {15 728 3} {15 729 3} {15 730 3} {15 731 3} {15 732 3} {15 733 3} {15 734 3} {15 735 3} {15 736 3} {15 737 3} {15 738 3} {15 739 3} {15 740 3} {15 741 3} {15 742 3} {15 743 3} {15 744 3} {15 745 3} {15 746 3} {15 747 3} {15 748 3} {15 749 3} {15 750 3} {15 751 3} {15 752 3} {15 753 3} {15 754 3} {15 755 3} {15 756 3} {15 757 3} {15 758 3} {15 759 3} {15 760 3} {15 761 3} {15 762 3} {15 763 3} {15 764 3} {15 765 3} {15 766 3} {15 767 3} {15 768 3} {15 769 3} {15 770 3} {15 771 3} {15 772 3} {15 773 3} {15 774 3} {15 775 3} {15 776 3} {15 777 3} {15 778 3} {15 779 3} {15 780 3} {15 781 3} {15 782 3} {15 783 3} {15 784 3} {15 785 3} {15 786 3} {15 787 3} {15 788 3} {15 789 3} {15 790 3} {15 791 3} {15 792 3} {15 793 3} {15 794 3} {15 795 3} {15 796 3} {15 797 3} {15 798 3} {15 799 3} {15 800 3} {15 801 3} {15 802 3} {15 803 3} {15 804 3} {15 805 3} {15 806 3} {15 807 3} {15 808 3} {15 809 3} {15 810 3} {15 811 3} {15 812 3} {15 813 3} {15 814 3} {15 815 3} {15 816 3} {15 817 3} {15 818 3} {15 819 3} {15 820 3} {15 821 3} {15 822 3} {15 823 3} {15 824 3} {15 825 3} {15 826 3} {15 827 3} {15 828 3} {15 829 3} {15 830 3} {15 831 3} {15 832 3} {15 833 3} {15 834 3} {15 835 3} {15 836 3} {15 837 3} {15 838 3} {15 839 3} {15 840 3} {15 841 3} {15 842 3} {15 843 3} {15 844 3} {15 845 3} {15 846 3} {15 847 3} {15 848 3} {15 849 3} {15 850 3} {15 851 3} {15 852 3} {15 853 3} {15 854 3} {15 855 3} {15 856 3} {15 857 3} {15 858 3} {15 859 3} {15 860 3} {15 861 3} {15 862 3} {15 863 3} {15 864 3} {15 865 3} {15 866 3} {15 867 3} {15 868 3} {15 869 3} {15 870 3} {15 871 3} {15 872 3} {15 873 3} {15 874 3} {15 875 3} {15 876 3} {15 877 3} {15 878 3} {15 879 3} {15 880 3} {15 881 3} {15 882 3} {15 883 3} {15 884 3} {15 885 3} {15 886 3} {15 887 3} {15 888 3} {15 889 3} {15 890 3} {15 891 3} {15 892 3} {15 893 3} {15 894 3} {15 895 3} {15 896 3} {15 897 3} {15 898 3} {15 899 3} {15 900 3} {15 901 3} {15 902 3} {15 903 3} {15 904 3} {15 905 3} {15 906 3} {15 907 3} {15 908 3} {15 909 3} {15 910 3} {15 911 3} {15 912 3} {15 913 3} {15 914 3} {15 915 3} {15 916 3} {15 917 3} {15 918 3} {15 919 3} {15 920 3} {15 921 3} {15 922 3} {15 923 3} {15 924 3} {15 925 3} {15 926 3} {15 927 3} {15 928 3} {15 929 3} {15 930 3} {15 931 3} {15 932 3} {15 933 3} {15 934 3} {15 935 3} {15 936 9000} {127 937 9000}] log, the nextIndex is:936, len of log is:938, status is:1, and term is:127, send args term is:127, msg type is:2, papare to send log is:[{15 936 9000} {127 937 9000}], args commitIndex is:0
+2024/05/19 09:50:30 server[2], term:127, before send log to others, ths allSendLogArgs is:[
+    {127 2 935 15 [{15 936 9000} {127 937 9000}] 0 2} 
+    {127 2 935 15 [{15 936 9000} {127 937 9000}] 0 2} 
+    {0 0 0 0 [] 0 0} 
+    {127 2 935 15 [{15 936 9000} {127 937 9000}] 0 2} 
+    {127 2 935 15 [{15 936 9000} {127 937 9000}] 0 2}],
+
+=== server3丢弃了server2发来的日志，server2要回退server3的nextIndex
+2024/05/19 09:50:30 server[3]discard 2 server send heart log beat, because log is too new, local log dot not contain pre log, pre log term:15, pre log index:935
+2024/05/19 09:50:30 server[3] got server 1 vote respone, args Term is:127,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+
+2024/05/19 09:50:30 server[0]begin a new ticker, local state is:2, local Term is:127, and time is bigger than interval?:true
+2024/05/19 09:50:30 server[0]should begin a election
+2024/05/19 09:50:30 server[0]has vote for himself, Term is:128
+=== server0开始了term为128的投票
+2024/05/19 09:50:30 server[0] got a log heart beat, but args Term less than local Term, request Term is:127, current term is:128, request server id is:2
+2024/05/19 09:50:30 server[2]reciver 0 server reply, and found local term is less, so change local term from:127 to:128
+
+2024/05/19 09:50:30 server[4] recive 0 server vote request, args Term is:128, get lock success
+2024/05/19 09:50:30 server[4] begin to handler vote request, local Term is:127, request server is:0, request Term is:128, request log last term is:12, request log last index is:616
+2024/05/19 09:50:30 server[4]handler 0 vote request, args term is:128 bigger than local term:128, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:30 server[4] has finish request vote, request server is:0, args Term is:128, result granted is:false
+
+2024/05/19 09:50:30 server[1]discard 2 server send heart log beat, because log is too new, local log dot not contain pre log, pre log term:15, pre log index:935
+2024/05/19 09:50:30 server[4] got a log heart beat, but args Term less than local Term, request Term is:127, current term is:128, request server id is:2
+
+2024/05/19 09:50:30 server[3] recive 0 server vote request, args Term is:128, get lock success
+2024/05/19 09:50:30 server[3] begin to handler vote request, local Term is:127, request server is:0, request Term is:128, request log last term is:12, request log last index is:616
+2024/05/19 09:50:30 server[3]handler 0 vote request, args term is:128 bigger than local term:128, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:30 server[3] has finish request vote, request server is:0, args Term is:128, result granted is:false
+2024/05/19 09:50:30 server[0] got server 3 vote respone, args Term is:128,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:30 server[2] recive 0 server vote request, args Term is:128, get lock success
+2024/05/19 09:50:30 server[2] begin to handler vote request, local Term is:128, request server is:0, request Term is:128, request log last term is:12, request log last index is:616
+2024/05/19 09:50:30 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:30 server[2] has finish request vote, request server is:0, args Term is:128, result granted is:false
+2024/05/19 09:50:30 server[0] got server 2 vote respone, args Term is:128,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[1] recive 0 server vote request, args Term is:128, get lock success
+2024/05/19 09:50:30 server[1] begin to handler vote request, local Term is:127, request server is:0, request Term is:128, request log last term is:12, request log last index is:616
+2024/05/19 09:50:30 server[1]handler 0 vote request, args term is:128 bigger than local term:128, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[1] has finish request vote, request server is:0, args Term is:128, result granted is:true
+2024/05/19 09:50:30 server[0] got server 1 vote respone, args Term is:128,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:30 server[0] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[2] got server 1 vote respone, args Term is:126,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[2] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[2], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:126
+2024/05/19 09:50:30 server[1]begin a new ticker, local state is:2, local Term is:128, and time is bigger than interval?:false
+
+2024/05/19 09:50:30 server[4]begin a new ticker, local state is:2, local Term is:128, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[4] got server 3 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[4] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[4], vote for leader, got 2 tickets, got 1 failRpc, total 5 request, args Term is:125
+2024/05/19 09:50:30 server[2]begin a new ticker, local state is:2, local Term is:128, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[3] got server 4 vote respone, args Term is:127,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[3], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:127
+2024/05/19 09:50:30 server[3]begin a new ticker, local state is:2, local Term is:128, and time is bigger than interval?:false
+
+
+=== server 0 只是收到了server1的同意，所以在没有新日志添加的情况下，server0不可能再成为leader。
+2024/05/19 09:50:30 server[1]begin a new ticker, local state is:2, local Term is:128, and time is bigger than interval?:true
+2024/05/19 09:50:30 server[1]should begin a election
+2024/05/19 09:50:30 server[1]has vote for himself, Term is:129
+2024/05/19 09:50:30 server[4] recive 1 server vote request, args Term is:129, get lock success
+2024/05/19 09:50:30 server[4] begin to handler vote request, local Term is:128, request server is:1, request Term is:129, request log last term is:2, request log last index is:98
+2024/05/19 09:50:30 server[4]handler 1 vote request, args term is:129 bigger than local term:129, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:30 server[4] has finish request vote, request server is:1, args Term is:129, result granted is:false
+2024/05/19 09:50:30 server[3] recive 1 server vote request, args Term is:129, get lock success
+2024/05/19 09:50:30 server[3] begin to handler vote request, local Term is:128, request server is:1, request Term is:129, request log last term is:2, request log last index is:98
+2024/05/19 09:50:30 server[3]handler 1 vote request, args term is:129 bigger than local term:129, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:30 server[3] has finish request vote, request server is:1, args Term is:129, result granted is:false
+2024/05/19 09:50:30 server[1] got server 3 vote respone, args Term is:129,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:30 server[2] recive 1 server vote request, args Term is:129, get lock success
+2024/05/19 09:50:30 server[2] begin to handler vote request, local Term is:128, request server is:1, request Term is:129, request log last term is:2, request log last index is:98
+2024/05/19 09:50:30 server[2]handler 1 vote request, args term is:129 bigger than local term:129, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:30 server[2] has finish request vote, request server is:1, args Term is:129, result granted is:false
+2024/05/19 09:50:30 server[1] got server 2 vote respone, args Term is:129,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[0] recive 1 server vote request, args Term is:129, get lock success
+2024/05/19 09:50:30 server[0] begin to handler vote request, local Term is:128, request server is:1, request Term is:129, request log last term is:2, request log last index is:98
+2024/05/19 09:50:30 server[0]handler 1 vote request, args term is:129 bigger than local term:129, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:30 server[0] has finish request vote, request server is:1, args Term is:129, result granted is:false
+2024/05/19 09:50:30 server[0]begin a new ticker, local state is:2, local Term is:129, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[0] got server 4 vote respone, args Term is:128,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[0] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[0], vote for leader, got 2 tickets, got 1 failRpc, total 5 request, args Term is:128
+2024/05/19 09:50:30 server[4]begin a new ticker, local state is:2, local Term is:129, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[3] got server 2 vote respone, args Term is:127,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[1] got server 4 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:125
+2024/05/19 09:50:30 server[2]begin a new ticker, local state is:2, local Term is:129, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[3]begin a new ticker, local state is:2, local Term is:129, and time is bigger than interval?:true
+2024/05/19 09:50:30 server[3]should begin a election
+2024/05/19 09:50:30 server[0] got server 2 vote respone, args Term is:126,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:30 server[0] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[0], vote for leader, got 2 tickets, got 0 failRpc, total 5 request, args Term is:126
+2024/05/19 09:50:30 server[3]has vote for himself, Term is:130
+2024/05/19 09:50:30 server[0] recive 3 server vote request, args Term is:130, get lock success
+2024/05/19 09:50:30 server[0] begin to handler vote request, local Term is:129, request server is:3, request Term is:130, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[0]handler 3 vote request, args term is:130 bigger than local term:130, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[0] has finish request vote, request server is:3, args Term is:130, result granted is:true
+2024/05/19 09:50:30 server[4] recive 3 server vote request, args Term is:130, get lock success
+2024/05/19 09:50:30 server[4] begin to handler vote request, local Term is:129, request server is:3, request Term is:130, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[4]handler 3 vote request, args term is:130 bigger than local term:130, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[4] has finish request vote, request server is:3, args Term is:130, result granted is:true
+2024/05/19 09:50:30 server[3] got server 4 vote respone, args Term is:130,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:30 server[2] recive 3 server vote request, args Term is:130, get lock success
+2024/05/19 09:50:30 server[2] begin to handler vote request, local Term is:129, request server is:3, request Term is:130, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[2]handler 3 vote request, args term is:130 bigger than local term:130, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[2]not granted to server 3, because local Index is new than args
+2024/05/19 09:50:30 server[2] has finish request vote, request server is:3, args Term is:130, result granted is:false
+2024/05/19 09:50:30 server[3] got server 2 vote respone, args Term is:130,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:30 server[1] recive 3 server vote request, args Term is:130, get lock success
+2024/05/19 09:50:30 server[1] begin to handler vote request, local Term is:129, request server is:3, request Term is:130, request log last term is:74, request log last index is:384
+2024/05/19 09:50:30 server[1]handler 3 vote request, args term is:130 bigger than local term:130, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:30 server[1] has finish request vote, request server is:3, args Term is:130, result granted is:true
+2024/05/19 09:50:30 server[3] got server 1 vote respone, args Term is:130,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:30 server[3] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:30 server[3], vote for leader, got 1 tickets, got 3 failRpc, total 4 request, args Term is:130
+2024/05/19 09:50:30 server[1]begin a new ticker, local state is:2, local Term is:130, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[0]begin a new ticker, local state is:2, local Term is:130, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[4]begin a new ticker, local state is:2, local Term is:130, and time is bigger than interval?:false
+2024/05/19 09:50:30 server[1] got server 2 vote respone, args Term is:125,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1]begin a new ticker, local state is:2, local Term is:130, and time is bigger than interval?:true
+2024/05/19 09:50:31 server[1]should begin a election
+2024/05/19 09:50:31 server[1]has vote for himself, Term is:131
+2024/05/19 09:50:31 server[0] recive 1 server vote request, args Term is:131, get lock success
+2024/05/19 09:50:31 server[0] begin to handler vote request, local Term is:130, request server is:1, request Term is:131, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[0]handler 1 vote request, args term is:131 bigger than local term:131, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[0] has finish request vote, request server is:1, args Term is:131, result granted is:false
+2024/05/19 09:50:31 server[0]begin a new ticker, local state is:2, local Term is:131, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[2] recive 1 server vote request, args Term is:131, get lock success
+2024/05/19 09:50:31 server[2] begin to handler vote request, local Term is:130, request server is:1, request Term is:131, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[2]handler 1 vote request, args term is:131 bigger than local term:131, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[2] has finish request vote, request server is:1, args Term is:131, result granted is:false
+2024/05/19 09:50:31 server[3] recive 1 server vote request, args Term is:131, get lock success
+2024/05/19 09:50:31 server[3] begin to handler vote request, local Term is:130, request server is:1, request Term is:131, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[3]handler 1 vote request, args term is:131 bigger than local term:131, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[3] has finish request vote, request server is:1, args Term is:131, result granted is:false
+2024/05/19 09:50:31 server[4] recive 1 server vote request, args Term is:131, get lock success
+2024/05/19 09:50:31 server[4] begin to handler vote request, local Term is:130, request server is:1, request Term is:131, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[4]handler 1 vote request, args term is:131 bigger than local term:131, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[4] has finish request vote, request server is:1, args Term is:131, result granted is:false
+2024/05/19 09:50:31 server[1] got server 4 vote respone, args Term is:131,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:31 server[2]begin a new ticker, local state is:2, local Term is:131, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[3]begin a new ticker, local state is:2, local Term is:131, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[4]begin a new ticker, local state is:2, local Term is:131, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1] got server 0 vote respone, args Term is:129,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:31 server[1], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:129
+2024/05/19 09:50:31 server[2] got server 4 vote respone, args Term is:126,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] got server 3 vote respone, args Term is:131,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:31 server[1]begin a new ticker, local state is:3, local Term is:131, and time is bigger than interval?:true
+2024/05/19 09:50:31 server[1]should begin a election
+2024/05/19 09:50:31 server[1]has vote for himself, Term is:132
+2024/05/19 09:50:31 server[3] recive 1 server vote request, args Term is:132, get lock success
+2024/05/19 09:50:31 server[3] begin to handler vote request, local Term is:131, request server is:1, request Term is:132, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[3]handler 1 vote request, args term is:132 bigger than local term:132, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[3] has finish request vote, request server is:1, args Term is:132, result granted is:false
+2024/05/19 09:50:31 server[4] recive 1 server vote request, args Term is:132, get lock success
+2024/05/19 09:50:31 server[4] begin to handler vote request, local Term is:131, request server is:1, request Term is:132, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[4]handler 1 vote request, args term is:132 bigger than local term:132, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[4] has finish request vote, request server is:1, args Term is:132, result granted is:false
+2024/05/19 09:50:31 server[1] got server 4 vote respone, args Term is:132,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:31 server[2] recive 1 server vote request, args Term is:132, get lock success
+2024/05/19 09:50:31 server[2] begin to handler vote request, local Term is:131, request server is:1, request Term is:132, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[2]handler 1 vote request, args term is:132 bigger than local term:132, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[2] has finish request vote, request server is:1, args Term is:132, result granted is:false
+2024/05/19 09:50:31 server[3]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1] got server 2 vote respone, args Term is:132,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:31 server[0] recive 1 server vote request, args Term is:132, get lock success
+2024/05/19 09:50:31 server[0] begin to handler vote request, local Term is:131, request server is:1, request Term is:132, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[0]handler 1 vote request, args term is:132 bigger than local term:132, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[0] has finish request vote, request server is:1, args Term is:132, result granted is:false
+2024/05/19 09:50:31 server[0]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[2]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1] got server 0 vote respone, args Term is:131,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:31 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:131
+2024/05/19 09:50:31 server[4]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1] got server 2 vote respone, args Term is:131,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[2]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1] got server 4 vote respone, args Term is:129,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[3]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[0]begin a new ticker, local state is:2, local Term is:132, and time is bigger than interval?:true
+2024/05/19 09:50:31 server[0]should begin a election
+2024/05/19 09:50:31 server[0]has vote for himself, Term is:133
+2024/05/19 09:50:31 server[3] recive 0 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[3] begin to handler vote request, local Term is:132, request server is:0, request Term is:133, request log last term is:12, request log last index is:616
+2024/05/19 09:50:31 server[3]handler 0 vote request, args term is:133 bigger than local term:133, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:31 server[3] has finish request vote, request server is:0, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[0] got server 3 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:31 server[1]begin a new ticker, local state is:3, local Term is:132, and time is bigger than interval?:true
+2024/05/19 09:50:31 server[1]should begin a election
+2024/05/19 09:50:31 server[1]has vote for himself, Term is:133
+2024/05/19 09:50:31 server[1] recive 0 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[1] begin to handler vote request, local Term is:133, request server is:0, request Term is:133, request log last term is:12, request log last index is:616
+2024/05/19 09:50:31 server[1]not granted to server 0, because server has vote to 1
+2024/05/19 09:50:31 server[1] has finish request vote, request server is:0, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[4] recive 1 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[4] begin to handler vote request, local Term is:132, request server is:1, request Term is:133, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[4]handler 1 vote request, args term is:133 bigger than local term:133, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[4] has finish request vote, request server is:1, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[2] recive 1 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[2] begin to handler vote request, local Term is:132, request server is:1, request Term is:133, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[2]handler 1 vote request, args term is:133 bigger than local term:133, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[2] has finish request vote, request server is:1, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[1] got server 2 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:31 server[3] recive 1 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[3] begin to handler vote request, local Term is:133, request server is:1, request Term is:133, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[3] has finish request vote, request server is:1, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[1] got server 3 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:31 server[2] recive 0 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[2] begin to handler vote request, local Term is:133, request server is:0, request Term is:133, request log last term is:12, request log last index is:616
+2024/05/19 09:50:31 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:31 server[2] has finish request vote, request server is:0, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[0] got server 2 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:31 server[4] recive 0 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[4] begin to handler vote request, local Term is:133, request server is:0, request Term is:133, request log last term is:12, request log last index is:616
+2024/05/19 09:50:31 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:31 server[4] has finish request vote, request server is:0, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[0] recive 1 server vote request, args Term is:133, get lock success
+2024/05/19 09:50:31 server[0] begin to handler vote request, local Term is:133, request server is:1, request Term is:133, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[0]not granted to server 1, because server has vote to 0
+2024/05/19 09:50:31 server[0] has finish request vote, request server is:1, args Term is:133, result granted is:false
+2024/05/19 09:50:31 server[1] got server 0 vote respone, args Term is:132,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:31 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:132
+2024/05/19 09:50:31 server[4]begin a new ticker, local state is:2, local Term is:133, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[3]begin a new ticker, local state is:2, local Term is:133, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[2]begin a new ticker, local state is:2, local Term is:133, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[4]begin a new ticker, local state is:2, local Term is:133, and time is bigger than interval?:false
+2024/05/19 09:50:31 server[1]begin a new ticker, local state is:3, local Term is:133, and time is bigger than interval?:true
+2024/05/19 09:50:31 server[1]should begin a election
+2024/05/19 09:50:31 server[1]has vote for himself, Term is:134
+2024/05/19 09:50:31 server[0] recive 1 server vote request, args Term is:134, get lock success
+2024/05/19 09:50:31 server[0] begin to handler vote request, local Term is:133, request server is:1, request Term is:134, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[0]handler 1 vote request, args term is:134 bigger than local term:134, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[0] has finish request vote, request server is:1, args Term is:134, result granted is:false
+2024/05/19 09:50:31 server[4] recive 1 server vote request, args Term is:134, get lock success
+2024/05/19 09:50:31 server[4] begin to handler vote request, local Term is:133, request server is:1, request Term is:134, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[4]handler 1 vote request, args term is:134 bigger than local term:134, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[4] has finish request vote, request server is:1, args Term is:134, result granted is:false
+2024/05/19 09:50:31 server[3] recive 1 server vote request, args Term is:134, get lock success
+2024/05/19 09:50:31 server[3] begin to handler vote request, local Term is:133, request server is:1, request Term is:134, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[1] got server 4 vote respone, args Term is:134,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:31 server[3]handler 1 vote request, args term is:134 bigger than local term:134, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[3] has finish request vote, request server is:1, args Term is:134, result granted is:false
+2024/05/19 09:50:31 server[1] got server 3 vote respone, args Term is:134,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:31 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:31 server[2] recive 1 server vote request, args Term is:134, get lock success
+2024/05/19 09:50:31 server[2] begin to handler vote request, local Term is:133, request server is:1, request Term is:134, request log last term is:2, request log last index is:98
+2024/05/19 09:50:31 server[2]handler 1 vote request, args term is:134 bigger than local term:134, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:31 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:31 server[2] has finish request vote, request server is:1, args Term is:134, result granted is:false
+2024/05/19 09:50:31 server[3]begin a new ticker, local state is:2, local Term is:134, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[0]begin a new ticker, local state is:2, local Term is:134, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[2]begin a new ticker, local state is:2, local Term is:134, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[0] got server 1 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[0] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:32 server[0], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:133
+2024/05/19 09:50:32 server[1]begin a new ticker, local state is:3, local Term is:134, and time is bigger than interval?:true
+2024/05/19 09:50:32 server[1]should begin a election
+2024/05/19 09:50:32 server[1]has vote for himself, Term is:135
+2024/05/19 09:50:32 server[0] recive 1 server vote request, args Term is:135, get lock success
+2024/05/19 09:50:32 server[0] begin to handler vote request, local Term is:134, request server is:1, request Term is:135, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[0]handler 1 vote request, args term is:135 bigger than local term:135, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[0] has finish request vote, request server is:1, args Term is:135, result granted is:false
+2024/05/19 09:50:32 server[4] recive 1 server vote request, args Term is:135, get lock success
+2024/05/19 09:50:32 server[4] begin to handler vote request, local Term is:134, request server is:1, request Term is:135, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[4]handler 1 vote request, args term is:135 bigger than local term:135, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[4] has finish request vote, request server is:1, args Term is:135, result granted is:false
+2024/05/19 09:50:32 server[2] recive 1 server vote request, args Term is:135, get lock success
+2024/05/19 09:50:32 server[2] begin to handler vote request, local Term is:134, request server is:1, request Term is:135, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[2]handler 1 vote request, args term is:135 bigger than local term:135, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[2] has finish request vote, request server is:1, args Term is:135, result granted is:false
+2024/05/19 09:50:32 server[3] recive 1 server vote request, args Term is:135, get lock success
+2024/05/19 09:50:32 server[3] begin to handler vote request, local Term is:134, request server is:1, request Term is:135, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[3]handler 1 vote request, args term is:135 bigger than local term:135, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[3] has finish request vote, request server is:1, args Term is:135, result granted is:false
+2024/05/19 09:50:32 server[1] got server 3 vote respone, args Term is:135,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:32 server[3] got server 0 vote respone, args Term is:130,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:32 server[4]begin a new ticker, local state is:2, local Term is:135, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[0] got server 4 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[3]begin a new ticker, local state is:2, local Term is:135, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[0]begin a new ticker, local state is:2, local Term is:135, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[2]begin a new ticker, local state is:2, local Term is:135, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[1]begin a new ticker, local state is:3, local Term is:135, and time is bigger than interval?:true
+2024/05/19 09:50:32 server[1]should begin a election
+2024/05/19 09:50:32 server[1]has vote for himself, Term is:136
+2024/05/19 09:50:32 server[2] recive 1 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[2] begin to handler vote request, local Term is:135, request server is:1, request Term is:136, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[2]handler 1 vote request, args term is:136 bigger than local term:136, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[2] has finish request vote, request server is:1, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[3] recive 1 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[3] begin to handler vote request, local Term is:135, request server is:1, request Term is:136, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[3]handler 1 vote request, args term is:136 bigger than local term:136, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[3] has finish request vote, request server is:1, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[1] got server 0 vote respone, args Term is:136,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:32 server[0]begin a new ticker, local state is:2, local Term is:135, and time is bigger than interval?:true
+2024/05/19 09:50:32 server[0]should begin a election
+2024/05/19 09:50:32 server[4] recive 1 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[4] begin to handler vote request, local Term is:135, request server is:1, request Term is:136, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[4]handler 1 vote request, args term is:136 bigger than local term:136, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[4]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[4] has finish request vote, request server is:1, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[0]has vote for himself, Term is:136
+2024/05/19 09:50:32 server[4] recive 0 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[4] begin to handler vote request, local Term is:136, request server is:0, request Term is:136, request log last term is:12, request log last index is:616
+2024/05/19 09:50:32 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:32 server[4] has finish request vote, request server is:0, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[1] got server 0 vote respone, args Term is:134,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:32 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:134
+2024/05/19 09:50:32 server[2] recive 0 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[2] begin to handler vote request, local Term is:136, request server is:0, request Term is:136, request log last term is:12, request log last index is:616
+2024/05/19 09:50:32 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:32 server[2] has finish request vote, request server is:0, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[0] got server 2 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:32 server[0] got server 3 vote respone, args Term is:136,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:32 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:32 server[1] recive 0 server vote request, args Term is:136, get lock success
+2024/05/19 09:50:32 server[1] begin to handler vote request, local Term is:136, request server is:0, request Term is:136, request log last term is:12, request log last index is:616
+2024/05/19 09:50:32 server[1]not granted to server 0, because server has vote to 1
+2024/05/19 09:50:32 server[1] has finish request vote, request server is:0, args Term is:136, result granted is:false
+2024/05/19 09:50:32 server[4]begin a new ticker, local state is:2, local Term is:136, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[2]begin a new ticker, local state is:2, local Term is:136, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[1] got server 2 vote respone, args Term is:134,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] got server 4 vote respone, args Term is:135,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:32 server[3]begin a new ticker, local state is:2, local Term is:136, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[1] got server 0 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:32 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:133
+2024/05/19 09:50:32 server[1] got server 4 vote respone, args Term is:133,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] got server 2 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:32 server[0]begin a new ticker, local state is:3, local Term is:136, and time is bigger than interval?:false
+
+2024/05/19 09:50:32 server[1]begin a new ticker, local state is:3, local Term is:136, and time is bigger than interval?:true
+2024/05/19 09:50:32 server[1]should begin a election
+2024/05/19 09:50:32 server[1]has vote for himself, Term is:137
+
+2024/05/19 09:50:32 server[4]begin a new ticker, local state is:2, local Term is:136, and time is bigger than interval?:true
+2024/05/19 09:50:32 server[4]should begin a election
+2024/05/19 09:50:32 server[4]has vote for himself, Term is:137
+
+
+2024/05/19 09:50:32 server[3] recive 1 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[3] begin to handler vote request, local Term is:136, request server is:1, request Term is:137, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[3]handler 1 vote request, args term is:137 bigger than local term:137, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[3]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[3] has finish request vote, request server is:1, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[2] recive 4 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[2] begin to handler vote request, local Term is:136, request server is:4, request Term is:137, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[2]handler 4 vote request, args term is:137 bigger than local term:137, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[2]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:32 server[2] has finish request vote, request server is:4, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[4] got server 2 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[4] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:32 server[0] recive 1 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[0] begin to handler vote request, local Term is:136, request server is:1, request Term is:137, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[0]handler 1 vote request, args term is:137 bigger than local term:137, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[0]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[0] has finish request vote, request server is:1, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[3] recive 4 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[3] begin to handler vote request, local Term is:137, request server is:4, request Term is:137, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[3]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:32 server[3] has finish request vote, request server is:4, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[1] recive 4 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[1] begin to handler vote request, local Term is:137, request server is:4, request Term is:137, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[1]not granted to server 4, because server has vote to 1
+2024/05/19 09:50:32 server[1] has finish request vote, request server is:4, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[2] recive 1 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[2] begin to handler vote request, local Term is:137, request server is:1, request Term is:137, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[2]not granted to server 1, because local Index is new than args
+2024/05/19 09:50:32 server[2] has finish request vote, request server is:1, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[4] recive 1 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[4] begin to handler vote request, local Term is:137, request server is:1, request Term is:137, request log last term is:2, request log last index is:98
+2024/05/19 09:50:32 server[4]not granted to server 1, because server has vote to 4
+2024/05/19 09:50:32 server[4] has finish request vote, request server is:1, args Term is:137, result granted is:false
+2024/05/19 09:50:32 server[2]begin a new ticker, local state is:2, local Term is:137, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[0] recive 4 server vote request, args Term is:137, get lock success
+2024/05/19 09:50:32 server[0] begin to handler vote request, local Term is:137, request server is:4, request Term is:137, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[0] has finish request vote, request server is:4, args Term is:137, result granted is:true
+2024/05/19 09:50:32 server[1] got server 0 vote respone, args Term is:135,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:32 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:135
+2024/05/19 09:50:32 server[1]begin a new ticker, local state is:3, local Term is:137, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[3]begin a new ticker, local state is:2, local Term is:137, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[1] got server 4 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:32 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:32 server[1], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:136
+2024/05/19 09:50:32 server[0]begin a new ticker, local state is:2, local Term is:137, and time is bigger than interval?:false
+2024/05/19 09:50:32 server[4]begin a new ticker, local state is:3, local Term is:137, and time is bigger than interval?:true
+
+=== server4开始了term为138的选举，server4有机会成为leader
+2024/05/19 09:50:32 server[4]should begin a election
+2024/05/19 09:50:32 server[4]has vote for himself, Term is:138
+
+=== server3反对server4
+2024/05/19 09:50:32 server[3] recive 4 server vote request, args Term is:138, get lock success
+2024/05/19 09:50:32 server[3] begin to handler vote request, local Term is:137, request server is:4, request Term is:138, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[3]handler 4 vote request, args term is:138 bigger than local term:138, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[3]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:32 server[3] has finish request vote, request server is:4, args Term is:138, result granted is:false
+=== server0同意server4
+2024/05/19 09:50:32 server[0] recive 4 server vote request, args Term is:138, get lock success
+2024/05/19 09:50:32 server[0] begin to handler vote request, local Term is:137, request server is:4, request Term is:138, request log last term is:15, request log last index is:35
+2024/05/19 09:50:32 server[0]handler 4 vote request, args term is:138 bigger than local term:138, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:32 server[0] has finish request vote, request server is:4, args Term is:138, result granted is:true
+=== server2反对server4
+2024/05/19 09:50:33 server[2] recive 4 server vote request, args Term is:138, get lock success
+2024/05/19 09:50:33 server[2] begin to handler vote request, local Term is:137, request server is:4, request Term is:138, request log last term is:15, request log last index is:35
+2024/05/19 09:50:33 server[2]handler 4 vote request, args term is:138 bigger than local term:138, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[2]not granted to server 4, because local Index is new than args
+2024/05/19 09:50:33 server[2] has finish request vote, request server is:4, args Term is:138, result granted is:false
+=== server1同意server4
+2024/05/19 09:50:33 server[1] recive 4 server vote request, args Term is:138, get lock success
+2024/05/19 09:50:33 server[1] begin to handler vote request, local Term is:137, request server is:4, request Term is:138, request log last term is:15, request log last index is:35
+2024/05/19 09:50:33 server[1]handler 4 vote request, args term is:138 bigger than local term:138, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[1] has finish request vote, request server is:4, args Term is:138, result granted is:true
+
+
+2024/05/19 09:50:33 server[4] got server 1 vote respone, args Term is:138,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:33 server[4] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+
+2024/05/19 09:50:33 server[1] got server 4 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[1] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:33 server[1] got server 2 vote respone, args Term is:135,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[2]begin a new ticker, local state is:2, local Term is:138, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[1] got server 3 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[3]begin a new ticker, local state is:2, local Term is:138, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[1]begin a new ticker, local state is:2, local Term is:138, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[1] got server 0 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[1] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[1] got server 3 vote respone, args Term is:132,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[1] got server 3 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[1] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:33 server[1], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:137
+2024/05/19 09:50:33 server[0]begin a new ticker, local state is:2, local Term is:138, and time is bigger than interval?:true
+2024/05/19 09:50:33 server[0]should begin a election
+2024/05/19 09:50:33 server[0]has vote for himself, Term is:139
+2024/05/19 09:50:33 server[3] recive 0 server vote request, args Term is:139, get lock success
+2024/05/19 09:50:33 server[3] begin to handler vote request, local Term is:138, request server is:0, request Term is:139, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[3]handler 0 vote request, args term is:139 bigger than local term:139, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[3] has finish request vote, request server is:0, args Term is:139, result granted is:false
+2024/05/19 09:50:33 server[0] got server 3 vote respone, args Term is:139,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:33 server[4] recive 0 server vote request, args Term is:139, get lock success
+2024/05/19 09:50:33 server[4] begin to handler vote request, local Term is:138, request server is:0, request Term is:139, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[4]handler 0 vote request, args term is:139 bigger than local term:139, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[4] has finish request vote, request server is:0, args Term is:139, result granted is:false
+2024/05/19 09:50:33 server[2] recive 0 server vote request, args Term is:139, get lock success
+2024/05/19 09:50:33 server[2] begin to handler vote request, local Term is:138, request server is:0, request Term is:139, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[2]handler 0 vote request, args term is:139 bigger than local term:139, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[2] has finish request vote, request server is:0, args Term is:139, result granted is:false
+2024/05/19 09:50:33 server[0] got server 2 vote respone, args Term is:139,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[1] recive 0 server vote request, args Term is:139, get lock success
+2024/05/19 09:50:33 server[1] begin to handler vote request, local Term is:138, request server is:0, request Term is:139, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[1]handler 0 vote request, args term is:139 bigger than local term:139, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[1] has finish request vote, request server is:0, args Term is:139, result granted is:true
+2024/05/19 09:50:33 server[0] got server 4 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:33 server[0], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:136
+2024/05/19 09:50:33 server[4]begin a new ticker, local state is:2, local Term is:139, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[3]begin a new ticker, local state is:2, local Term is:139, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[2]begin a new ticker, local state is:2, local Term is:139, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[0] got server 1 vote respone, args Term is:136,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[4] got server 2 vote respone, args Term is:138,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[4] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[1]begin a new ticker, local state is:2, local Term is:139, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[0]begin a new ticker, local state is:3, local Term is:139, and time is bigger than interval?:true
+2024/05/19 09:50:33 server[0]should begin a election
+2024/05/19 09:50:33 server[0]has vote for himself, Term is:140
+2024/05/19 09:50:33 server[4] recive 0 server vote request, args Term is:140, get lock success
+2024/05/19 09:50:33 server[4] begin to handler vote request, local Term is:139, request server is:0, request Term is:140, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[4]handler 0 vote request, args term is:140 bigger than local term:140, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[4] has finish request vote, request server is:0, args Term is:140, result granted is:false
+2024/05/19 09:50:33 server[3] recive 0 server vote request, args Term is:140, get lock success
+2024/05/19 09:50:33 server[3] begin to handler vote request, local Term is:139, request server is:0, request Term is:140, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[3]handler 0 vote request, args term is:140 bigger than local term:140, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[3] has finish request vote, request server is:0, args Term is:140, result granted is:false
+2024/05/19 09:50:33 server[0] got server 3 vote respone, args Term is:140,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:33 server[2] recive 0 server vote request, args Term is:140, get lock success
+2024/05/19 09:50:33 server[2] begin to handler vote request, local Term is:139, request server is:0, request Term is:140, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[2]handler 0 vote request, args term is:140 bigger than local term:140, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[2] has finish request vote, request server is:0, args Term is:140, result granted is:false
+2024/05/19 09:50:33 server[0] got server 2 vote respone, args Term is:140,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[4] got server 3 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[4] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[2]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[1] recive 0 server vote request, args Term is:140, get lock success
+2024/05/19 09:50:33 server[1] begin to handler vote request, local Term is:139, request server is:0, request Term is:140, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[1]handler 0 vote request, args term is:140 bigger than local term:140, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[1] has finish request vote, request server is:0, args Term is:140, result granted is:true
+2024/05/19 09:50:33 server[0] got server 1 vote respone, args Term is:140,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[3]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[4]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[4] got server 1 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[4] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:33 server[4], vote for leader, got 1 tickets, got 0 failRpc, total 4 request, args Term is:137
+2024/05/19 09:50:33 server[1]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[4]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[0]begin a new ticker, local state is:3, local Term is:140, and time is bigger than interval?:true
+
+2024/05/19 09:50:33 server[0]should begin a election
+2024/05/19 09:50:33 server[0]has vote for himself, Term is:141
+2024/05/19 09:50:33 server[4] recive 0 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[4] begin to handler vote request, local Term is:140, request server is:0, request Term is:141, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[4]handler 0 vote request, args term is:141 bigger than local term:141, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[4] has finish request vote, request server is:0, args Term is:141, result granted is:false
+2024/05/19 09:50:33 server[0] got server 2 vote respone, args Term is:141,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:33 server[3] recive 0 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[3] begin to handler vote request, local Term is:140, request server is:0, request Term is:141, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[3]handler 0 vote request, args term is:141 bigger than local term:141, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:33 server[3] has finish request vote, request server is:0, args Term is:141, result granted is:false
+2024/05/19 09:50:33 server[0] got server 3 vote respone, args Term is:141,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:1, finishRequest:3, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:33 server[1] recive 0 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[1] begin to handler vote request, local Term is:140, request server is:0, request Term is:141, request log last term is:12, request log last index is:616
+2024/05/19 09:50:33 server[1]handler 0 vote request, args term is:141 bigger than local term:141, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:33 server[1] has finish request vote, request server is:0, args Term is:141, result granted is:true
+2024/05/19 09:50:33 server[3]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:33 server[0] got server 4 vote respone, args Term is:140,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[0] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:33 server[0], vote for leader, got 2 tickets, got 0 failRpc, total 5 request, args Term is:140
+2024/05/19 09:50:33 server[4] got server 0 vote respone, args Term is:137,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:33 server[1]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+
+=== server2开始了选举，server0是没有机会成为leader的
+2024/05/19 09:50:33 server[2]begin a new ticker, local state is:2, local Term is:140, and time is bigger than interval?:true
+2024/05/19 09:50:33 server[2]should begin a election
+2024/05/19 09:50:33 server[2]has vote for himself, Term is:141
+
+=== server4将term为141的票投给了2
+2024/05/19 09:50:33 server[4] recive 2 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[4] begin to handler vote request, local Term is:141, request server is:2, request Term is:141, request log last term is:127, request log last index is:937
+2024/05/19 09:50:33 server[4] has finish request vote, request server is:2, args Term is:141, result granted is:true
+
+=== server1没有将term为141的票投给server2，以为server1已经将票投给了server0
+2024/05/19 09:50:33 server[1] recive 2 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[1] begin to handler vote request, local Term is:141, request server is:2, request Term is:141, request log last term is:127, request log last index is:937
+2024/05/19 09:50:33 server[1]not granted to server 2, because server has vote to 0
+2024/05/19 09:50:33 server[1] has finish request vote, request server is:2, args Term is:141, result granted is:false
+
+=== server3将term为141的票投给了2
+2024/05/19 09:50:33 server[3] recive 2 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[3] begin to handler vote request, local Term is:141, request server is:2, request Term is:141, request log last term is:127, request log last index is:937
+2024/05/19 09:50:33 server[3] has finish request vote, request server is:2, args Term is:141, result granted is:true
+
+=== server0没有将term为141的票投给2，因为他将票投给了自己
+2024/05/19 09:50:33 server[0] recive 2 server vote request, args Term is:141, get lock success
+2024/05/19 09:50:33 server[0] begin to handler vote request, local Term is:141, request server is:2, request Term is:141, request log last term is:127, request log last index is:937
+2024/05/19 09:50:33 server[0]not granted to server 2, because server has vote to 0
+2024/05/19 09:50:33 server[0] has finish request vote, request server is:2, args Term is:141, result granted is:false
+
+=================现在server2可以开始收获了，因为他获得了server4，server3的选票
+2024/05/19 09:50:33 server[2] got server 0 vote respone, args Term is:141,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:33 server[2] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+
+
+2024/05/19 09:50:33 server[1] got server 2 vote respone, args Term is:137,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[3]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[4]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[4] got server 0 vote respone, args Term is:138,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:34 server[4] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:34 server[0]begin a new ticker, local state is:3, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[1]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[2]begin a new ticker, local state is:3, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[0] got server 1 vote respone, args Term is:139,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:34 server[0] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:34 server[4]begin a new ticker, local state is:2, local Term is:141, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[4] got server 3 vote respone, args Term is:138,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[4] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:34 server[4], vote for leader, got 2 tickets, got 1 failRpc, total 5 request, args Term is:138
+2024/05/19 09:50:34 server[0]begin a new ticker, local state is:3, local Term is:141, and time is bigger than interval?:true
+
+2024/05/19 09:50:34 server[0]should begin a election
+2024/05/19 09:50:34 server[0]has vote for himself, Term is:142
+
+2024/05/19 09:50:34 server[3] recive 0 server vote request, args Term is:142, get lock success
+2024/05/19 09:50:34 server[3] begin to handler vote request, local Term is:141, request server is:0, request Term is:142, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[3]handler 0 vote request, args term is:142 bigger than local term:142, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:34 server[3] has finish request vote, request server is:0, args Term is:142, result granted is:false
+
+
+2024/05/19 09:50:34 server[1] recive 0 server vote request, args Term is:142, get lock success
+2024/05/19 09:50:34 server[1] begin to handler vote request, local Term is:141, request server is:0, request Term is:142, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[1]handler 0 vote request, args term is:142 bigger than local term:142, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[1] has finish request vote, request server is:0, args Term is:142, result granted is:true
+
+
+2024/05/19 09:50:34 server[2] recive 0 server vote request, args Term is:142, get lock success
+2024/05/19 09:50:34 server[2] begin to handler vote request, local Term is:141, request server is:0, request Term is:142, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[2]handler 0 vote request, args term is:142 bigger than local term:142, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:34 server[2] has finish request vote, request server is:0, args Term is:142, result granted is:false
+
+2024/05/19 09:50:34 server[4] recive 0 server vote request, args Term is:142, get lock success
+2024/05/19 09:50:34 server[4] begin to handler vote request, local Term is:141, request server is:0, request Term is:142, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[4]handler 0 vote request, args term is:142 bigger than local term:142, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[4]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:34 server[4] has finish request vote, request server is:0, args Term is:142, result granted is:false
+
+2024/05/19 09:50:34 server[2] got server 4 vote respone, args Term is:141,reply grante:true, is ok? true, get lock success
+2024/05/19 09:50:34 server[2] wait walk up, voteCount is:2, finishRequest:3, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:34 server[0] got server 4 vote respone, args Term is:141,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[0] wait walk up, voteCount is:1, finishRequest:4, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:34 server[0], vote for leader, got 1 tickets, got 1 failRpc, total 4 request, args Term is:141
+2024/05/19 09:50:34 server[3]begin a new ticker, local state is:2, local Term is:142, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[0] got server 4 vote respone, args Term is:139,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[0] wait walk up, voteCount is:2, finishRequest:5, len/2 is:2, vote plus finish is:2
+2024/05/19 09:50:34 server[0], vote for leader, got 2 tickets, got 0 failRpc, total 5 request, args Term is:139
+2024/05/19 09:50:34 server[1]begin a new ticker, local state is:2, local Term is:142, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[4]begin a new ticker, local state is:2, local Term is:142, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[0]begin a new ticker, local state is:3, local Term is:142, and time is bigger than interval?:true
+2024/05/19 09:50:34 server[0]should begin a election
+2024/05/19 09:50:34 server[0]has vote for himself, Term is:143
+2024/05/19 09:50:34 server[2] recive 0 server vote request, args Term is:143, get lock success
+2024/05/19 09:50:34 server[2] begin to handler vote request, local Term is:142, request server is:0, request Term is:143, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[2]handler 0 vote request, args term is:143 bigger than local term:143, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[2]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:34 server[2] has finish request vote, request server is:0, args Term is:143, result granted is:false
+2024/05/19 09:50:34 server[0] got server 4 vote respone, args Term is:143,reply grante:false, is ok? false, get lock success
+2024/05/19 09:50:34 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+2024/05/19 09:50:34 server[1] recive 0 server vote request, args Term is:143, get lock success
+2024/05/19 09:50:34 server[1] begin to handler vote request, local Term is:142, request server is:0, request Term is:143, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[1]handler 0 vote request, args term is:143 bigger than local term:143, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[1] has finish request vote, request server is:0, args Term is:143, result granted is:true
+2024/05/19 09:50:34 server[3] recive 0 server vote request, args Term is:143, get lock success
+2024/05/19 09:50:34 server[3] begin to handler vote request, local Term is:142, request server is:0, request Term is:143, request log last term is:12, request log last index is:616
+2024/05/19 09:50:34 server[3]handler 0 vote request, args term is:143 bigger than local term:143, so make self to follower,and votefor is:-1,status is:2
+2024/05/19 09:50:34 server[3]not granted to server 0, because local Index is new than args
+2024/05/19 09:50:34 server[3] has finish request vote, request server is:0, args Term is:143, result granted is:false
+2024/05/19 09:50:34 server[2] got server 1 vote respone, args Term is:141,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[2] wait walk up, voteCount is:2, finishRequest:4, len/2 is:2, vote plus finish is:3
+2024/05/19 09:50:34 server[3]begin a new ticker, local state is:2, local Term is:143, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[2]begin a new ticker, local state is:2, local Term is:143, and time is bigger than interval?:false
+2024/05/19 09:50:34 server[0] got server 3 vote respone, args Term is:142,reply grante:false, is ok? true, get lock success
+2024/05/19 09:50:34 server[0] wait walk up, voteCount is:1, finishRequest:2, len/2 is:2, vote plus finish is:4
+--- FAIL: TestFigure8Unreliable3C (43.98s)
+    config.go:605: one(9000) failed to reach agreement
+FAIL
+exit status 1
+FAIL	6.5840/raft	43.984s
+end of test 3...

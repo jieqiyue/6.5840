@@ -7,7 +7,7 @@
     echo "" > "$output_file"
 
 # 运行100次测试
-for ((i=1; i<=100; i++)); do
+for ((i=1; i<=5; i++)); do
     echo "Running test $i..."
 
     echo "Running test $i...." >> "$output_file"

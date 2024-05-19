@@ -104,9 +104,13 @@ type Raft struct {
 }
 
 // 不使用锁保护，需要调用者保证安全
-func (rf *Raft) SetElectionTime() {
+// 1. 在投了赞成票的时候
+// 2. 接收到leader的log（心跳）之后
+// 3. 接收到一个reply大于自己的term的时候，转变为follower
+// 4. 开始一次选举之后
+func (rf *Raft) SetElectionTime(interval int) {
 	rf.startElectionTime = time.Now()
-	rf.electionInterval = rand.Intn(200) + 150
+	rf.electionInterval = rand.Intn(200) + 150 + interval
 
 	return
 }
@@ -194,7 +198,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	defer func() {
 		if reply.VoteGranted == true {
 			//rf.receiveNew = true
-			rf.SetElectionTime()
+			rf.SetElectionTime(300)
 			rf.state = Follower
 			rf.persist()
 		}
@@ -282,7 +286,7 @@ func (rf *Raft) RequestHeartBeat(args *HeartBeatArgs, reply *HeartBeatReply) {
 	}
 
 	// rf.receiveNew = true
-	rf.SetElectionTime()
+	rf.SetElectionTime(200)
 	DPrintf("server[%d]got heart beat, reset timeout, local Term is:%d, local status is:%d, args server id is:%d, args Term is:%d", rf.me, rf.currentTerm, rf.state, args.CandidateId, args.Term)
 }
 
@@ -293,7 +297,7 @@ func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 		reply.Term = rf.currentTerm
 		// 将重置定时器的代码放在defer里面，防止某些特殊情况提前return的时候，没有执行到这个重置定时器的代码
 		if args.Term >= rf.currentTerm {
-			rf.SetElectionTime()
+			rf.SetElectionTime(200)
 		}
 		rf.mu.Unlock()
 	}()
@@ -333,7 +337,13 @@ func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 	}
 
 	// 由于切片截取不包括最后的那个下标，所以这里要+1
-	rf.log = append(rf.log[:args.PrevLogIndex+1], args.Entries...)
+	if len(args.Entries) > 0 {
+		argsLastLog := args.Entries[len(args.Entries)-1]
+		if !(rf.log[len(rf.log)-1].Index >= argsLastLog.Index && rf.log[argsLastLog.Index].Term == argsLastLog.Term) {
+			rf.log = append(rf.log[:args.PrevLogIndex+1], args.Entries...)
+		}
+	}
+
 	rf.persist()
 	// 更新commitIndex,这个分支虽然可能leader并没有发送消息过来，但是还是需要进。因为可能要可以更新自己的commitIndex了。
 	if args.LeaderCommit > rf.commitIndex {
@@ -379,7 +389,7 @@ func (rf *Raft) AddCurrentTerm(term int) {
 	// 自身的term为这个follower的term。并且此时会来执行这个SetElectionTime，又由于这个SetElectionTime设置的超时时间是800ms+的，但是那边分区出去的
 	// follower是每隔150ms就要重新选举一次，导致每次都是这个分区的follower先发起选举。但是又由于它没有最新的日志，导致成为不了leader。但是其他有最新log的
 	// 又由于定时器没有超时所以不进行选举。造成集群出问题了。
-	rf.SetElectionTime()
+	rf.SetElectionTime(0)
 	rf.persist()
 }
 
@@ -750,7 +760,7 @@ func (rf *Raft) ticker() {
 			DPrintf("server[%d]should begin a election", rf.me)
 
 			shouldElection = true
-			rf.SetElectionTime()
+			rf.SetElectionTime(600)
 			rf.currentTerm++
 			rf.state = Candidate
 			rf.voteFor = rf.me
@@ -863,7 +873,7 @@ func (rf *Raft) ticker() {
 			2. 作为一个follower，当收到leader发来的消息的时候
 		*/
 
-		ms := 150 + (rand.Int63() % 200)
+		ms := 200 + (rand.Int63() % 300)
 		time.Sleep(time.Duration(ms) * time.Millisecond)
 	}
 }

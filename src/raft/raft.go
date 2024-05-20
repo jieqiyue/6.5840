@@ -184,6 +184,8 @@ func (rf *Raft) readPersist(data []byte) {
 // that Index. Raft should now trim its log as much as possible.
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	// Your code here (3D).
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
 	firstLog := rf.log[0]
 	lastLog := rf.log[len(rf.log)-1]
 	if index < firstLog.Index {
@@ -203,6 +205,12 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 		Data:  nil,
 	}
 
+	tempLogEntry := make([]LogEntry, len(rf.log))
+	tempLogEntry = append(tempLogEntry, dummyLog)
+	tempLogEntry = append(rf.log[index-firstLog.Index+1:])
+
+	rf.log = tempLogEntry
+	rf.snapshot = snapshot
 }
 
 // example RequestVote RPC handler.
@@ -318,6 +326,10 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 
 }
 
+func (rf *Raft) GetLastLog() LogEntry {
+	return rf.log[len(rf.log)-1]
+}
+
 func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 	// Your code here (3A, 3B).
 	rf.mu.Lock()
@@ -342,7 +354,7 @@ func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 	}
 
 	// todo 先将这两个条件分开，方便查看日志, 正常来说不会进到这个if里面的
-	if args.PrevLogIndex > len(rf.log)-1 {
+	if args.PrevLogIndex > rf.getLastLog().Index {
 		reply.Success = false
 		DPrintf("server[%d]discard %d server send heart log beat, because log is too new, local log dot not contain pre log, pre log term:%d, pre log index:%d",
 			rf.me, args.LeaderId, args.PrevLogTerm, args.PrevLogIndex)

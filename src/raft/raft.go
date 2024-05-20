@@ -93,6 +93,7 @@ type Raft struct {
 	currentTerm int        // 当前任期
 	voteFor     int        // 当前任期的选票投给了哪个server
 	log         []LogEntry // 当前这个server中的所有日志
+	snapshot    []byte     // 快照
 
 	// volatile state
 	commitIndex int // 当前可以应用到状态机的日志为止
@@ -177,12 +178,30 @@ func (rf *Raft) readPersist(data []byte) {
 	}
 }
 
-// the service says it has created a snapshot that has
+// Snapshot the service says it has created a snapshot that has
 // all info up to and including Index. this means the
 // service no longer needs the log through (and including)
 // that Index. Raft should now trim its log as much as possible.
 func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	// Your code here (3D).
+	firstLog := rf.log[0]
+	lastLog := rf.log[len(rf.log)-1]
+	if index < firstLog.Index {
+		DPrintf("server[%d]try to snapShot,but args index:%d is less then local first log index:%d", rf.me, index, firstLog.Index)
+		return
+	}
+
+	if index > lastLog.Index {
+		DPrintf("server[%d]try to snapShot,but args index:%d is bigger then local last log index:%d", rf.me, index, lastLog.Index)
+		return
+	}
+
+	// 需要截断从log的index为传入的这个index这个log之后的日志，需要计算出这个index日志在本地的位置
+	dummyLog := LogEntry{
+		Term:  rf.log[index-firstLog.Index].Term,
+		Index: rf.log[index-firstLog.Index].Index,
+		Data:  nil,
+	}
 
 }
 
@@ -288,6 +307,15 @@ func (rf *Raft) RequestHeartBeat(args *HeartBeatArgs, reply *HeartBeatReply) {
 	// rf.receiveNew = true
 	rf.SetElectionTime(200)
 	DPrintf("server[%d]got heart beat, reset timeout, local Term is:%d, local status is:%d, args server id is:%d, args Term is:%d", rf.me, rf.currentTerm, rf.state, args.CandidateId, args.Term)
+}
+
+func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *RequestSnapShotReply) {
+	// Your code here (3A, 3B).
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+
+	reply.Term = rf.currentTerm
+
 }
 
 func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
@@ -435,6 +463,11 @@ func (rf *Raft) sendLog(server int, args *SendLogArgs, reply *SendLogReply) bool
 	return ok
 }
 
+func (rf *Raft) sendInstallSnapShot(server int, args *RequestSnapShotArgs, reply *RequestSnapShotReply) bool {
+	ok := rf.peers[server].Call("Raft.RequestInstallSnapShot", args, reply)
+	return ok
+}
+
 // 获取到最后一条日志，因为有dummy log，所以不用担心下标的问题
 func (rf *Raft) getLastLog() LogEntry {
 	return rf.log[len(rf.log)-1]
@@ -552,6 +585,91 @@ func (rf *Raft) heartBeat() {
 	}
 }
 
+func (rf *Raft) sendSnapShot(peer int) {
+	rf.mu.Lock()
+	if rf.state != Leader {
+		return
+	}
+
+	sendLeaderTerm := rf.currentTerm
+	sendMatchIndex := rf.matchIndex[peer]
+	sendLastLogIndex := rf.log[0].Index
+	if sendMatchIndex != 0 {
+		DPrintf("server[%d],term:%d, send snapShot to %d server, but found this server sendMatchIndex is not 0", rf.me, rf.currentTerm, peer)
+		fmt.Println(2 / 0)
+	}
+	args := RequestSnapShotArgs{
+		Term:              rf.currentTerm,
+		LeaderId:          rf.me,
+		LastIncludedIndex: rf.log[0].Index,
+		LastIncludedTerm:  rf.log[0].Term,
+		Offset:            0,
+		Data:              rf.snapshot,
+		Done:              true,
+	}
+	rf.mu.Unlock()
+	reply := RequestSnapShotReply{}
+	ok := rf.sendInstallSnapShot(peer, &args, &reply)
+	if !ok {
+		return
+	}
+
+	// 如果返回true，就需要增加nextIndex
+	rf.mu.Lock()
+	if rf.state == Leader && rf.currentTerm == sendLeaderTerm {
+		// 如果nextIndex还是0的话，那么就把nextIndex更新为1.让它下次不再发送snapshot了。
+		if rf.nextIndex[peer] == 0 {
+			rf.nextIndex[peer] = 1
+		}
+
+		if rf.matchIndex[peer] == sendMatchIndex {
+			rf.matchIndex[peer] = sendLastLogIndex
+		}
+	}
+
+	//  apply到状态机
+	// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
+	for beginIndex := rf.commitIndex + 1; beginIndex < len(rf.log); beginIndex++ {
+		matchCount := 0
+		DPrintf("server[%d]begin to cacu match count, begin index is:%d, len of log is:%d, this is:%d server reply,"+
+			"and now match index is:%v,commit index is:%d", rf.me, beginIndex, len(rf.log), i, rf.matchIndex, rf.commitIndex)
+		for _, matchIndex := range rf.matchIndex {
+			if matchIndex >= beginIndex {
+				matchCount++
+			}
+		}
+
+		if matchCount <= len(rf.peers)/2 {
+			break
+		}
+
+		// 更新commitIndex，注意这里不能提交之前term的日志，只能提交本term的日志
+		if beginIndex > rf.commitIndex && rf.currentTerm == rf.log[beginIndex].Term {
+			// 由于leader不能提交之前term的日志，只能间接提交之前term的日志，就导致有可能leader在某一个之后的时刻更新自身的
+			// commitIndex是跳过了前面的一些日志的。但是往applyCh里面发送applyMsg还是必须是连续的，所以这个地方需要遍历从
+			// rf.commitIndex + 1到beginIndex之间这一段的日志，并提交到applyCh。
+			for toApplyIndex := rf.commitIndex + 1; toApplyIndex <= beginIndex; toApplyIndex++ {
+				applyMsg := ApplyMsg{
+					CommandValid: true,
+					Command:      rf.log[toApplyIndex].Data,
+					CommandIndex: toApplyIndex,
+				}
+
+				rf.applyCh <- applyMsg
+				DPrintf("leader server[%d] apply a log entry to applyCh, log term is:%d, log index is:%d", rf.me, rf.log[toApplyIndex].Term, rf.log[toApplyIndex].Index)
+			}
+
+			rf.commitIndex = beginIndex
+		}
+	}
+
+	rf.mu.Unlock()
+}
+
+func (rf *Raft) applyToRaftStateMachine() {
+
+}
+
 func (rf *Raft) sendLogTicket() {
 	// 周期性的发送日志
 	shouldSendLog := false
@@ -579,6 +697,13 @@ func (rf *Raft) sendLogTicket() {
 				// 将rf.nextIndex[i] >= len(rf.log)这个条件去掉。因为现在已经把发送心跳和发送日志的合二为一了。那么也就不需要用那个比较follower和
 				// leader是否跟上了，因为无论怎样都要发送RPC的，只是如果是跟上了的话，发送的数据是空的，只用来重置定时器。
 				if i == rf.me {
+					continue
+				}
+
+				// 如果发现nextIndex为0的话，那么就需要发送snapshot了
+				sendLogArgs.ShouldSendSnapShot = false
+				if rf.nextIndex[i] == 0 {
+					sendLogArgs.ShouldSendSnapShot = true
 					continue
 				}
 
@@ -618,6 +743,11 @@ func (rf *Raft) sendLogTicket() {
 			DPrintf("server[%d], term:%d, before send log to others, ths allSendLogArgs is:%v,", rf.me, rf.currentTerm, allSendLogArgs)
 			for i, _ := range rf.peers {
 				if i == rf.me {
+					continue
+				}
+
+				if allSendLogArgs[i].ShouldSendSnapShot {
+					go rf.sendSnapShot(i)
 					continue
 				}
 
@@ -671,8 +801,6 @@ func (rf *Raft) sendLogTicket() {
 								}
 
 								// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
-								// 2024/05/17 14:15:08 server[4]begin to cacu match count, begin index is:18, len of log is:77, this is:3 server reply,
-								// and now match index is:[76 76 76 76 0],commit index is:17
 								for beginIndex := rf.commitIndex + 1; beginIndex < len(rf.log); beginIndex++ {
 									matchCount := 0
 									DPrintf("server[%d]begin to cacu match count, begin index is:%d, len of log is:%d, this is:%d server reply,"+
@@ -717,11 +845,21 @@ func (rf *Raft) sendLogTicket() {
 							// 将i这个服务器的nextIndex回退一个term
 
 							// 这里更新的时候，还需要判断是否是前一个请求对应的回复。
+
+							// 因为之前是
 							if rf.nextIndex[i] == recodeNextIndex {
 								backNextIndex := rf.nextIndex[i]
+								// 当len(rf.log) == 1的时候，这个backNextIndex设置为1.而当这个时候如果客户端返回了false，那么这个地方就会越界。
+								// 而由于之前，dummy log是一定相等的。所以nextIndex为1的时候发送的日志，永远不会被其他follower拒绝，
+								// 所以这里没有越界。
+								if len(rf.log) == 1 {
+									rf.nextIndex[i] = 0
+									return
+								}
+
 								nowNextTerm := rf.log[backNextIndex].Term
-								// 最多让nextIndex回退到1
-								for backNextIndex > 1 && rf.log[backNextIndex].Term == nowNextTerm {
+								// 最多让nextIndex回退到0
+								for backNextIndex > 0 && rf.log[backNextIndex].Term == nowNextTerm {
 									backNextIndex--
 								}
 
@@ -778,6 +916,7 @@ func (rf *Raft) ticker() {
 				// todo 此处应该要设置为0，还是用rf里面的currentTerm
 				args.LastLogTerm = -1
 			} else {
+				// 由于rf.log里面至少都会有一条dummy log，所以此处可以直接这样获取最后一条日志
 				tempLog := rf.log[len(rf.log)-1]
 				args.LastLogTerm = tempLog.Term
 				args.LastLogIndex = tempLog.Index
@@ -883,7 +1022,13 @@ func (rf *Raft) ticker() {
 // 设置nextIndex为1.
 func (rf *Raft) resetRaftIndex() {
 	for i, _ := range rf.nextIndex {
-		// 这里直接设置为log的长度，因为有个dummy节点，所以实际上可以直接用这个数字当做log数组的下标来用了
+		// 这里直接设置为log的长度，因为有个dummy节点，所以实际上可以直接用这个数字当做log数组的下标来用了，go语言中切片截取array[begin:]，这个begin
+		// 可以等于len(array)。并不会报错。
+		// 在snapshot之后，即使这个master什么log都没有，但是会有一个dummy log，此处将nextIndex初始化为1，
+		// 每个server的snapshot的生成都是自己控制的。所以leader不用关心是否需要把snapshot发送给follower。而是只需要正常的同步日志，当发现
+		// nextIndex在本地已经成为了snapshot之后，就发送snapshot就行了。之前是dummy log一定会符合，现在是dummy log也不一定符合了，所以当
+		// 发送nextIndex为1的位置的日志都不符合了的话，那么就需要继续减少nextIndex。此时nextIndex会变成0，所以在发送日志的时候，就要判断，如果
+		// nextIndex是0的话，就去发送snapshot，而不要再去截取log数组里面的日志发送了。
 		if len(rf.log) == 1 {
 			rf.nextIndex[i] = 1
 		} else {
@@ -894,6 +1039,7 @@ func (rf *Raft) resetRaftIndex() {
 		rf.matchIndex[i] = 0
 	}
 
+	// 由于这里设置了commitIndex为0，所以不会将index为0的日志提交掉。
 	rf.commitIndex = 0
 }
 

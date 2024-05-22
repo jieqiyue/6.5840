@@ -1246,8 +1246,10 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 
 	cfg.begin(name)
 
-	cfg.one(rand.Int(), servers, true)
+	cfg.one(0, servers, true)
+	DPrintf("snapcommon: now command 0 should make same at three server")
 	leader1 := cfg.checkOneLeader()
+	DPrintf("snapcommon: leader1 is:%d", leader1)
 
 	for i := 0; i < iters; i++ {
 		victim := (leader1 + 1) % servers
@@ -1267,9 +1269,11 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 		}
 
 		// perhaps send enough to get a snapshot
+		outi := i
 		nn := (SnapShotInterval / 2) + (rand.Int() % SnapShotInterval)
 		for i := 0; i < nn; i++ {
-			cfg.rafts[sender].Start(rand.Int())
+			DPrintf("snapcommon: send %d to %d server", outi, sender)
+			cfg.rafts[sender].Start(outi)
 		}
 
 		// let applier threads catch up with the Start()'s
@@ -1277,7 +1281,8 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 			// make sure all followers have caught up, so that
 			// an InstallSnapshot RPC isn't required for
 			// TestSnapshotBasic3D().
-			cfg.one(rand.Int(), servers, true)
+			cfg.one(888, servers, true)
+			DPrintf("snapcommon: should make 888 to same")
 		} else {
 			cfg.one(rand.Int(), servers-1, true)
 		}

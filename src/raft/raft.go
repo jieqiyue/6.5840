@@ -1184,7 +1184,7 @@ func (rf *Raft) resetRaftIndex() {
 	}
 
 	// 由于这里设置了commitIndex为0，所以不会将index为0的日志提交掉。
-	rf.commitIndex = 0
+	//rf.commitIndex = 0
 }
 
 // the service or tester wants to create a Raft server. the ports

@@ -187,6 +187,7 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	// Your code here (3D).
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
+	DPrintf("server[%d]reciver a snapshot from top service,index is:%d", rf.me, index)
 	firstLog := rf.GetFirstLog()
 	lastLog := rf.GetLastLog()
 	if index <= firstLog.Index {
@@ -206,10 +207,11 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 		Data:  nil,
 	}
 
-	tempLogEntry := make([]LogEntry, len(rf.log))
+	tempLogEntry := make([]LogEntry, 0)
 	tempLogEntry = append(tempLogEntry, dummyLog)
 	tempLogEntry = append(tempLogEntry, rf.log[index-firstLog.Index+1:]...)
-
+	DPrintf("server[%d] is snapshot in index:%d, now dummy log is:%v, "+
+		"and tempLogEntry is:%v", rf.me, index, dummyLog, tempLogEntry)
 	rf.log = tempLogEntry
 	rf.snapshot = snapshot
 
@@ -225,7 +227,7 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	//}()
 
 	rf.persist()
-	DPrintf("server[%d]finish a snapshot,now first log index is:%d, term is:%d", rf.me, rf.GetFirstLog().Index, rf.GetFirstLog().Term)
+	DPrintf("server[%d]finish a snapshot,now first log index is:%d, term is:%d, now i have:%v", rf.me, rf.GetFirstLog().Index, rf.GetFirstLog().Term, rf.log)
 }
 
 // example RequestVote RPC handler.
@@ -378,9 +380,17 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 			rf.applyCh <- applyMsg
 		}()
 
+		if args.LastIncludedIndex > rf.lastApplied {
+			rf.lastApplied = args.LastIncludedIndex
+		}
+
+		if args.LastIncludedIndex > rf.commitIndex {
+			rf.commitIndex = args.LastIncludedIndex
+		}
 		rf.persist()
 		rf.SetElectionTime(200)
 
+		DPrintf("server[%d]after install snapshot,and lastapplied is:%d, commitIndex is:%d,have %v log", rf.me, rf.lastApplied, rf.commitIndex, rf.log)
 		return
 	}
 
@@ -699,10 +709,10 @@ func (rf *Raft) sendSnapShot(peer int) {
 	sendNextIndex := rf.nextIndex[peer]
 	sendMatchIndex := rf.matchIndex[peer]
 	sendLastLogIndex := rf.GetFirstLog().Index
-	if sendMatchIndex != 0 {
-		DPrintf("server[%d],term:%d, send snapShot to %d server, but found this server sendMatchIndex is not 0", rf.me, rf.currentTerm, peer)
-		panic("sendSnapShot panic")
-	}
+	//if sendMatchIndex != 0 {
+	//	DPrintf("server[%d],term:%d, send snapShot to %d server, but found this server sendMatchIndex is not 0", rf.me, rf.currentTerm, peer)
+	//	panic("sendSnapShot panic")
+	//}
 	args := RequestSnapShotArgs{
 		Term:              rf.currentTerm,
 		LeaderId:          rf.me,
@@ -712,7 +722,7 @@ func (rf *Raft) sendSnapShot(peer int) {
 		Data:              rf.snapshot,
 		Done:              true,
 	}
-	DPrintf("server[%d], server term:%d, begin to send snap shot to:%d, args is:%v", rf.me, rf.currentTerm, peer, args)
+	DPrintf("server[%d], server term:%d, begin to send snapshot to:%d, args is:%v", rf.me, rf.currentTerm, peer, args)
 	rf.mu.Unlock()
 	reply := RequestSnapShotReply{}
 	ok := rf.sendInstallSnapShot(peer, &args, &reply)
@@ -722,6 +732,12 @@ func (rf *Raft) sendSnapShot(peer int) {
 
 	// 如果返回true，就需要增加nextIndex
 	rf.mu.Lock()
+	if reply.Term > rf.currentTerm {
+		DPrintf("server[%d]reciver %d server snapshot reply, and found local term is less, so change local term from:%d to:%d", rf.me, peer, rf.currentTerm, reply.Term)
+		rf.AddCurrentTerm(reply.Term)
+		return
+	}
+
 	if rf.state == Leader && rf.currentTerm == sendLeaderTerm {
 		// 如果nextIndex还是0的话，那么就把nextIndex更新为1.让它下次不再发送snapshot了。
 		if rf.nextIndex[peer] == sendNextIndex {
@@ -735,7 +751,7 @@ func (rf *Raft) sendSnapShot(peer int) {
 		DPrintf("server[%d], term:%d, got peer:%d send snapshot reply", rf.me, rf.currentTerm, peer)
 		//  apply到状态机
 		// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
-		for beginIndex := rf.commitIndex + 1; beginIndex < len(rf.log); beginIndex++ {
+		for beginIndex := rf.commitIndex + 1; beginIndex <= rf.GetLastLog().Index; beginIndex++ {
 			matchCount := 0
 			DPrintf("server[%d]begin to cacu commit index, begin index is:%d, len of log is:%d, this is:%d server reply,"+
 				"and now match index is:%v,commit index is:%d", rf.me, beginIndex, len(rf.log), peer, rf.matchIndex, rf.commitIndex)
@@ -783,29 +799,37 @@ func (rf *Raft) applyToRaftStateMachine() {
 }
 
 func (rf *Raft) applyTicket() {
-	rf.mu.Lock()
-	endApplyIndex := 0
-	if rf.lastApplied < rf.commitIndex {
-		endApplyIndex = rf.commitIndex
-	}
-	rf.mu.Unlock()
+	for rf.killed() == false {
+		rf.mu.Lock()
+		toApplyLogEntries := make([]LogEntry, 0)
 
-	for toApplyIndex := rf.lastApplied + 1; toApplyIndex <= endApplyIndex; toApplyIndex++ {
-		applyMsg := ApplyMsg{
-			CommandValid: true,
-			Command:      rf.log[toApplyIndex-rf.GetFirstLog().Index].Data,
-			CommandIndex: toApplyIndex,
+		if rf.lastApplied < rf.commitIndex {
+			for toApplyIndex := rf.lastApplied + 1; toApplyIndex <= rf.commitIndex; toApplyIndex++ {
+				toApplyLogEntries = append(toApplyLogEntries, rf.log[toApplyIndex-rf.GetFirstLog().Index])
+			}
+		}
+		rf.mu.Unlock()
+
+		DPrintf("server[%d] begin to apply ticket,lastApply is:%d, len of toAppLogEntries is:%d, array is:%v", rf.me, rf.lastApplied, len(toApplyLogEntries), toApplyLogEntries)
+
+		for i := 0; i < len(toApplyLogEntries); i++ {
+			DPrintf("server[%d]want to apply %d logEntry, the logEntry is:%v", rf.me, i, toApplyLogEntries[i])
+			applyMsg := ApplyMsg{
+				CommandValid: true,
+				Command:      toApplyLogEntries[i].Data,
+				CommandIndex: toApplyLogEntries[i].Index,
+			}
+
+			rf.applyCh <- applyMsg
 		}
 
-		rf.applyCh <- applyMsg
+		if len(toApplyLogEntries) > 0 && toApplyLogEntries[len(toApplyLogEntries)-1].Index > rf.lastApplied {
+			rf.lastApplied = toApplyLogEntries[len(toApplyLogEntries)-1].Index
+			DPrintf("server[%d]apply all log,now lastapply is:%d", rf.me, rf.lastApplied)
+		}
 
-		DPrintf("server[%d] apply a log entry to applyCh, log term is:%d, log index is:%d",
-			rf.me, rf.log[toApplyIndex-rf.GetFirstLog().Index].Term, rf.log[toApplyIndex-rf.GetFirstLog().Index].Index)
+		time.Sleep(150 * time.Millisecond)
 	}
-
-	rf.lastApplied = endApplyIndex
-
-	time.Sleep(150 * time.Millisecond)
 }
 
 func (rf *Raft) sendLogTicket() {
@@ -939,7 +963,7 @@ func (rf *Raft) sendLogTicket() {
 								}
 
 								// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
-								for beginIndex := rf.commitIndex + 1; beginIndex < len(rf.log); beginIndex++ {
+								for beginIndex := rf.commitIndex + 1; beginIndex <= rf.GetLastLog().Index; beginIndex++ {
 									matchCount := 0
 									DPrintf("server[%d]begin to cacu match count, begin index is:%d, len of log is:%d, this is:%d server reply,"+
 										"and now match index is:%v,commit index is:%d", rf.me, beginIndex, len(rf.log), i, rf.matchIndex, rf.commitIndex)
@@ -986,7 +1010,7 @@ func (rf *Raft) sendLogTicket() {
 
 								// leader有可能在发出这个append entries rpc之后发生了一次snapshot，当这次snapshot的lastIncludedIndex大于等于
 								// backNextIndex的时候，直接设置nextIndex为这个lastIncludedIndex。
-								if backNextIndex-rf.log[0].Index <= 0 {
+								if backNextIndex-rf.log[0].Index <= 1 {
 									// 能进入这个分支，一定是发生了snapshot的。
 									rf.nextIndex[i] = rf.log[0].Index
 									DPrintf("server[%d]after send append entry to:%d, but need reduce nextIndex to:%d", rf.me, i, rf.nextIndex[i])
@@ -996,7 +1020,15 @@ func (rf *Raft) sendLogTicket() {
 								// 这个地方不能直接作为下标了，有两种情况，发生了snapshot，或者是没有发生snapshot。
 								// 1. 发生了snapshot：rf.log中的第一个位置保存的是snapshot最后一条日志的index。计算应该是 backNextIndex - rf.log[0].index
 								// 2. 没有发生snapshot：backNextIndex就可以当做下标。此时的计算应该变成 backNextIndex - rf.log[0].index
-								nowNextTerm := rf.log[backNextIndex-rf.log[0].Index].Term
+								//nowNextTerm := rf.GetLastLog().Term
+								//if backNextIndex <= rf.GetLastLog().Index {
+								//	nowNextTerm = rf.log[backNextIndex-rf.log[0].Index].Term
+								//}
+								if backNextIndex > rf.GetLastLog().Index {
+									backNextIndex = rf.GetLastLog().Index
+								}
+
+								nowNextTerm := rf.log[backNextIndex-rf.GetFirstLog().Index].Term
 								// 最多让nextIndex回退到rf.log第一个log的index位置
 								for backNextIndex > rf.log[0].Index && rf.log[backNextIndex-rf.log[0].Index].Term == nowNextTerm {
 									backNextIndex--
@@ -1242,6 +1274,8 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	// go rf.heartBeat()
 
 	go rf.sendLogTicket()
+
+	go rf.applyTicket()
 
 	return rf
 }

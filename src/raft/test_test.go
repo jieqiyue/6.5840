@@ -1260,12 +1260,18 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 		}
 
 		if disconnect {
+			DPrintf("snapcommon:make server[%d] disconnect", victim)
 			cfg.disconnect(victim)
-			cfg.one(rand.Int(), servers-1, true)
+			ran := rand.Int()
+			DPrintf("snapcommon:make %d to be same", ran)
+			cfg.one(ran, servers-1, true)
 		}
 		if crash {
+			DPrintf("snapcommon:make server[%d] crash", victim)
 			cfg.crash1(victim)
-			cfg.one(rand.Int(), servers-1, true)
+			ran := rand.Int()
+			DPrintf("snapcommon:make %d to be same", ran)
+			cfg.one(ran, servers-1, true)
 		}
 
 		// perhaps send enough to get a snapshot
@@ -1284,7 +1290,9 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 			cfg.one(888, servers, true)
 			DPrintf("snapcommon: should make 888 to same")
 		} else {
-			cfg.one(rand.Int(), servers-1, true)
+			ran := rand.Int()
+			DPrintf("snapcommon:make %d to be same", ran)
+			cfg.one(ran, servers-1, true)
 		}
 
 		if cfg.LogSize() >= MAXLOGSIZE {
@@ -1293,8 +1301,11 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 		if disconnect {
 			// reconnect a follower, who maybe behind and
 			// needs to rceive a snapshot to catch up.
+			DPrintf("make server[%d]back", victim)
 			cfg.connect(victim)
-			cfg.one(rand.Int(), servers, true)
+			ran := rand.Int()
+			DPrintf("snapcommon:make %d to be same", ran)
+			cfg.one(ran, servers, true)
 			leader1 = cfg.checkOneLeader()
 		}
 		if crash {

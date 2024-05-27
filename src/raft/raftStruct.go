@@ -17,7 +17,7 @@ const (
 	LogMsgType
 )
 
-// {4 1 11 2 [] 11 1 false}
+// {40 0 230 38 [{40 231 8368273227940715514} {40 232 6261130192811087240}] 232 2 false}
 type SendLogArgs struct {
 	Term         int
 	LeaderId     int

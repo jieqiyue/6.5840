@@ -130,10 +130,12 @@ func (cfg *config) crash1(i int) {
 		cfg.rafts[i] = nil
 	}
 
+	DPrintf("config.go make:%d to crash,the cfg.saved is:%v", i, cfg.saved[i])
 	if cfg.saved[i] != nil {
 		raftlog := cfg.saved[i].ReadRaftState()
 		snapshot := cfg.saved[i].ReadSnapshot()
 		cfg.saved[i] = &Persister{}
+		DPrintf("config.go make:%d to crash,and save the raftlog and snapshot,raft log:%v, snapshot:%v", i, raftlog, snapshot)
 		cfg.saved[i].Save(raftlog, snapshot)
 	}
 }
@@ -206,6 +208,7 @@ func (cfg *config) ingestSnap(i int, snapshot []byte, index int) string {
 		cfg.logs[i][j] = xlog[j]
 	}
 	cfg.lastApplied[i] = lastIncludedIndex
+	DPrintf("config.go:restart:%d, set lastApplied to snapshot lastIncludedIndexis:%d", i, cfg.lastApplied[i])
 	return ""
 }
 
@@ -302,6 +305,7 @@ func (cfg *config) start1(i int, applier func(int, chan ApplyMsg)) {
 		cfg.saved[i] = cfg.saved[i].Copy()
 
 		snapshot := cfg.saved[i].ReadSnapshot()
+		DPrintf("config.go start:%d back to cluster, and cfg.save is not null, snapshot is:%v", i, snapshot)
 		if snapshot != nil && len(snapshot) > 0 {
 			// mimic KV server and process snapshot now.
 			// ideally Raft should send it up on applyCh...
@@ -313,6 +317,7 @@ func (cfg *config) start1(i int, applier func(int, chan ApplyMsg)) {
 	} else {
 		cfg.saved[i] = MakePersister()
 	}
+	DPrintf("config.go start:%d back to cluster,now lastApplied is:%d", i, cfg.lastApplied[i])
 
 	cfg.mu.Unlock()
 

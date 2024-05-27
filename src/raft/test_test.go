@@ -1257,6 +1257,7 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 		if i%3 == 1 {
 			sender = (leader1 + 1) % servers
 			victim = leader1
+			DPrintf("snapcommon:this victim is leader:%d, and sender not affect,sender:%d", victim, sender)
 		}
 
 		if disconnect {
@@ -1301,7 +1302,7 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 		if disconnect {
 			// reconnect a follower, who maybe behind and
 			// needs to rceive a snapshot to catch up.
-			DPrintf("make server[%d]back", victim)
+			DPrintf("snapcommon:make disconnect server[%d]back", victim)
 			cfg.connect(victim)
 			ran := rand.Int()
 			DPrintf("snapcommon:make %d to be same", ran)
@@ -1309,6 +1310,7 @@ func snapcommon(t *testing.T, name string, disconnect bool, reliable bool, crash
 			leader1 = cfg.checkOneLeader()
 		}
 		if crash {
+			DPrintf("snapcommon:make crash server[%d] back", victim)
 			cfg.start1(victim, cfg.applierSnap)
 			cfg.connect(victim)
 			cfg.one(rand.Int(), servers, true)
@@ -1339,9 +1341,9 @@ func TestSnapshotInstallUnCrash3D(t *testing.T) {
 	snapcommon(t, "Test (3D): install snapshots (unreliable+crash)", false, false, true)
 }
 
-// do the servers persist the snapshots, and
-// restart using snapshot along with the
-// tail of the log?
+//do the servers persist the snapshots, and
+//restart using snapshot along with the
+//tail of the log?
 func TestSnapshotAllCrash3D(t *testing.T) {
 	servers := 3
 	iters := 5

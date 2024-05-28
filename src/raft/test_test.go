@@ -1341,9 +1341,9 @@ func TestSnapshotInstallUnCrash3D(t *testing.T) {
 	snapcommon(t, "Test (3D): install snapshots (unreliable+crash)", false, false, true)
 }
 
-//do the servers persist the snapshots, and
-//restart using snapshot along with the
-//tail of the log?
+// do the servers persist the snapshots, and
+// restart using snapshot along with the
+// tail of the log?
 func TestSnapshotAllCrash3D(t *testing.T) {
 	servers := 3
 	iters := 5

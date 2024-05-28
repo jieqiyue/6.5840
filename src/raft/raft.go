@@ -418,9 +418,9 @@ func (rf *Raft) GetFirstLog() LogEntry {
 
 func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 	// Your code here (3A, 3B).
-	DPrintf("server[%d]got a append entries rpc, args server is:%d, args term is:%d,not get lock", rf.me, args.LeaderId, args.Term)
+	DPrintf("server[%d]got a append entries rpc, local status is:%d, args server is:%d, args term is:%d,not get lock", rf.me, rf.state, args.LeaderId, args.Term)
 	rf.mu.Lock()
-	DPrintf("server[%d]got a append entries rpc, args server is:%d, args term is:%d,get lock success", rf.me, args.LeaderId, args.Term)
+	DPrintf("server[%d]got a append entries rpc,local status is:%d, args server is:%d, args term is:%d,get lock success", rf.me, rf.state, args.LeaderId, args.Term)
 	defer func() {
 		reply.Term = rf.currentTerm
 		// 将重置定时器的代码放在defer里面，防止某些特殊情况提前return的时候，没有执行到这个重置定时器的代码
@@ -1100,7 +1100,7 @@ func (rf *Raft) ticker() {
 			}
 		}
 		rf.mu.Unlock()
-
+		DPrintf("server[%d]begin a new ticker, local state is:%v, local Term is:%d, release a lock success", rf.me, rf.state, rf.currentTerm)
 		// 在发送RPC之前释放锁，防止死锁
 		go func() {
 			if shouldElection {

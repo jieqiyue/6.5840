@@ -418,7 +418,7 @@ func (rf *Raft) GetFirstLog() LogEntry {
 
 func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 	// Your code here (3A, 3B).
-	DPrintf("server[%d]got a append entries rpc, local status is:%d, args server is:%d, args term is:%d,not get lock", rf.me, rf.state, args.LeaderId, args.Term)
+	DPrintf("server[%d]got a append entries rpc, args server is:%d, args term is:%d,not get lock", rf.me, args.LeaderId, args.Term)
 	rf.mu.Lock()
 	DPrintf("server[%d]got a append entries rpc,local status is:%d, args server is:%d, args term is:%d,get lock success", rf.me, rf.state, args.LeaderId, args.Term)
 	defer func() {
@@ -806,9 +806,8 @@ func (rf *Raft) applyTicket() {
 				toApplyLogEntries = append(toApplyLogEntries, rf.log[toApplyIndex-rf.GetFirstLog().Index])
 			}
 		}
-		rf.mu.Unlock()
-
 		DPrintf("server[%d]begin to apply ticket,lastApply is:%d, commit index is:%d, len of toAppLogEntries is:%d, array is:%v", rf.me, rf.lastApplied, rf.commitIndex, len(toApplyLogEntries), toApplyLogEntries)
+		rf.mu.Unlock()
 
 		for i := 0; i < len(toApplyLogEntries); i++ {
 			DPrintf("server[%d]want to apply %d logEntry, the logEntry is:%v", rf.me, i, toApplyLogEntries[i])
@@ -908,7 +907,7 @@ func (rf *Raft) sendLogTicket() {
 		rf.mu.Unlock()
 
 		if shouldSendLog {
-			DPrintf("server[%d], term:%d, before send log to others, ths allSendLogArgs is:%v,", rf.me, rf.currentTerm, allSendLogArgs)
+			DPrintf("server[%d], before send log to others, ths allSendLogArgs is:%v,", rf.me, allSendLogArgs)
 			for i, _ := range rf.peers {
 				if i == rf.me {
 					continue
@@ -1099,10 +1098,11 @@ func (rf *Raft) ticker() {
 				args.LastLogIndex = tempLog.Index
 			}
 		}
-		rf.mu.Unlock()
 		DPrintf("server[%d]begin a new ticker, local state is:%v, local Term is:%d, release a lock success", rf.me, rf.state, rf.currentTerm)
+		rf.mu.Unlock()
+
 		// 在发送RPC之前释放锁，防止死锁
-		go func() {
+		go func(shouldElection bool) {
 			if shouldElection {
 				// 由于RPC已经含有了超时的功能，所以此处直接使用waitGroup，不用担心某一个节点不可达，导致reply一直收不到的情况
 				//wg := sync.WaitGroup{}
@@ -1170,7 +1170,7 @@ func (rf *Raft) ticker() {
 				rf.mu.Unlock()
 				//DPrintf("server[%d]is going to sleep.....333", rf.me)
 			}
-		}()
+		}(shouldElection)
 
 		// pause for a random amount of time between 50 and 350
 		// milliseconds.

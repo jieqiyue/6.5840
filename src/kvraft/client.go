@@ -1,12 +1,21 @@
 package kvraft
 
-import "6.5840/labrpc"
+import (
+	"6.5840/labrpc"
+	"sync"
+)
 import "crypto/rand"
 import "math/big"
 
 type Clerk struct {
 	servers []*labrpc.ClientEnd
 	// You will have to modify this struct.
+
+	clientId int64
+	// 这个标识了当前Clerk下一次要发送的请求的ID，是递增的
+	reqSeq   int64
+	leaderId int
+	mu       sync.Mutex
 }
 
 func nrand() int64 {
@@ -20,6 +29,12 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 	ck := new(Clerk)
 	ck.servers = servers
 	// You'll have to add code here.
+	// 使用随机数生成clientId，避免不同的client生成了同样的id
+	ck.clientId = nrand()
+	// 序列号从0开始
+	ck.reqSeq = 0
+	ck.leaderId = 0
+
 	return ck
 }
 
@@ -34,8 +49,8 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 // must match the declared types of the RPC handler function's
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) Get(key string) string {
-
 	// You will have to modify this function.
+	ck.SendClientRequest(key, "", OpGet)
 	return ""
 }
 
@@ -49,11 +64,46 @@ func (ck *Clerk) Get(key string) string {
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) PutAppend(key string, value string, op string) {
 	// You will have to modify this function.
+	if op == "Put" {
+		ck.SendClientRequest(key, value, OpPut)
+	}
+
+	if op == "Append" {
+		ck.SendClientRequest(key, value, OpAppend)
+	}
 }
 
 func (ck *Clerk) Put(key string, value string) {
 	ck.PutAppend(key, value, "Put")
 }
+
 func (ck *Clerk) Append(key string, value string) {
 	ck.PutAppend(key, value, "Append")
+}
+
+func (ck *Clerk) SendClientRequest(key string, value string, op OperationOp) string {
+	args := ClientRequestArgs{
+		op:       op,
+		Key:      key,
+		Value:    value,
+		ClientId: ck.clientId,
+		ReqSeq:   ck.reqSeq,
+	}
+
+	for true {
+		// 一直请求，直到这个请求成功为止
+		reply := ClientRequestReply{}
+		ok := ck.servers[ck.leaderId].Call("KVServer.HandlerClientRequest", &args, &reply)
+		if !ok || reply.Err == ErrWrongLeader || reply.Err == ErrNoKey || reply.Err == TimeOut {
+			ck.leaderId = (ck.leaderId + 1) % len(ck.servers)
+			continue
+		}
+
+		// 能到这里代表这个请求处理成功了，此时需要增加reqSeq为下一次请求做准备
+		ck.reqSeq++
+
+		return reply.Value
+	}
+
+	return ""
 }

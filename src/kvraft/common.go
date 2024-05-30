@@ -1,12 +1,21 @@
 package kvraft
 
+type Err string
+
 const (
 	OK             = "OK"
 	ErrNoKey       = "ErrNoKey"
 	ErrWrongLeader = "ErrWrongLeader"
+	TimeOut        = "TimeOut"
 )
 
-type Err string
+type OperationOp uint8
+
+const (
+	OpPut OperationOp = iota
+	OpAppend
+	OpGet
+)
 
 // Put or Append
 type PutAppendArgs struct {
@@ -27,6 +36,20 @@ type GetArgs struct {
 }
 
 type GetReply struct {
+	Err   Err
+	Value string
+}
+
+type ClientRequestArgs struct {
+	op    OperationOp
+	Key   string
+	Value string
+
+	ClientId int64
+	ReqSeq   int64
+}
+
+type ClientRequestReply struct {
 	Err   Err
 	Value string
 }

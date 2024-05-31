@@ -3,10 +3,11 @@ package kvraft
 type Err string
 
 const (
-	OK             = "OK"
-	ErrNoKey       = "ErrNoKey"
-	ErrWrongLeader = "ErrWrongLeader"
-	TimeOut        = "TimeOut"
+	OK          = "OK"
+	NoKey       = "ErrNoKey"
+	WrongLeader = "ErrWrongLeader"
+	TimeOut     = "TimeOut"
+	Duplicate   = "Duplicate"
 )
 
 type OperationOp uint8
@@ -41,7 +42,7 @@ type GetReply struct {
 }
 
 type ClientRequestArgs struct {
-	op    OperationOp
+	Op    OperationOp
 	Key   string
 	Value string
 

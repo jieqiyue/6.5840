@@ -7,9 +7,11 @@ import (
 	"log"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 const Debug = false
+const ExecuteTimeout = 500 * time.Millisecond
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
@@ -22,6 +24,9 @@ type Op struct {
 	// Your definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
+	Op    OperationOp
+	Key   string
+	Value string
 }
 
 type KVServer struct {
@@ -34,18 +39,125 @@ type KVServer struct {
 	maxraftstate int // snapshot if log grows this big
 
 	// Your definitions here.
+	lastApplied int
+	// k/v存储核心数据结构
+	store map[string]string
+	// clientId -->maxReqId,给每一个clientId记录一下已经处理到哪个reqId了。防止重复处理客户端请求。实现exactly once语义。
+	clientMaxReq map[int64]int64
+	// clientId --> lastReqRest，缓存这个客户端上一次处理的请求的结果，因为客户端是按照顺序请求的，上一个请求没有结束的时候，一定不会开始下一个
+	// 请求。所以当发现reqId小于clientMaxReq给这个客户端存的值的时候，就可以认为是过时的请求，直接丢弃。
+	clientLastReqRest map[int64]ClientRequestReply
+	// 通知的channel表示该请求处理完成了。由于applier和请求不是在同一个goroutine里面处理的
+	notifyChannel map[int]chan *ClientRequestReply
 }
 
-func (kv *KVServer) Get(args *GetArgs, reply *GetReply) {
+// 由于如果read只进一次日志的话，要做很多特殊判断。比如说查看上一次的read的通知channel是否存在。并且继续等待它结束等等。
+// 所以使用另外一种处理方式，如果op是read的话，就每次都进日志。非read的话，如果已经进过一次日志了，就不再进日志了。毕竟read操作就算是重复发送
+// 只要能够返回这个时间段内的值，都可以认为是线性一致性的。
+func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientRequestReply) {
 	// Your code here.
+	kv.mu.Lock()
+	defer kv.mu.Unlock()
+	if maxReq, ok := kv.clientMaxReq[args.ClientId]; ok && maxReq >= args.ReqSeq && args.Op != OpGet {
+		reply.Err = Duplicate
+		return
+	}
+
+	// 组装日志，进日志
+	opLog := Op{
+		Op:    args.Op,
+		Key:   args.Key,
+		Value: args.Value,
+	}
+
+	index, _, ok := kv.rf.Start(opLog)
+	if !ok {
+		reply.Err = WrongLeader
+		return
+	}
+
+	// 获取通知的channel，并且阻塞在这个通知上面获取结果.这个地方不会出现日志同步的太快，导致那边applier的时候，这个channel还没有被创建出来
+	// 导致没法发送消息。因为这个GetNotifyChannel函数在applier的时候也会调用。所以也有可能是那边创建的channel。
+	kv.mu.Lock()
+	notifyCh := kv.GetNotifyChannel(index)
+	kv.mu.Unlock()
+
+	select {
+	case result := <-notifyCh:
+		reply.Value, reply.Err = result.Value, result.Err
+	case <-time.After(ExecuteTimeout):
+		reply.Err = TimeOut
+	}
+
+	// 由于select会阻塞，如果运行到这个地方的时候，已经可以把这个channel给删除了
+	go func(index int) {
+		kv.mu.Lock()
+		defer kv.mu.Unlock()
+		kv.RemoveNotifyChannel(index)
+	}(index)
 }
 
-func (kv *KVServer) Put(args *PutAppendArgs, reply *PutAppendReply) {
-	// Your code here.
+func (kv *KVServer) ApplyTicket() {
+	for kv.killed() == false {
+		select {
+		case applyMsg := <-kv.applyCh:
+			if applyMsg.CommandValid {
+				if applyMsg.CommandIndex <= kv.lastApplied {
+					DPrintf("server[%d]found index:%d have applied,so discard it", kv.me, applyMsg.CommandIndex)
+					continue
+				}
+
+				kv.lastApplied = applyMsg.CommandIndex
+				// 到这里就可以应用到状态机了
+				opLog := applyMsg.Command.(Op)
+				notifyCh := kv.GetNotifyChannel(applyMsg.CommandIndex)
+				kv.ApplyToStateMachine(opLog)
+			} else if applyMsg.SnapshotValid {
+
+			} else {
+				DPrintf("server[%d] error, unknow opLog type:%v", kv.me, applyMsg)
+			}
+		}
+	}
 }
 
-func (kv *KVServer) Append(args *PutAppendArgs, reply *PutAppendReply) {
-	// Your code here.
+func (kv *KVServer) ApplyToStateMachine(opLog Op) ClientRequestReply {
+	reply := ClientRequestReply{}
+	var err Err
+	var value string
+	switch opLog.Op {
+	case OpGet:
+		kv.StateMachineGet(opLog.Key)
+	}
+}
+
+func (kv *KVServer) GetNotifyChannel(index int) chan *ClientRequestReply {
+	if _, ok := kv.notifyChannel[index]; !ok {
+		kv.notifyChannel[index] = make(chan *ClientRequestReply, 1)
+	}
+
+	return kv.notifyChannel[index]
+}
+
+func (kv *KVServer) RemoveNotifyChannel(index int) {
+	delete(kv.notifyChannel, index)
+}
+
+func (kv *KVServer) StateMachineGet(key string) (string, Err) {
+	var value string
+	if value, ok := kv.store[key]; !ok {
+		return value, NoKey
+	}
+
+	return value, OK
+}
+
+func (kv *KVServer) StateMachinePut() Err {
+
+}
+
+func (kv *KVServer) StateMachineAppend() Err {
+
 }
 
 // the tester calls Kill() when a KVServer instance won't

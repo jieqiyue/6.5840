@@ -50,8 +50,7 @@ func MakeClerk(servers []*labrpc.ClientEnd) *Clerk {
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) Get(key string) string {
 	// You will have to modify this function.
-	ck.SendClientRequest(key, "", OpGet)
-	return ""
+	return ck.SendClientRequest(key, "", OpGet)
 }
 
 // shared by Put and Append.
@@ -83,7 +82,7 @@ func (ck *Clerk) Append(key string, value string) {
 
 func (ck *Clerk) SendClientRequest(key string, value string, op OperationOp) string {
 	args := ClientRequestArgs{
-		op:       op,
+		Op:       op,
 		Key:      key,
 		Value:    value,
 		ClientId: ck.clientId,
@@ -94,7 +93,7 @@ func (ck *Clerk) SendClientRequest(key string, value string, op OperationOp) str
 		// 一直请求，直到这个请求成功为止
 		reply := ClientRequestReply{}
 		ok := ck.servers[ck.leaderId].Call("KVServer.HandlerClientRequest", &args, &reply)
-		if !ok || reply.Err == ErrWrongLeader || reply.Err == ErrNoKey || reply.Err == TimeOut {
+		if !ok || reply.Err == WrongLeader || reply.Err == NoKey || reply.Err == TimeOut {
 			ck.leaderId = (ck.leaderId + 1) % len(ck.servers)
 			continue
 		}

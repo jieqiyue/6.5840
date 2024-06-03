@@ -27,6 +27,9 @@ type Op struct {
 	Op    OperationOp
 	Key   string
 	Value string
+
+	ClientId int64
+	ReqSeq   int64
 }
 
 type KVServer struct {
@@ -46,7 +49,7 @@ type KVServer struct {
 	clientMaxReq map[int64]int64
 	// clientId --> lastReqRest，缓存这个客户端上一次处理的请求的结果，因为客户端是按照顺序请求的，上一个请求没有结束的时候，一定不会开始下一个
 	// 请求。所以当发现reqId小于clientMaxReq给这个客户端存的值的时候，就可以认为是过时的请求，直接丢弃。
-	clientLastReqRest map[int64]ClientRequestReply
+	clientLastReqRest map[int64]*ClientRequestReply
 	// 通知的channel表示该请求处理完成了。由于applier和请求不是在同一个goroutine里面处理的
 	notifyChannel map[int]chan *ClientRequestReply
 }
@@ -57,19 +60,19 @@ type KVServer struct {
 func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientRequestReply) {
 	// Your code here.
 	kv.mu.Lock()
-	defer kv.mu.Unlock()
 	if maxReq, ok := kv.clientMaxReq[args.ClientId]; ok && maxReq >= args.ReqSeq && args.Op != OpGet {
 		reply.Err = Duplicate
+		kv.mu.Unlock()
 		return
 	}
-
+	kv.mu.Unlock()
 	// 组装日志，进日志
 	opLog := Op{
 		Op:    args.Op,
 		Key:   args.Key,
 		Value: args.Value,
 	}
-
+	// 由于控制不了kv.clientMaxReq的设置时机，所以需要在apply的时候，进行判断，防止执行两次相同的操作。
 	index, _, ok := kv.rf.Start(opLog)
 	if !ok {
 		reply.Err = WrongLeader
@@ -102,6 +105,8 @@ func (kv *KVServer) ApplyTicket() {
 		select {
 		case applyMsg := <-kv.applyCh:
 			if applyMsg.CommandValid {
+				// 仅仅通过这个kv.lastApplied是不能够完全防止执行两次客户端的相同的opLog的。因为客户端可能发送了两次opLog，这两个opLog是
+				// 不同的index。
 				if applyMsg.CommandIndex <= kv.lastApplied {
 					DPrintf("server[%d]found index:%d have applied,so discard it", kv.me, applyMsg.CommandIndex)
 					continue
@@ -110,8 +115,22 @@ func (kv *KVServer) ApplyTicket() {
 				kv.lastApplied = applyMsg.CommandIndex
 				// 到这里就可以应用到状态机了
 				opLog := applyMsg.Command.(Op)
-				notifyCh := kv.GetNotifyChannel(applyMsg.CommandIndex)
-				kv.ApplyToStateMachine(opLog)
+				reply := &ClientRequestReply{}
+				kv.mu.Lock()
+				if index, ok := kv.clientMaxReq[opLog.ClientId]; ok && index >= opLog.ReqSeq {
+					reply = kv.clientLastReqRest[opLog.ClientId]
+				} else {
+					reply = kv.ApplyToStateMachine(opLog)
+					kv.clientLastReqRest[opLog.ClientId] = reply
+					kv.clientMaxReq[opLog.ClientId] = opLog.ReqSeq
+				}
+
+				if _, isLeader := kv.rf.GetState(); isLeader {
+					notifyCh := kv.GetNotifyChannel(applyMsg.CommandIndex)
+					notifyCh <- reply
+				}
+
+				kv.mu.Unlock()
 			} else if applyMsg.SnapshotValid {
 
 			} else {
@@ -121,14 +140,22 @@ func (kv *KVServer) ApplyTicket() {
 	}
 }
 
-func (kv *KVServer) ApplyToStateMachine(opLog Op) ClientRequestReply {
+func (kv *KVServer) ApplyToStateMachine(opLog Op) *ClientRequestReply {
 	reply := ClientRequestReply{}
 	var err Err
 	var value string
 	switch opLog.Op {
 	case OpGet:
-		kv.StateMachineGet(opLog.Key)
+		value, err = kv.StateMachineGet(opLog.Key)
+	case OpPut:
+		err = kv.StateMachinePut(opLog.Key, opLog.Value)
+	case OpAppend:
+		err = kv.StateMachineAppend(opLog.Key, opLog.Value)
 	}
+
+	reply.Err = err
+	reply.Value = value
+	return &reply
 }
 
 func (kv *KVServer) GetNotifyChannel(index int) chan *ClientRequestReply {
@@ -152,12 +179,14 @@ func (kv *KVServer) StateMachineGet(key string) (string, Err) {
 	return value, OK
 }
 
-func (kv *KVServer) StateMachinePut() Err {
-
+func (kv *KVServer) StateMachinePut(key, value string) Err {
+	kv.store[key] = value
+	return OK
 }
 
-func (kv *KVServer) StateMachineAppend() Err {
-
+func (kv *KVServer) StateMachineAppend(key, value string) Err {
+	kv.store[key] = value
+	return OK
 }
 
 // the tester calls Kill() when a KVServer instance won't

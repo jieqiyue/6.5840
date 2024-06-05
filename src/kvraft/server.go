@@ -11,11 +11,19 @@ import (
 )
 
 const Debug = false
+const Debugt = false
 const ExecuteTimeout = 500 * time.Millisecond
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
 		log.Printf(format, a...)
+	}
+	return
+}
+
+func DPrintft(format string, a ...interface{}) (n int, err error) {
+	if Debugt {
+		log.Printf("kv:"+format, a...)
 	}
 	return
 }
@@ -60,6 +68,7 @@ type KVServer struct {
 func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientRequestReply) {
 	// Your code here.
 	kv.mu.Lock()
+	//DPrintf("server[%d]begin to HandlerClientRequest,args clientId is:%d, req seq is:%d", kv.me, args.ClientId, args.ReqSeq)
 	if maxReq, ok := kv.clientMaxReq[args.ClientId]; ok && maxReq >= args.ReqSeq && args.Op != OpGet {
 		reply.Err = Duplicate
 		kv.mu.Unlock()
@@ -68,9 +77,11 @@ func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientR
 	kv.mu.Unlock()
 	// 组装日志，进日志
 	opLog := Op{
-		Op:    args.Op,
-		Key:   args.Key,
-		Value: args.Value,
+		Op:       args.Op,
+		Key:      args.Key,
+		Value:    args.Value,
+		ClientId: args.ClientId,
+		ReqSeq:   args.ReqSeq,
 	}
 	// 由于控制不了kv.clientMaxReq的设置时机，所以需要在apply的时候，进行判断，防止执行两次相同的操作。
 	index, _, ok := kv.rf.Start(opLog)
@@ -81,14 +92,21 @@ func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientR
 
 	// 获取通知的channel，并且阻塞在这个通知上面获取结果.这个地方不会出现日志同步的太快，导致那边applier的时候，这个channel还没有被创建出来
 	// 导致没法发送消息。因为这个GetNotifyChannel函数在applier的时候也会调用。所以也有可能是那边创建的channel。
+	DPrintf("server[%d]start a log success,args clientId is:%d, req seq is:%d", kv.me, args.ClientId, args.ReqSeq)
 	kv.mu.Lock()
+	start := time.Now().UnixMilli()
+	DPrintft("in HandlerClientRequest, msg success send to raft, time is:%v", start)
 	notifyCh := kv.GetNotifyChannel(index)
 	kv.mu.Unlock()
 
 	select {
 	case result := <-notifyCh:
 		reply.Value, reply.Err = result.Value, result.Err
+		start := time.Now().UnixMilli()
+		DPrintft("in HandlerClientRequest, notifyCh said opLog apply success, time is:%v", start)
+		DPrintf("server[%d]got a notifyCh,reply value:%v,args clientId is:%v, args req seq is:%d", kv.me, reply.Value, args.ClientId, args.ReqSeq)
 	case <-time.After(ExecuteTimeout):
+		DPrintf("server[%d]got a notifyCh,time out,args clientId is:%v, args req seq is:%d", kv.me, args.ClientId, args.ReqSeq)
 		reply.Err = TimeOut
 	}
 
@@ -104,11 +122,14 @@ func (kv *KVServer) ApplyTicket() {
 	for kv.killed() == false {
 		select {
 		case applyMsg := <-kv.applyCh:
+			DPrintf("server[%d]kv got a applyMsg,applyMsg is:%v", kv.me, applyMsg)
 			if applyMsg.CommandValid {
 				// 仅仅通过这个kv.lastApplied是不能够完全防止执行两次客户端的相同的opLog的。因为客户端可能发送了两次opLog，这两个opLog是
 				// 不同的index。
+				kv.mu.Lock()
 				if applyMsg.CommandIndex <= kv.lastApplied {
 					DPrintf("server[%d]found index:%d have applied,so discard it", kv.me, applyMsg.CommandIndex)
+					kv.mu.Unlock()
 					continue
 				}
 
@@ -116,11 +137,13 @@ func (kv *KVServer) ApplyTicket() {
 				// 到这里就可以应用到状态机了
 				opLog := applyMsg.Command.(Op)
 				reply := &ClientRequestReply{}
-				kv.mu.Lock()
+				DPrintf("server[%d]ApplyTicket begin to apply a log,log is:%v,opLog reqSeq is:%d,kv clientMaxReq:%v",
+					kv.me, opLog, opLog.ReqSeq, kv.clientMaxReq)
 				if index, ok := kv.clientMaxReq[opLog.ClientId]; ok && index >= opLog.ReqSeq {
 					reply = kv.clientLastReqRest[opLog.ClientId]
 				} else {
 					reply = kv.ApplyToStateMachine(opLog)
+					DPrintf("server[%d]success apply opLog:%v to state machine, reply value is:%v", kv.me, opLog, reply.Value)
 					kv.clientLastReqRest[opLog.ClientId] = reply
 					kv.clientMaxReq[opLog.ClientId] = opLog.ReqSeq
 				}
@@ -131,6 +154,7 @@ func (kv *KVServer) ApplyTicket() {
 				}
 
 				kv.mu.Unlock()
+				DPrintf("server[%d]finish opLog:%v, unlock success", kv.me, opLog)
 			} else if applyMsg.SnapshotValid {
 
 			} else {
@@ -171,12 +195,11 @@ func (kv *KVServer) RemoveNotifyChannel(index int) {
 }
 
 func (kv *KVServer) StateMachineGet(key string) (string, Err) {
-	var value string
-	if value, ok := kv.store[key]; !ok {
-		return value, NoKey
+	if value, ok := kv.store[key]; ok {
+		return value, OK
 	}
 
-	return value, OK
+	return "", NoKey
 }
 
 func (kv *KVServer) StateMachinePut(key, value string) Err {
@@ -185,7 +208,7 @@ func (kv *KVServer) StateMachinePut(key, value string) Err {
 }
 
 func (kv *KVServer) StateMachineAppend(key, value string) Err {
-	kv.store[key] = value
+	kv.store[key] += value
 	return OK
 }
 
@@ -235,6 +258,13 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 	kv.rf = raft.Make(servers, me, persister, kv.applyCh)
 
 	// You may need initialization code here.
+	kv.lastApplied = -1
+	kv.notifyChannel = make(map[int]chan *ClientRequestReply)
+	kv.store = make(map[string]string)
+	kv.clientMaxReq = make(map[int64]int64)
+	kv.clientLastReqRest = make(map[int64]*ClientRequestReply)
+
+	go kv.ApplyTicket()
 
 	return kv
 }

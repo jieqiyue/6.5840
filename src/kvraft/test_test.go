@@ -401,13 +401,13 @@ func GenericTestSpeed(t *testing.T, part string, maxraftstate int) {
 	// wait until first op completes, so we know a leader is elected
 	// and KV servers are ready to process client requests
 	ck.Get("x")
-
+	DPrintf("GenericTestSpeed:Get key X finish....")
 	start := time.Now()
 	for i := 0; i < numOps; i++ {
 		ck.Append("x", "x 0 "+strconv.Itoa(i)+" y")
 	}
 	dur := time.Since(start)
-
+	fmt.Printf("all test cast:%v ms\n", dur.Milliseconds())
 	v := ck.Get("x")
 	checkClntAppends(t, 0, v, numOps)
 
@@ -418,7 +418,7 @@ func GenericTestSpeed(t *testing.T, part string, maxraftstate int) {
 	if dur > numOps*timePerOp {
 		t.Fatalf("Operations completed too slowly %v/op > %v/op\n", dur/numOps, timePerOp)
 	}
-
+	fmt.Printf("Operations completed %v/op > %v/op\n", dur/numOps, timePerOp)
 	cfg.end()
 }
 

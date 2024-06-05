@@ -3,6 +3,7 @@ package kvraft
 import (
 	"6.5840/labrpc"
 	"sync"
+	"time"
 )
 import "crypto/rand"
 import "math/big"
@@ -63,6 +64,7 @@ func (ck *Clerk) Get(key string) string {
 // arguments. and reply must be passed as a pointer.
 func (ck *Clerk) PutAppend(key string, value string, op string) {
 	// You will have to modify this function.
+
 	if op == "Put" {
 		ck.SendClientRequest(key, value, OpPut)
 	}
@@ -73,6 +75,7 @@ func (ck *Clerk) PutAppend(key string, value string, op string) {
 }
 
 func (ck *Clerk) Put(key string, value string) {
+	DPrintf("client Clerk begin to put key:%v and value:%v to server", key, value)
 	ck.PutAppend(key, value, "Put")
 }
 
@@ -89,11 +92,15 @@ func (ck *Clerk) SendClientRequest(key string, value string, op OperationOp) str
 		ReqSeq:   ck.reqSeq,
 	}
 
+	DPrintf("client begin to send a request:%v,op is:%v,key is:%v,value is:%v,clientId is:%v,reqSeq is:%v",
+		args, args.Op, args.Key, args.Value, args.ClientId, args.ReqSeq)
+	start := time.Now().UnixMilli()
+	DPrintft("in SendClientRequest, before send msg, time is:%v,op:%v,key:%v,value:%v", start, args.Op, args.Key, args.Value)
 	for true {
 		// 一直请求，直到这个请求成功为止
 		reply := ClientRequestReply{}
 		ok := ck.servers[ck.leaderId].Call("KVServer.HandlerClientRequest", &args, &reply)
-		if !ok || reply.Err == WrongLeader || reply.Err == NoKey || reply.Err == TimeOut {
+		if !ok || reply.Err == WrongLeader || reply.Err == TimeOut {
 			ck.leaderId = (ck.leaderId + 1) % len(ck.servers)
 			continue
 		}

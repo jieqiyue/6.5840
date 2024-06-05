@@ -82,7 +82,8 @@ type Raft struct {
 	// Look at the paper's Figure 2 for a description of what
 	// state a Raft server must maintain.
 
-	applyCh chan ApplyMsg
+	applyCh   chan ApplyMsg
+	applyCond *sync.Cond
 
 	state      ServerState
 	receiveNew bool
@@ -398,6 +399,7 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 
 		if args.LastIncludedIndex > rf.commitIndex {
 			rf.commitIndex = args.LastIncludedIndex
+			rf.applyCond.Signal()
 		}
 
 		rf.SetElectionTime(200)
@@ -502,9 +504,10 @@ func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 		newCommitIndex := int(math.Min(float64(args.LeaderCommit), float64(rf.GetLastLog().Index)))
 		if newCommitIndex > rf.commitIndex {
 			rf.commitIndex = newCommitIndex
+			rf.applyCond.Signal()
 		}
 	}
-
+	DPrintft("follower[%d]append a msg to local,time is:%v", rf.me, time.Now().UnixMilli())
 	reply.Success = true
 }
 
@@ -783,6 +786,7 @@ func (rf *Raft) sendSnapShot(peer int) {
 				//}
 
 				rf.commitIndex = beginIndex
+				rf.applyCond.Signal()
 			}
 		}
 	}
@@ -798,6 +802,10 @@ func (rf *Raft) applyToRaftStateMachine() {
 func (rf *Raft) applyTicket() {
 	for rf.killed() == false {
 		rf.mu.Lock()
+		for rf.lastApplied >= rf.commitIndex {
+			rf.applyCond.Wait()
+		}
+
 		toApplyLogEntries := make([]LogEntry, 0)
 		DPrintf("server[%d]begin to apply ticket,lastApply is:%d, commitIndex is:%d,now have:%v log", rf.me, rf.lastApplied, rf.commitIndex, rf.log)
 
@@ -808,7 +816,7 @@ func (rf *Raft) applyTicket() {
 		}
 		DPrintf("server[%d]begin to apply ticket,lastApply is:%d, commit index is:%d, len of toAppLogEntries is:%d, array is:%v", rf.me, rf.lastApplied, rf.commitIndex, len(toApplyLogEntries), toApplyLogEntries)
 		rf.mu.Unlock()
-
+		DPrintft("server[%d]in applyTicket,begin to apply a msg,time is:%v, toApplyLogEntries is:%v", rf.me, time.Now().UnixMilli(), toApplyLogEntries)
 		for i := 0; i < len(toApplyLogEntries); i++ {
 			DPrintf("server[%d]want to apply %d logEntry, the logEntry is:%v", rf.me, i, toApplyLogEntries[i])
 			applyMsg := ApplyMsg{
@@ -817,6 +825,8 @@ func (rf *Raft) applyTicket() {
 				CommandIndex: toApplyLogEntries[i].Index,
 			}
 
+			//start := time.Now().UnixMilli()
+			//DPrintft("in applyTicket,begin send msg to applyCh, time is:%v", start)
 			rf.applyCh <- applyMsg
 		}
 
@@ -825,7 +835,218 @@ func (rf *Raft) applyTicket() {
 			DPrintf("server[%d]apply all log,now lastapply is:%d", rf.me, rf.lastApplied)
 		}
 
-		time.Sleep(150 * time.Millisecond)
+		//time.Sleep(20 * time.Millisecond)
+	}
+}
+
+// 将发送日志的逻辑抽象出来，供start()函数调用，防止leader的非必要的延迟同步到follower
+func (rf *Raft) sendLogTicketCore() {
+	recodeNextIndex := make([]int, len(rf.peers))
+	allSendLogArgs := make([]SendLogArgs, len(rf.peers))
+
+	for i, _ := range rf.peers {
+		sendLogArgs := &allSendLogArgs[i]
+		// 此处不能使用append，要使用下标的方式每次都覆盖上次这个位置的值
+
+		// 如果这个follower的nextIndex是leader的最后一条日志的index + 1的位置，那么就认为没有新的日志要发送
+		// 所以这个nextIndex一开始需要初始化为len(rf.log) - 1的位置，表示将要发送的Log的下标。如果一开始的时候，leader一条日志都
+		// 没有，那么会初始化为0，否则初始化为len(rf.log) - 1.当初始化为0的时候，这个条件也会成立，所以也不会再发送RPC了。而当leader
+		// 后续添加了一条log之后，len(rf.log) 就变成1了，此时的nextIndex还是0，那么不成立也就会继续往下去发送日志了
+
+		// 将rf.nextIndex[i] >= len(rf.log)这个条件去掉。因为现在已经把发送心跳和发送日志的合二为一了。那么也就不需要用那个比较follower和
+		// leader是否跟上了，因为无论怎样都要发送RPC的，只是如果是跟上了的话，发送的数据是空的，只用来重置定时器。
+		if i == rf.me {
+			continue
+		}
+
+		// 如果发现nextIndex为0的话，那么就需要发送snapshot了
+		sendLogArgs.ShouldSendSnapShot = false
+		if rf.GetFirstLog().Term != -1 && rf.nextIndex[i] <= rf.GetFirstLog().Index {
+			sendLogArgs.ShouldSendSnapShot = true
+			continue
+		}
+
+		if rf.GetFirstLog().Term == -1 && rf.nextIndex[i] == rf.GetFirstLog().Index {
+			rf.nextIndex[i] = rf.GetFirstLog().Index + 1
+		}
+
+		if rf.nextIndex[i] < 0 {
+			DPrintf("error,server[%d] found %d nextIndex less than 0", rf.me, i)
+			fmt.Printf("error,server[%d] found %d nextIndex less than 0", rf.me, i)
+			rf.nextIndex[i] = 0
+		}
+
+		// todo 此时是否需要判断nextIndex是否是大于0的，有可能某一个follower的nextIndex一直减少，一直到0以下了
+		sendLogArgs.LeaderId = rf.me
+		sendLogArgs.Term = rf.currentTerm
+
+		// 因为nextIndex一定是大于等于1的，所以这里一定可以拿到preLog。
+		if rf.nextIndex[i]-rf.GetFirstLog().Index == 0 {
+			fmt.Printf("error,leader[%d] have:%v log, and nextIndex is:%v", rf.me, rf.log, rf.nextIndex)
+		}
+		preLog := rf.log[(rf.nextIndex[i]-rf.GetFirstLog().Index)-1]
+		sendLogArgs.PrevLogIndex = preLog.Index
+		sendLogArgs.PrevLogTerm = preLog.Term
+
+		sendLogArgs.Entries = rf.log[(rf.nextIndex[i] - rf.GetFirstLog().Index):]
+		sendLogArgs.LeaderCommit = rf.commitIndex
+
+		// for update nextIndex
+		recodeNextIndex[i] = rf.nextIndex[i]
+		// === for log
+		sendLogArgs.MsgType = LogMsgType
+		if len(sendLogArgs.Entries) == 0 {
+			sendLogArgs.MsgType = HeartBeatMsgType
+		}
+		DPrintf("server[%d] prepare send log to %d,leader have %v log, "+
+			"the nextIndex is:%d, len of log is:%d, status is:%v, and term is:%d, send args term is:%d, msg type is:%v, papare to send log is:%v, args commitIndex is:%d",
+			rf.me, i, rf.log, rf.nextIndex[i], len(rf.log), rf.state, rf.currentTerm, allSendLogArgs[i].Term, sendLogArgs.MsgType, sendLogArgs.Entries, sendLogArgs.LeaderCommit)
+	}
+
+	rf.mu.Unlock()
+
+	DPrintf("server[%d], before send log to others, ths allSendLogArgs is:%v,", rf.me, allSendLogArgs)
+	DPrintft("leader[%d] in sendLogTicket,begin to send log to others,time is:%v", rf.me, time.Now().UnixMilli())
+	for i, _ := range rf.peers {
+		if i == rf.me {
+			continue
+		}
+
+		if allSendLogArgs[i].ShouldSendSnapShot {
+			go rf.sendSnapShot(i)
+			continue
+		}
+
+		// todo 不能直接使用外部的allSendLogArgs，而是要将这个作为参数传入
+		go func(i int, args SendLogArgs, recodeNextIndex int) {
+			reply := SendLogReply{}
+			//  for update commitIndex,这里不能用args的term，而是应该用当前leader的term，因为日志的term有可能是之前的term的，
+			// 而这里要拿到的是当前发出这个请求的leader的term。
+			leaderTerm := args.Term
+			// lastSendLogIndex := args.Entries[len(allSendLogArgs[i].Entries)-1].Index
+			// lastSendLogTerm := args.Entries[len(allSendLogArgs[i].Entries)-1].Term
+			// 注意这个如果toSendCommond是空的话，那么在接收到这个请求的success返回的时候不应该去更新nextIndex。如果不为空的话，
+			// 则表示刚刚发出的这些日志都已经被这个follower保存了。那么就得更新为最后一个LogEntry的index+1的位置
+			toSendEntries := args.Entries
+			// for log
+			//preLogTerm := args.PrevLogTerm
+			//preLogIndex := args.PrevLogIndex
+
+			ok := rf.sendLog(i, &args, &reply)
+			if !ok {
+				//DPrintf("server[%d] send log to %d, bug get fail, args Term is:%d, args Index is:%d", rf.me, i, preLogTerm, preLogIndex)
+				return
+			}
+
+			rf.mu.Lock()
+			defer rf.mu.Unlock()
+			if reply.Term > rf.currentTerm {
+				DPrintf("server[%d]reciver %d server reply, and found local term is less, so change local term from:%d to:%d", rf.me, i, rf.currentTerm, reply.Term)
+				rf.AddCurrentTerm(reply.Term)
+				return
+			}
+
+			// 在更新之前，还需要进行两个判断，当前是否是leader，并且当前的term是否还是之前发出这个请求的时候的term，因为可能出现如下情形：
+			// 1. 如果当前已经不是leader了，那么此时再去更新commitIndex，并且把已经提交的日志发送到上层的话，会造成误解，因为这个位置的日志可能
+			// 已经被新的term的leader重写了。此时可能会提交一个错误的index的日志。
+			// 2. 如果当前是leader，但是当前的term和发出请求的term不相同。那么可能中间没有当leader的那个term可能已经把这个位置的日志重写了。
+			// 那么此时如果更新nextIndex的话，就更新不是自己term的了，会影响最新的term的nextIndex了。
+			if rf.state == Leader && rf.currentTerm == leaderTerm {
+				// 更新这个follower的nextIndex，和leader的commitIndex
+				if reply.Success {
+					// 更新nextIndex,matchIndex也更新为这次请求设置的值，这个地方还需要判断是否之前的大，如果大的话，才去更新，
+					// 因为有可能这次请求执行的很慢，导致leader下一次重发了这个请求，并且重发了后面的请求，然后后面的请求都已经执行成功了。
+					// 所以matchIndex已经被更新到更大的值了，此时如果不判断直接设置的话，会导致matchIndex回退。
+					if len(toSendEntries) > 0 {
+						lastEntry := toSendEntries[len(toSendEntries)-1]
+						if lastEntry.Index > rf.matchIndex[i] {
+							rf.matchIndex[i] = lastEntry.Index
+						}
+						if lastEntry.Index+1 > rf.nextIndex[i] {
+							rf.nextIndex[i] = lastEntry.Index + 1
+						}
+
+						// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
+						for beginIndex := rf.commitIndex + 1; beginIndex <= rf.GetLastLog().Index; beginIndex++ {
+							matchCount := 0
+							DPrintf("server[%d]begin to cacu match count, begin index is:%d, len of log is:%d, this is:%d server reply,"+
+								"and now match index is:%v,commit index is:%d", rf.me, beginIndex, len(rf.log), i, rf.matchIndex, rf.commitIndex)
+							for _, matchIndex := range rf.matchIndex {
+								if matchIndex >= beginIndex {
+									matchCount++
+								}
+							}
+
+							if matchCount <= len(rf.peers)/2 {
+								break
+							}
+
+							// 更新commitIndex，注意这里不能提交之前term的日志，只能提交本term的日志
+							if beginIndex > rf.commitIndex && rf.currentTerm == rf.log[beginIndex-rf.GetFirstLog().Index].Term {
+								// 由于leader不能提交之前term的日志，只能间接提交之前term的日志，就导致有可能leader在某一个之后的时刻更新自身的
+								// commitIndex是跳过了前面的一些日志的。但是往applyCh里面发送applyMsg还是必须是连续的，所以这个地方需要遍历从
+								// rf.commitIndex + 1到beginIndex之间这一段的日志，并提交到applyCh。
+								rf.commitIndex = beginIndex
+								rf.applyCond.Signal()
+							}
+						}
+
+						DPrintf("server[%d]after append entries to %d server request, now it commit index is:%d", rf.me, i, rf.commitIndex)
+					}
+				} else {
+					// 如果返回失败，则需要递减nextIndex的值,往前退一个值，正常来说，对于index为0的日志，是不可能会添加失败的。
+					// follower接收到下标为0的日志的时候，应该是要无条件接收的。
+					// 如果这次的log并没有分发成功，则对于这个请求来说，不需要去更新leader的commitIndex。
+					// rf.nextIndex[i]--
+					// 将i这个服务器的nextIndex回退一个term
+
+					// 这里更新的时候，还需要判断是否是前一个请求对应的回复。
+
+					// 因为之前是
+					if rf.nextIndex[i] == recodeNextIndex {
+						backNextIndex := rf.nextIndex[i] - 1
+						// 当len(rf.log) == 1的时候，这个backNextIndex设置为1.而当这个时候如果客户端返回了false，那么这个地方就会越界。
+						// 而由于之前，dummy log是一定相等的。所以nextIndex为1的时候发送的日志，永远不会被其他follower拒绝，
+						// 所以这里没有越界。
+						//if len(rf.log) == 1 {
+						//	rf.nextIndex[i] = 0
+						//	return
+						//}
+
+						// leader有可能在发出这个append entries rpc之后发生了一次snapshot，当这次snapshot的lastIncludedIndex大于等于
+						// backNextIndex的时候，直接设置nextIndex为这个lastIncludedIndex。
+						if backNextIndex <= rf.GetFirstLog().Index {
+							// 能进入这个分支，一定是发生了snapshot的。
+							rf.nextIndex[i] = rf.GetFirstLog().Index
+							DPrintf("server[%d]after send append entry to:%d, but need reduce nextIndex to:%d", rf.me, i, rf.nextIndex[i])
+							return
+						}
+
+						// 这个地方不能直接作为下标了，有两种情况，发生了snapshot，或者是没有发生snapshot。
+						// 1. 发生了snapshot：rf.log中的第一个位置保存的是snapshot最后一条日志的index。计算应该是 backNextIndex - rf.log[0].index
+						// 2. 没有发生snapshot：backNextIndex就可以当做下标。此时的计算应该变成 backNextIndex - rf.log[0].index
+						//nowNextTerm := rf.GetLastLog().Term
+						//if backNextIndex <= rf.GetLastLog().Index {
+						//	nowNextTerm = rf.log[backNextIndex-rf.log[0].Index].Term
+						//}
+						if backNextIndex > rf.GetLastLog().Index {
+							backNextIndex = rf.GetLastLog().Index
+						}
+
+						nowNextTerm := rf.log[backNextIndex-rf.GetFirstLog().Index].Term
+						// 最多让nextIndex回退到rf.log第一个log的index位置
+						for backNextIndex >= rf.GetFirstLog().Index && rf.log[backNextIndex-rf.log[0].Index].Term == nowNextTerm {
+							backNextIndex--
+						}
+
+						rf.nextIndex[i] = backNextIndex + 1
+						DPrintf("server[%d]after send append entry to:%d, but need reduce nextIndex to:%d", rf.me, i, backNextIndex)
+					}
+
+					// todo 这里暂时不更新matchIndex，而去依赖当reply为success的时候去更新
+				}
+			}
+		}(i, allSendLogArgs[i], recodeNextIndex[i])
 	}
 }
 
@@ -908,6 +1129,7 @@ func (rf *Raft) sendLogTicket() {
 
 		if shouldSendLog {
 			DPrintf("server[%d], before send log to others, ths allSendLogArgs is:%v,", rf.me, allSendLogArgs)
+			DPrintft("leader[%d] in sendLogTicket,begin to send log to others,time is:%v", rf.me, time.Now().UnixMilli())
 			for i, _ := range rf.peers {
 				if i == rf.me {
 					continue
@@ -988,6 +1210,7 @@ func (rf *Raft) sendLogTicket() {
 										// commitIndex是跳过了前面的一些日志的。但是往applyCh里面发送applyMsg还是必须是连续的，所以这个地方需要遍历从
 										// rf.commitIndex + 1到beginIndex之间这一段的日志，并提交到applyCh。
 										rf.commitIndex = beginIndex
+										rf.applyCond.Signal()
 									}
 								}
 
@@ -1241,7 +1464,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.persister = persister
 	rf.me = me
 	rf.applyCh = applyCh
-
+	rf.applyCond = sync.NewCond(&rf.mu)
 	// Your initialization code here (3A, 3B, 3C).
 
 	// 启动的时候，服务器应该是跟随者的状态

@@ -216,7 +216,7 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	tempLogEntry = append(tempLogEntry, dummyLog)
 	tempLogEntry = append(tempLogEntry, rf.log[index-firstLog.Index+1:]...)
 	DPrintf("server[%d] is snapshot in index:%d, now dummy log is:%v, "+
-		"and tempLogEntry is:%v", rf.me, index, dummyLog, tempLogEntry)
+		"and new log is:%v", rf.me, index, dummyLog, tempLogEntry)
 	rf.log = tempLogEntry
 	rf.snapshot = snapshot
 
@@ -366,8 +366,8 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 	// 如果LastIncludedIndex小于等于rf.log[0].index的话，那么保留所有的日志并返回
 	if args.LastIncludedIndex <= rf.GetFirstLog().Index ||
 		(args.LastIncludedIndex <= rf.GetLastLog().Index && rf.log[args.LastIncludedIndex-rf.GetFirstLog().Index].Term == args.LastIncludedTerm) {
-		DPrintf("server[%d]discoad a snapshot,args lastIndex is:%d,args last term is:%d, local first log index is:%d, local last log index is:%d, local index pos term is:%d",
-			rf.me, args.LastIncludedIndex, args.LastIncludedTerm, rf.GetFirstLog().Index, rf.GetLastLog().Index, rf.log[args.LastIncludedIndex-rf.GetFirstLog().Index].Term)
+		DPrintf("server[%d]discoad a snapshot,args lastIndex is:%d,args last term is:%d, local first log index is:%d, local last log index is:%d",
+			rf.me, args.LastIncludedIndex, args.LastIncludedTerm, rf.GetFirstLog().Index, rf.GetLastLog().Index)
 		return
 	}
 
@@ -473,12 +473,14 @@ func (rf *Raft) RequestSendLog(args *SendLogArgs, reply *SendLogReply) {
 			}
 		}
 
+		args.PrevLogIndex = rf.GetFirstLog().Index
+		args.PrevLogTerm = rf.GetFirstLog().Term
 	}
 
 	// 当preLog是dummy log的时候，一定是能够符合的吧
 	if args.PrevLogIndex > rf.GetFirstLog().Index && rf.log[args.PrevLogIndex-rf.GetFirstLog().Index].Term != args.PrevLogTerm {
-		DPrintf("server[%d]got %d server log request,and args preIndex is:%d, args preTerm is:%d, local index in %d term is:%d",
-			rf.me, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, args.PrevLogIndex, rf.log[args.PrevLogIndex-rf.GetFirstLog().Index])
+		DPrintf("server[%d]got %d server log request,and args preIndex is:%d, args preTerm is:%d, local index in %d ",
+			rf.me, args.LeaderId, args.PrevLogIndex, args.PrevLogTerm, args.PrevLogIndex)
 		reply.Success = false
 		return
 	}
@@ -742,15 +744,19 @@ func (rf *Raft) sendSnapShot(peer int) {
 
 	if rf.state == Leader && rf.currentTerm == sendLeaderTerm {
 		// 如果nextIndex还是0的话，那么就把nextIndex更新为1.让它下次不再发送snapshot了。
-		if rf.nextIndex[peer] == sendNextIndex {
-			rf.nextIndex[peer] = sendNextIndex + 1
+		if rf.nextIndex[peer] == sendNextIndex && sendLastLogIndex+1 > rf.nextIndex[peer] {
+			// fix
+			DPrintf("server[%d], term:%d, got peer:%d send snapshot reply,and update it nextIndex from:%d, to %d",
+				rf.me, rf.currentTerm, peer, rf.nextIndex[peer], sendLastLogIndex+1)
+			rf.nextIndex[peer] = sendLastLogIndex + 1
 		}
 
-		if rf.matchIndex[peer] == sendMatchIndex {
+		if rf.matchIndex[peer] == sendMatchIndex && sendLastLogIndex > rf.matchIndex[peer] {
 			rf.matchIndex[peer] = sendLastLogIndex
 		}
 
-		DPrintf("server[%d], term:%d, got peer:%d send snapshot reply", rf.me, rf.currentTerm, peer)
+		DPrintf("server[%d], term:%d, got peer:%d send snapshot reply,it nextIndex is:%d, matchIndex is:%d",
+			rf.me, rf.currentTerm, peer, rf.nextIndex[peer], rf.matchIndex[peer])
 		//  apply到状态机
 		// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
 		for beginIndex := rf.commitIndex + 1; beginIndex <= rf.GetLastLog().Index; beginIndex++ {
@@ -871,6 +877,8 @@ func (rf *Raft) sendLogTicketCore() {
 		sendLogArgs.ShouldSendSnapShot = false
 		if rf.GetFirstLog().Term != -1 && rf.nextIndex[i] <= rf.GetFirstLog().Index {
 			sendLogArgs.ShouldSendSnapShot = true
+			DPrintf("server[%d]found follower:%d nextIndex is:%d less than first log index:%d,so begin to send snapshot",
+				rf.me, i, rf.nextIndex[i], rf.GetFirstLog().Index)
 			continue
 		}
 
@@ -892,6 +900,7 @@ func (rf *Raft) sendLogTicketCore() {
 		if rf.nextIndex[i]-rf.GetFirstLog().Index == 0 {
 			fmt.Printf("error,leader[%d] have:%v log, and nextIndex is:%v", rf.me, rf.log, rf.nextIndex)
 		}
+		DPrintf("server[%d]to cacl server:%d prelog,nextIndex is:%d, first log index is:%d", rf.me, i, rf.nextIndex[i], rf.GetFirstLog().Index)
 		preLog := rf.log[(rf.nextIndex[i]-rf.GetFirstLog().Index)-1]
 		sendLogArgs.PrevLogIndex = preLog.Index
 		sendLogArgs.PrevLogTerm = preLog.Term
@@ -972,6 +981,7 @@ func (rf *Raft) sendLogTicketCore() {
 						}
 						if lastEntry.Index+1 > rf.nextIndex[i] {
 							rf.nextIndex[i] = lastEntry.Index + 1
+							DPrintf("server[%d]update follower server:%d nextIndex to:%d", rf.me, i, rf.nextIndex[i])
 						}
 
 						// 开始修改commitIndex,这里不能拿最后一条日志来比较matchIndex
@@ -999,7 +1009,7 @@ func (rf *Raft) sendLogTicketCore() {
 							}
 						}
 
-						DPrintf("server[%d]after append entries to %d server request, now it commit index is:%d", rf.me, i, rf.commitIndex)
+						DPrintf("server[%d]after append entries to %d server request, now it commit index is:%d,it nextIndex is:%d", rf.me, i, rf.commitIndex, rf.nextIndex[i])
 					}
 				} else {
 					// 如果返回失败，则需要递减nextIndex的值,往前退一个值，正常来说，对于index为0的日志，是不可能会添加失败的。

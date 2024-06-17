@@ -18,10 +18,11 @@ package raft
 //
 
 import (
-	"6.5840/labgob"
 	"bytes"
 	"fmt"
 	"math"
+
+	"6.5840/labgob"
 
 	//	"bytes"
 	"math/rand"
@@ -81,8 +82,10 @@ type Raft struct {
 	// Look at the paper's Figure 2 for a description of what
 	// state a Raft server must maintain.
 
-	applyCh   chan ApplyMsg
-	applyCond *sync.Cond
+	applyCh      chan ApplyMsg
+	applyCond    *sync.Cond
+	applySeqMu   sync.Mutex
+	applySeqCond *sync.Cond
 
 	state      ServerState
 	receiveNew bool
@@ -356,7 +359,13 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 		})
 		rf.snapshot = args.Data
 
+		// 在apply的时候，需要使用锁保护，使得一个时刻只能有一个goroutine去apply消息。因为可能出现这种情况：老的普通消息，比如说50-100这
+		// 一段的，一直在apply。然后某一个时刻，如果150这个位置被leader发送了一个snapshot。那么是不需要去再次apply150之前的任何消息的。
+		// 但是这个goroutine已经在运行了。那么不能停止他。所以还是要用一个锁的。
+		// 如果是普通消息一直apply，然后上层忽然来了个snapshot的请求。
+		// 那么这种情况不会出现问题的。因为在这种情况下，不需要发送applyMsg到上层。
 		go func(snapShotIndex int, snapShotTerm int) {
+			rf.applySeqMu.Lock()
 			applyMsg := ApplyMsg{
 				SnapshotValid: true,
 				Snapshot:      rf.snapshot,
@@ -365,19 +374,25 @@ func (rf *Raft) RequestInstallSnapShot(args *RequestSnapShotArgs, reply *Request
 			}
 
 			rf.applyCh <- applyMsg
+
+			rf.mu.Lock()
+			if args.LastIncludedIndex > rf.lastApplied {
+				rf.lastApplied = args.LastIncludedIndex
+			}
+
+			if args.LastIncludedIndex > rf.commitIndex {
+				rf.commitIndex = args.LastIncludedIndex
+				rf.applyCond.Signal()
+			}
+			DPrintf("server[%d]send snapshot to applyCh success,now lastapplied is:%d,commitIndex is:%d", rf.me, rf.lastApplied, rf.commitIndex)
+			rf.mu.Unlock()
+
+			rf.applySeqCond.Signal()
+			rf.applySeqMu.Unlock()
 		}(args.LastIncludedIndex, args.LastIncludedTerm)
 
-		if args.LastIncludedIndex > rf.lastApplied {
-			rf.lastApplied = args.LastIncludedIndex
-		}
-
-		if args.LastIncludedIndex > rf.commitIndex {
-			rf.commitIndex = args.LastIncludedIndex
-			rf.applyCond.Signal()
-		}
-
 		rf.SetElectionTime(200)
-		DPrintf("server[%d]after install snapshot,and lastapplied is:%d, commitIndex is:%d,have %v log", rf.me, rf.lastApplied, rf.commitIndex, rf.log)
+		//DPrintf("server[%d]after install snapshot,and lastapplied is:%d, commitIndex is:%d,have %v log", rf.me, rf.lastApplied, rf.commitIndex, rf.log)
 		return
 	}
 
@@ -773,8 +788,13 @@ func (rf *Raft) applyToRaftStateMachine() {
 func (rf *Raft) applyTicket() {
 	for rf.killed() == false {
 		rf.mu.Lock()
-		for rf.lastApplied >= rf.commitIndex {
+		for rf.lastApplied >= rf.commitIndex || rf.lastApplied < rf.GetFirstLog().Index {
 			rf.applyCond.Wait()
+		}
+
+		if rf.lastApplied < rf.GetFirstLog().Index {
+			DPrintf("server[%d]error, apply ticket reset lastapplied form %d to %d", rf.me, rf.lastApplied, rf.GetFirstLog().Index)
+			//rf.lastApplied = rf.GetFirstLog().Index
 		}
 
 		toApplyLogEntries := make([]LogEntry, 0)
@@ -787,7 +807,21 @@ func (rf *Raft) applyTicket() {
 		}
 		DPrintf("server[%d]begin to apply ticket,lastApply is:%d, commit index is:%d, len of toAppLogEntries is:%d, array is:%v", rf.me, rf.lastApplied, rf.commitIndex, len(toApplyLogEntries), toApplyLogEntries)
 		rf.mu.Unlock()
-		DPrintft("server[%d]in applyTicket,begin to apply a msg,time is:%v, toApplyLogEntries is:%v", rf.me, time.Now().UnixMilli(), toApplyLogEntries)
+
+		if len(toApplyLogEntries) == 0 {
+			continue
+		}
+
+		rf.applySeqMu.Lock()
+		firstLog := toApplyLogEntries[0]
+		for firstLog.Index != rf.lastApplied+1 && firstLog.Index > rf.lastApplied {
+			rf.applySeqCond.Wait()
+		}
+
+		if firstLog.Index <= rf.lastApplied {
+			continue
+		}
+
 		for i := 0; i < len(toApplyLogEntries); i++ {
 			DPrintf("server[%d]want to apply %d logEntry, the logEntry is:%v", rf.me, i, toApplyLogEntries[i])
 			applyMsg := ApplyMsg{
@@ -805,6 +839,8 @@ func (rf *Raft) applyTicket() {
 			rf.lastApplied = toApplyLogEntries[len(toApplyLogEntries)-1].Index
 			DPrintf("server[%d]apply all log,now lastapply is:%d", rf.me, rf.lastApplied)
 		}
+
+		rf.applySeqMu.Unlock()
 	}
 }
 
@@ -1179,6 +1215,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.me = me
 	rf.applyCh = applyCh
 	rf.applyCond = sync.NewCond(&rf.mu)
+	rf.applySeqCond = sync.NewCond(&rf.applySeqMu)
 	// Your initialization code here (3A, 3B, 3C).
 
 	// 启动的时候，服务器应该是跟随者的状态

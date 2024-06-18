@@ -4,6 +4,7 @@ import (
 	"6.5840/labgob"
 	"6.5840/labrpc"
 	"6.5840/raft"
+	"bytes"
 	"log"
 	"sync"
 	"sync/atomic"
@@ -48,16 +49,16 @@ type KVServer struct {
 	dead    int32 // set by Kill()
 
 	maxraftstate int // snapshot if log grows this big
-
+	threshold    float64
 	// Your definitions here.
 	lastApplied int
 	// k/v存储核心数据结构
-	store map[string]string
+	Store map[string]string
 	// clientId -->maxReqId,给每一个clientId记录一下已经处理到哪个reqId了。防止重复处理客户端请求。实现exactly once语义。
-	clientMaxReq map[int64]int64
+	ClientMaxReq map[int64]int64
 	// clientId --> lastReqRest，缓存这个客户端上一次处理的请求的结果，因为客户端是按照顺序请求的，上一个请求没有结束的时候，一定不会开始下一个
 	// 请求。所以当发现reqId小于clientMaxReq给这个客户端存的值的时候，就可以认为是过时的请求，直接丢弃。
-	clientLastReqRest map[int64]*ClientRequestReply
+	ClientLastReqRest map[int64]*ClientRequestReply
 	// 通知的channel表示该请求处理完成了。由于applier和请求不是在同一个goroutine里面处理的
 	notifyChannel map[int]chan *ClientRequestReply
 }
@@ -69,7 +70,7 @@ func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientR
 	// Your code here.
 	kv.mu.Lock()
 	//DPrintf("server[%d]begin to HandlerClientRequest,args clientId is:%d, req seq is:%d", kv.me, args.ClientId, args.ReqSeq)
-	if maxReq, ok := kv.clientMaxReq[args.ClientId]; ok && maxReq >= args.ReqSeq && args.Op != OpGet {
+	if maxReq, ok := kv.ClientMaxReq[args.ClientId]; ok && maxReq >= args.ReqSeq && args.Op != OpGet {
 		reply.Err = Duplicate
 		kv.mu.Unlock()
 		return
@@ -118,6 +119,53 @@ func (kv *KVServer) HandlerClientRequest(args *ClientRequestArgs, reply *ClientR
 	}(index)
 }
 
+func (kv *KVServer) ShouldSnapShot() bool {
+	if kv.maxraftstate != -1 && kv.rf.GetRaftStateSize() > kv.maxraftstate {
+		return true
+	}
+
+	return false
+}
+
+func (kv *KVServer) TakeSnapShot(index int) {
+	w := new(bytes.Buffer)
+	e := labgob.NewEncoder(w)
+	err := e.Encode(kv.Store)
+	err = e.Encode(kv.ClientMaxReq)
+	err = e.Encode(kv.ClientLastReqRest)
+	if err != nil {
+		DPrintf("server[%d]error,encode snapshot fail", kv.me)
+		return
+	}
+	kv.rf.Snapshot(index, w.Bytes())
+}
+
+// RestoreSnapShot 这里虽然说是从其他server同步过来的snapshot，但是这个snapshot也是它这个server的上层发给他的。所以还是会按照TakeSnapShot的
+// 序列化顺序。
+func (kv *KVServer) RestoreSnapShot(applyMsg raft.ApplyMsg) {
+	if applyMsg.Snapshot == nil || len(applyMsg.Snapshot) == 0 {
+		return
+	}
+
+	r := bytes.NewBuffer(applyMsg.Snapshot)
+	d := labgob.NewDecoder(r)
+	var store map[string]string
+	// clientId -->maxReqId,给每一个clientId记录一下已经处理到哪个reqId了。防止重复处理客户端请求。实现exactly once语义。
+	var clientMaxReq map[int64]int64
+	// clientId --> lastReqRest，缓存这个客户端上一次处理的请求的结果，因为客户端是按照顺序请求的，上一个请求没有结束的时候，一定不会开始下一个
+	// 请求。所以当发现reqId小于clientMaxReq给这个客户端存的值的时候，就可以认为是过时的请求，直接丢弃。
+	var clientLastReqRest map[int64]*ClientRequestReply
+	if d.Decode(&store) != nil ||
+		d.Decode(&clientMaxReq) != nil ||
+		d.Decode(&clientLastReqRest) != nil {
+		DPrintf("RestoreSnapShot decode fail")
+	}
+
+	kv.Store = store
+	kv.ClientMaxReq = clientMaxReq
+	kv.ClientLastReqRest = clientLastReqRest
+}
+
 func (kv *KVServer) ApplyTicket() {
 	for kv.killed() == false {
 		select {
@@ -137,15 +185,15 @@ func (kv *KVServer) ApplyTicket() {
 				// 到这里就可以应用到状态机了
 				opLog := applyMsg.Command.(Op)
 				reply := &ClientRequestReply{}
-				DPrintf("server[%d]ApplyTicket begin to apply a log,log is:%v,opLog reqSeq is:%d,kv clientMaxReq:%v",
-					kv.me, opLog, opLog.ReqSeq, kv.clientMaxReq)
-				if index, ok := kv.clientMaxReq[opLog.ClientId]; ok && index >= opLog.ReqSeq {
-					reply = kv.clientLastReqRest[opLog.ClientId]
+				DPrintf("server[%d]ApplyTicket begin to apply a log,log is:%v,opLog reqSeq is:%d,kv ClientMaxReq:%v",
+					kv.me, opLog, opLog.ReqSeq, kv.ClientMaxReq)
+				if index, ok := kv.ClientMaxReq[opLog.ClientId]; ok && index >= opLog.ReqSeq {
+					reply = kv.ClientLastReqRest[opLog.ClientId]
 				} else {
 					reply = kv.ApplyToStateMachine(opLog)
 					DPrintf("server[%d]success apply opLog:%v to state machine, reply value is:%v", kv.me, opLog, reply.Value)
-					kv.clientLastReqRest[opLog.ClientId] = reply
-					kv.clientMaxReq[opLog.ClientId] = opLog.ReqSeq
+					kv.ClientLastReqRest[opLog.ClientId] = reply
+					kv.ClientMaxReq[opLog.ClientId] = opLog.ReqSeq
 				}
 
 				if _, isLeader := kv.rf.GetState(); isLeader {
@@ -153,10 +201,14 @@ func (kv *KVServer) ApplyTicket() {
 					notifyCh <- reply
 				}
 
+				if kv.ShouldSnapShot() {
+					kv.TakeSnapShot(applyMsg.CommandIndex)
+				}
+
 				kv.mu.Unlock()
 				DPrintf("server[%d]finish opLog:%v, unlock success", kv.me, opLog)
 			} else if applyMsg.SnapshotValid {
-
+				kv.RestoreSnapShot(applyMsg)
 			} else {
 				DPrintf("server[%d] error, unknow opLog type:%v", kv.me, applyMsg)
 			}
@@ -195,7 +247,7 @@ func (kv *KVServer) RemoveNotifyChannel(index int) {
 }
 
 func (kv *KVServer) StateMachineGet(key string) (string, Err) {
-	if value, ok := kv.store[key]; ok {
+	if value, ok := kv.Store[key]; ok {
 		return value, OK
 	}
 
@@ -203,12 +255,12 @@ func (kv *KVServer) StateMachineGet(key string) (string, Err) {
 }
 
 func (kv *KVServer) StateMachinePut(key, value string) Err {
-	kv.store[key] = value
+	kv.Store[key] = value
 	return OK
 }
 
 func (kv *KVServer) StateMachineAppend(key, value string) Err {
-	kv.store[key] += value
+	kv.Store[key] += value
 	return OK
 }
 
@@ -235,7 +287,7 @@ func (kv *KVServer) killed() bool {
 // servers that will cooperate via Raft to
 // form the fault-tolerant key/value service.
 // me is the index of the current server in servers[].
-// the k/v server should store snapshots through the underlying Raft
+// the k/v server should Store snapshots through the underlying Raft
 // implementation, which should call persister.SaveStateAndSnapshot() to
 // atomically save the Raft state along with the snapshot.
 // the k/v server should snapshot when Raft's saved state exceeds maxraftstate bytes,
@@ -260,9 +312,9 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 	// You may need initialization code here.
 	kv.lastApplied = -1
 	kv.notifyChannel = make(map[int]chan *ClientRequestReply)
-	kv.store = make(map[string]string)
-	kv.clientMaxReq = make(map[int64]int64)
-	kv.clientLastReqRest = make(map[int64]*ClientRequestReply)
+	kv.Store = make(map[string]string)
+	kv.ClientMaxReq = make(map[int64]int64)
+	kv.ClientLastReqRest = make(map[int64]*ClientRequestReply)
 
 	go kv.ApplyTicket()
 

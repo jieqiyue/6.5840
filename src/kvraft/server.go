@@ -142,12 +142,12 @@ func (kv *KVServer) TakeSnapShot(index int) {
 
 // RestoreSnapShot 这里虽然说是从其他server同步过来的snapshot，但是这个snapshot也是它这个server的上层发给他的。所以还是会按照TakeSnapShot的
 // 序列化顺序。
-func (kv *KVServer) RestoreSnapShot(applyMsg raft.ApplyMsg) {
-	if applyMsg.Snapshot == nil || len(applyMsg.Snapshot) == 0 {
+func (kv *KVServer) RestoreSnapShot(snapShot []byte) {
+	if snapShot == nil || len(snapShot) == 0 {
 		return
 	}
 
-	r := bytes.NewBuffer(applyMsg.Snapshot)
+	r := bytes.NewBuffer(snapShot)
 	d := labgob.NewDecoder(r)
 	var store map[string]string
 	// clientId -->maxReqId,给每一个clientId记录一下已经处理到哪个reqId了。防止重复处理客户端请求。实现exactly once语义。
@@ -208,7 +208,7 @@ func (kv *KVServer) ApplyTicket() {
 				kv.mu.Unlock()
 				DPrintf("server[%d]finish opLog:%v, unlock success", kv.me, opLog)
 			} else if applyMsg.SnapshotValid {
-				kv.RestoreSnapShot(applyMsg)
+				kv.RestoreSnapShot(applyMsg.Snapshot)
 			} else {
 				DPrintf("server[%d] error, unknow opLog type:%v", kv.me, applyMsg)
 			}
@@ -315,6 +315,7 @@ func StartKVServer(servers []*labrpc.ClientEnd, me int, persister *raft.Persiste
 	kv.Store = make(map[string]string)
 	kv.ClientMaxReq = make(map[int64]int64)
 	kv.ClientLastReqRest = make(map[int64]*ClientRequestReply)
+	kv.RestoreSnapShot(persister.ReadSnapshot())
 
 	go kv.ApplyTicket()
 
